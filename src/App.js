@@ -1,20 +1,37 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Container, Dimmer } from 'semantic-ui-react';
 import './App.css';
 import BottomNav from './components/BottomNav';
+import TopNav from './components/TopNav';
+import VotePage from './pages/VotePage';
+
+const flexStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100%',
+};
+
+const scrollStyle = {
+  flexGrow: 1,
+  overflowX: 'hidden',
+  overflowY: 'auto',
+};
+
+const stickStyle = {
+  flexShrink: 0,
+  borderRadius: 0,
+  margin: 0,
+};
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <BottomNav />
+      <div style={flexStyle}>
+        <TopNav />
+        <Container style={scrollStyle}>
+          <VotePage />
+        </Container>
+        <BottomNav style={stickStyle} />
       </div>
     );
   }
