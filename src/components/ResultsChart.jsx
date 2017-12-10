@@ -8,7 +8,7 @@ const data = [
 
 const ResultsChart = (props) => (
   <PieChart width={800} height={400}>
-    <Pie data={data} cx={500} cy={200} innerRadius={140} outerRadius={180} fill="#82ca9d" labels />
+    <Pie data={data} cx={500} cy={200} innerRadius={90} outerRadius={120} fill="#82ca9d" labels />
     <Tooltip/>
   </PieChart>
 );
