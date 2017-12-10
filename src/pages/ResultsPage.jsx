@@ -1,11 +1,11 @@
 import React from 'react';
+import { Segment } from 'semantic-ui-react';
+import ResultsChart from '../components/ResultsChart';
 
-const ResultsPage = (props) => {
-  return (
-    <div>
-      <p>results page</p>
-    </div>
-  );
-};
+const ResultsPage = (props) => (
+  <Segment>
+    <ResultsChart />
+  </Segment>
+);
 
 export default ResultsPage;
