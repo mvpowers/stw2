@@ -2,8 +2,9 @@ import React from 'react';
 
 const ResultsPage = (props) => {
   return (
-    <Container>
-    </Container>
+    <div>
+      <p>results page</p>
+    </div>
   );
 };
 

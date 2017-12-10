@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Menu } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 class BottomNav extends Component {
 
@@ -13,8 +14,8 @@ class BottomNav extends Component {
 
     return (
       <Menu fluid widths={2}>
-        <Menu.Item name='vote' active={activeItem === 'vote'} onClick={this.handleItemClick} />
-        <Menu.Item name='results' active={activeItem === 'results'} onClick={this.handleItemClick} />
+          <Menu.Item name='vote' as={Link} to='/vote' active={activeItem === 'vote'} onClick={this.handleItemClick} />
+          <Menu.Item name='results' as={Link} to='/results' active={activeItem === 'results'} onClick={this.handleItemClick} />
       </Menu>
     )
   }

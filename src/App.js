@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { Container, Dimmer } from 'semantic-ui-react';
+import { Switch, Route } from 'react-router';
 import './App.css';
 import BottomNav from './components/BottomNav';
 import TopNav from './components/TopNav';
+
 import VotePage from './pages/VotePage';
+import ResultsPage from './pages/ResultsPage';
 
 const flexStyle = {
   display: 'flex',
@@ -29,7 +32,10 @@ class App extends Component {
       <div style={flexStyle}>
         <TopNav />
         <Container style={scrollStyle}>
-          <VotePage />
+          <Switch>
+            <Route path="/vote" component={VotePage} />
+            <Route path="/results" component={ResultsPage} />
+          </Switch>
         </Container>
         <BottomNav style={stickStyle} />
       </div>
