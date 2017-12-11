@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, Form, TextArea } from 'semantic-ui-react';
+import { Button, Modal, Form } from 'semantic-ui-react';
 
 const VoteButton = () => (
   <Button basic fluid color="blue">Select</Button>

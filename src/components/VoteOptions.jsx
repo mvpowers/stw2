@@ -3,16 +3,16 @@ import { Card } from 'semantic-ui-react';
 import VoteModal from './VoteModal';
 
 const data = [
-  { name: 'Timmy', description: 'The one with the man-bun' },
-  { name: 'George', description: 'Eats frozen dinners for breakfast' },
-  { name: 'Larry', description: 'Dresses cats up for halloween' },
+  { id: 1, name: 'Timmy', description: 'The one with the man-bun' },
+  { id: 2, name: 'George', description: 'Eats frozen dinners for breakfast' },
+  { id: 3, name: 'Larry', description: 'Dresses cats up for halloween' },
 ];
 
 const VoteOptions = () => (
   <Card.Group itemsPerRow={1}>
     {data.map(option =>
       (
-        <Card>
+        <Card key={option.id}>
           <Card.Content>
             <Card.Header>
               {option.name}

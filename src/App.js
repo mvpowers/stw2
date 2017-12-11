@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Dimmer } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import { Switch, Route } from 'react-router';
 import './App.css';
 import BottomNav from './components/BottomNav';
