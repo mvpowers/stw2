@@ -7,18 +7,18 @@ const userData = { id: 10, name: 'Mikey' };
 
 const Comments = ({ commentData, toggleLike }) => (
   <Card.Group itemsPerRow={1}>
-    {commentData.map(commentObj =>
+    {commentData.map(comment =>
       (
-        <Card fluid key={commentObj.id} id={commentObj.id} onClick={toggleLike}>
+        <Card fluid key={comment.id} id={comment.id} onClick={toggleLike}>
           <Card.Content extra>
-            Vote for {commentObj.voteFor}
+            Vote for {comment.voteFor}
           </Card.Content>
           <Card.Content className="Comment-body">
-            {commentObj.commentText}
+            {comment.commentText}
           </Card.Content>
           <Card.Content extra>
-            <Icon name="heart"  />
-            {commentObj.likedBy.length} Likes
+            <Icon name="heart" />
+            {comment.likedBy.length} Likes
           </Card.Content>
         </Card>
       ))}
