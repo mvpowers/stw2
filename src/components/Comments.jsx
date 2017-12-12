@@ -9,7 +9,13 @@ const Comments = ({ commentData, toggleLike }) => (
   <Card.Group itemsPerRow={1}>
     {commentData.map(comment =>
       (
-        <Card fluid key={comment.id} id={comment.id} onClick={toggleLike}>
+        <Card
+          fluid
+          key={comment.id}
+          id={comment.id}
+          onClick={toggleLike}
+          liked={comment.likedBy.includes(userData.id)}
+        >
           <Card.Content extra>
             Vote for {comment.voteFor}
           </Card.Content>
