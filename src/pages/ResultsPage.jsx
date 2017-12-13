@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Segment } from 'semantic-ui-react';
-import ResultsChart from '../components/ResultsChart';
+import ResultsChart from '../components/ResultsGraph';
 import Comments from '../components/Comments';
 import { toggleLike } from '../store/comments/actions';
 

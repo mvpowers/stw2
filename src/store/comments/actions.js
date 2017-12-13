@@ -7,6 +7,7 @@ export function toggleLike(e) {
 
   // TODO function to choose between the two dispatches
   // like
+  console.log(e.currentTarget)
   return (dispatch) => {
     dispatch({
       type: ADD_LIKE,
