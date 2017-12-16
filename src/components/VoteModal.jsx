@@ -6,7 +6,7 @@ const VoteButton = () => (
 );
 
 const VoteModal = () => (
-  <Modal trigger={VoteButton()}>
+  <Modal trigger={VoteButton()} dimmer="blurring">
     <Modal.Header>I never really liked him either</Modal.Header>
     <Modal.Content>
       <Modal.Description>

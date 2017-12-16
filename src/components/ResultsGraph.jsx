@@ -2,11 +2,11 @@ import React from 'react';
 import { PieChart, Pie, Legend, Tooltip, Cell, ResponsiveContainer } from 'recharts';
 
 const data = [
-  {name: 'Group A', value: 2400}, {name: 'Group B', value: 4567},
-  {name: 'Group C', value: 1398}, {name: 'Group D', value: 9800},
-  {name: 'Group E', value: 3908}, {name: 'Group F', value: 4800}];
+  { name: 'Timmy', value: 3 },
+  { name: 'George', value: 7 },
+  { name: 'Larry', value: 5 }];
 
-const COLORS = ['#92a8d1', '#deeaee','#034f84', '#b1cbbb', '#f7cac9', '#eea29a', '#f7786b', '#c94c4c'];
+const COLORS = ['#92a8d1', '#deeaee', '#034f84', '#b1cbbb', '#f7cac9', '#eea29a', '#f7786b', '#c94c4c'];
 
 const ResultsChart = (props) => (
   <ResponsiveContainer width="100%" height={300}>
@@ -24,6 +24,7 @@ const ResultsChart = (props) => (
         }
       </Pie>
       <Tooltip />
+      <Legend iconType="circle" layout="vertical" />
     </PieChart>
   </ResponsiveContainer>
 );

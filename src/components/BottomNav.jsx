@@ -13,7 +13,7 @@ class BottomNav extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Menu fluid widths={2}>
+      <Menu widths={2}>
           <Menu.Item name='vote' as={Link} to='/vote' active={activeItem === 'vote'} onClick={this.handleItemClick} />
           <Menu.Item name='results' as={Link} to='/results' active={activeItem === 'results'} onClick={this.handleItemClick} />
       </Menu>

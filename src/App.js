@@ -7,6 +7,7 @@ import TopNav from './components/TopNav';
 
 import VotePage from './pages/VotePage';
 import ResultsPage from './pages/ResultsPage';
+import LoginPage from './pages/LoginPage';
 
 const flexStyle = {
   display: 'flex',
@@ -35,6 +36,7 @@ class App extends Component {
           <Switch>
             <Route path="/vote" component={VotePage} />
             <Route path="/results" component={ResultsPage} />
+            <Route path="/login" component={LoginPage} />
           </Switch>
         </Container>
         <BottomNav style={stickStyle} />

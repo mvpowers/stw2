@@ -16,6 +16,7 @@ const Comments = ({ commentData, toggleLike }) => (
           onClick={toggleLike}
           liked={comment.likedBy}
           user={userData.id}
+          style={{color: '#333'}}
         >
           <Card.Content extra>
             Vote for {comment.voteFor}
