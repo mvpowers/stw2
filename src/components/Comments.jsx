@@ -14,7 +14,8 @@ const Comments = ({ commentData, toggleLike }) => (
           key={comment.id}
           id={comment.id}
           onClick={toggleLike}
-          liked={comment.likedBy.includes(userData.id)}
+          liked={comment.likedBy}
+          user={userData.id}
         >
           <Card.Content extra>
             Vote for {comment.voteFor}

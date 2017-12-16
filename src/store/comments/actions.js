@@ -4,20 +4,21 @@ import {
 } from '../constants';
 
 export function toggleLike(e) {
+  const likes = e.currentTarget.getAttribute('liked').split(',');
+  const user = e.currentTarget.getAttribute('user');
 
-  // TODO function to choose between the two dispatches
   // like
-  console.log(e.currentTarget)
-  return (dispatch) => {
-    dispatch({
-      type: ADD_LIKE,
-      payload: {
-        userId: 10,
-        commentId: parseInt(e.currentTarget.getAttribute('id'), 10),
-      },
-    });
-  };
-
+  if (!likes.includes(user)) {
+    return (dispatch) => {
+      dispatch({
+        type: ADD_LIKE,
+        payload: {
+          userId: 10,
+          commentId: parseInt(e.currentTarget.getAttribute('id'), 10),
+        },
+      });
+    };
+  }
   // dislike
   return (dispatch) => {
     dispatch({
@@ -29,4 +30,3 @@ export function toggleLike(e) {
     });
   };
 }
-
