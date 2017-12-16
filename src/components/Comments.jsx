@@ -24,7 +24,7 @@ const Comments = ({ commentData, toggleLike }) => (
             {comment.commentText}
           </Card.Content>
           <Card.Content extra>
-            <Icon name="heart" />
+            <Icon name="heart" color={comment.likedBy.includes(userData.id) ? 'red' : 'grey'} />
             {comment.likedBy.length} Likes
           </Card.Content>
         </Card>
