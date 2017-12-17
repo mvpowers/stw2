@@ -8,10 +8,11 @@ const data = [
 
 const COLORS = ['#92a8d1', '#deeaee', '#034f84', '#b1cbbb', '#f7cac9', '#eea29a', '#f7786b', '#c94c4c'];
 
-const ResultsChart = (props) => (
+const ResultsGraph = () => (
   <ResponsiveContainer width="100%" height={300}>
     <PieChart width={600} height={300}>
       <Pie
+        dataKey="value"
         data={data}
         cx="50%"
         cy="50%"
@@ -20,7 +21,7 @@ const ResultsChart = (props) => (
         fill="#82ca9d"
       >
         {
-          data.map((entry, index) => <Cell fill={COLORS[index % COLORS.length]} />)
+          data.map((entry, index) => <Cell key={entry} fill={COLORS[index % COLORS.length]} />)
         }
       </Pie>
       <Tooltip />
@@ -29,4 +30,4 @@ const ResultsChart = (props) => (
   </ResponsiveContainer>
 );
 
-export default ResultsChart;
+export default ResultsGraph;
