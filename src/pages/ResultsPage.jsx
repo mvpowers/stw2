@@ -5,13 +5,17 @@ import PropTypes from 'prop-types';
 import { Segment } from 'semantic-ui-react';
 import ResultsChart from '../components/ResultsGraph';
 import Comments from '../components/Comments';
+import Question from '../components/Question';
 import { toggleLike } from '../store/comments/actions';
 
 class ResultsPage extends Component {
   render() {
     return (
-      <Segment>
-        <ResultsChart />
+      <Segment basic>
+        <Question />
+        <Segment>
+          <ResultsChart />
+        </Segment>
         <Comments commentData={this.props.comments} toggleLike={this.props.toggleLike} />
       </Segment>
     );

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 import { Switch, Route } from 'react-router';
 import './App.css';
-import BottomNav from './components/BottomNav';
 import TopNav from './components/TopNav';
 
 import VotePage from './pages/VotePage';
@@ -39,7 +38,6 @@ class App extends Component {
             <Route path="/login" component={LoginPage} />
           </Switch>
         </Container>
-        <BottomNav style={stickStyle} />
       </div>
     );
   }
