@@ -20,12 +20,6 @@ const scrollStyle = {
   overflowY: 'auto',
 };
 
-const stickStyle = {
-  flexShrink: 0,
-  borderRadius: 0,
-  margin: 0,
-};
-
 class App extends Component {
   render() {
     return (
