@@ -34,7 +34,7 @@ const Comments = ({ commentData, toggleLike }) => (
 );
 
 Comments.propTypes = {
-  commentData: PropTypes.array.isRequired,
+  commentData: PropTypes.arrayOf(Object).isRequired,
   toggleLike: PropTypes.func.isRequired,
 };
 

@@ -23,7 +23,7 @@ class ResultsPage extends Component {
 }
 
 ResultsPage.propTypes = {
-  comments: PropTypes.array.isRequired,
+  comments: PropTypes.arrayOf(Object).isRequired,
   toggleLike: PropTypes.func.isRequired,
 };
 
