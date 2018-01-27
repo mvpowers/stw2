@@ -3,7 +3,7 @@ import {
   REMOVE_LIKE,
 } from '../constants';
 import initialState from './initialState';
-import { removeArrEl } from '../../shared/index';
+import { removeArrEl } from '../../shared';
 
 const commentsReducer = (state = { comments: initialState }, action) => {
   switch (action.type) {

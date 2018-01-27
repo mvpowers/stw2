@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
-
-const voteSchema = new Schema({
+const voteSchema = new mongoose.Schema({
   name: { type: String },
   votes: {
     type: Number,
@@ -10,7 +8,7 @@ const voteSchema = new Schema({
   },
 });
 
-const commentSchema = new Schema({
+const commentSchema = new mongoose.Schema({
   voteFor: { type: String },
   text: {
     type: String,
@@ -22,12 +20,12 @@ const commentSchema = new Schema({
   },
 });
 
-const resultSchema = new Schema({
+const resultSchema = new mongoose.Schema({
   question: { type: String, required: true },
   timeAsked: { type: Date },
   votes: [voteSchema],
   comments: [commentSchema],
-  votesVisible: { type: Boolean, required: true },
+  votesVisible: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model('Result', resultSchema);
