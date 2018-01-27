@@ -5,3 +5,5 @@ export const UPDATE_VOTE_ID = 'UPDATE_VOTE_ID';
 export const UPDATE_VOTE_COMMENT = 'UPDATE_VOTE_COMMENT';
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
+export const REQUEST_RESULT = 'REQUEST_RESULT';
+export const RECEIVE_RESULT = 'RECEIVE_RESULT';

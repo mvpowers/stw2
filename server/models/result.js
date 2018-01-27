@@ -26,6 +26,7 @@ const resultSchema = new mongoose.Schema({
   votes: [voteSchema],
   comments: [commentSchema],
   votesVisible: { type: Boolean, default: false },
+  active: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model('Result', resultSchema);

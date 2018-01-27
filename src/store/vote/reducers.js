@@ -5,7 +5,7 @@ import {
   CLOSE_MODAL,
 } from '../constants';
 
-const voteReducer = (state = { modalStatus: false }, action) => {
+const voteReducer = (state = { modalStatus: false, isFetching: false }, action) => {
   switch (action.type) {
     case UPDATE_VOTE_ID:
       return Object.assign({}, state, {
