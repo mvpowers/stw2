@@ -13,7 +13,7 @@ export function updateComment(e) {
     dispatch({
       type: UPDATE_VOTE_COMMENT,
       payload: {
-        comment: e.target.value,
+        comment: e.target.value
       },
     });
   };
@@ -24,8 +24,8 @@ export function updateId(e) {
     dispatch({
       type: UPDATE_VOTE_ID,
       payload: {
-        userId: 3,
-      },
+        userId: 3
+      }
     });
   };
 }
@@ -35,21 +35,21 @@ export function openModal(e) {
     dispatch({
       type: OPEN_MODAL,
       payload: {
-        userId: e.target.getAttribute('user'),
+        userId: e.target.getAttribute("user")
       },
     });
   };
 }
 
 export function closeModal() {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
-      type: CLOSE_MODAL,
+      type: CLOSE_MODAL
     });
   };
 }
 
-const getResult = (data) => {
+const getResult = data => {
   return {
     type: FETCH_RESULT,
     payload: data,
@@ -57,14 +57,13 @@ const getResult = (data) => {
 };
 
 export function fetchResult() {
-  return (dispatch) => {
-    return axios
-      .get('http://localhost:9000/result/question')
-      .then((res) => {
+  return dispatch =>
+    axios
+      .get("http://localhost:9000/result/question")
+      .then(res => {
         dispatch(getResult(res.data));
       })
-      .catch((err) => {
-        console.log('Error:', err);
+      .catch(err => {
+        console.log("Error:", err);
       });
-  };
 }

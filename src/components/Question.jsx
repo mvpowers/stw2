@@ -5,7 +5,6 @@ const Question = ({ data }) => (
   <Message
     icon="question circle outline"
     header={data.question}
-    test={console.log('props', data)}
   />
 );
 
