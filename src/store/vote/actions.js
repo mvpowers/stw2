@@ -1,12 +1,11 @@
-import fetch from 'cross-fetch';
+import axios from 'axios';
 
 import {
   UPDATE_VOTE_ID,
   UPDATE_VOTE_COMMENT,
   OPEN_MODAL,
   CLOSE_MODAL,
-  REQUEST_RESULT,
-  RECEIVE_RESULT,
+  FETCH_RESULT,
 } from '../constants';
 
 export function updateComment(e) {
@@ -50,19 +49,22 @@ export function closeModal() {
   };
 }
 
-export function requestResult() {
-  return (dispatch) => {
-    dispatch({
-      type: REQUEST_RESULT,
-    });
+const getResult = (data) => {
+  return {
+    type: FETCH_RESULT,
+    payload: data,
   };
-}
+};
 
-export function receiveResult(json) {
+export function fetchResult() {
   return (dispatch) => {
-    dispatch({
-      type: RECEIVE_RESULT,
-      payload: json,
-    });
+    return axios
+      .get('http://localhost:9000/result/question')
+      .then((res) => {
+        dispatch(getResult(res.data));
+      })
+      .catch((err) => {
+        console.log('Error:', err);
+      });
   };
 }

@@ -6,14 +6,17 @@ import { Dimmer, Segment } from 'semantic-ui-react';
 import Question from '../components/Question';
 import VoteOptions from '../components/VoteOptions';
 import WaitDimmer from '../components/WaitDimmer';
-import { updateComment, updateId, openModal, closeModal } from '../store/vote/actions';
+import { updateComment, updateId, openModal, closeModal, fetchResult } from '../store/vote/actions';
 
 class VotePage extends Component {
+  componentDidMount() {
+    this.props.fetchResult();
+  }
   render() {
     return (
       <Dimmer.Dimmable as={Segment} basic>
         <WaitDimmer />
-        <Question />
+        <Question data={this.props.question} />
         <VoteOptions
           modalStatus={this.props.modalStatus}
           modalOpen={this.props.openModal}
@@ -32,6 +35,7 @@ VotePage.propTypes = {
   closeModal: PropTypes.func.isRequired,
   updateComment: PropTypes.func.isRequired,
   updateId: PropTypes.func.isRequired,
+  fetchResult: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -39,6 +43,7 @@ function mapStateToProps(state) {
     voteId: state.vote.id,
     comment: state.vote.comment,
     modalStatus: state.vote.modalStatus,
+    question: state.vote.vote,
   };
 }
 
@@ -48,6 +53,7 @@ function mapDispatchToProps(dispatch) {
     updateId,
     openModal,
     closeModal,
+    fetchResult,
   }, dispatch);
 }
 

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Message } from 'semantic-ui-react';
 
-const Question = () => (
+const Question = ({ data }) => (
   <Message
     icon="question circle outline"
-    header="Who is most likely to ask a question?"
+    header={data.question}
+    test={console.log('props', data)}
   />
 );
 

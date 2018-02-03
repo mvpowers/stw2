@@ -3,9 +3,10 @@ import {
   UPDATE_VOTE_COMMENT,
   OPEN_MODAL,
   CLOSE_MODAL,
+  FETCH_RESULT,
 } from '../constants';
 
-const voteReducer = (state = { modalStatus: false, isFetching: false }, action) => {
+const voteReducer = (state = { modalStatus: false, isFetching: false, vote: { question: '' } }, action) => {
   switch (action.type) {
     case UPDATE_VOTE_ID:
       return Object.assign({}, state, {
@@ -30,6 +31,12 @@ const voteReducer = (state = { modalStatus: false, isFetching: false }, action) 
       return Object.assign({}, state, {
         ...state,
         modalStatus: false,
+      });
+
+    case FETCH_RESULT:
+      return Object.assign({}, state, {
+        ...state,
+        vote: action.payload,
       });
 
     default:
