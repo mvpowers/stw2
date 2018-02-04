@@ -3,12 +3,12 @@ import { FETCH_RESULT } from '../constants';
 const initialState = {
   data: {
     votes: [],
-    comments: [],
+    comments: [{ id: null, voteFor: '', commentText: '', likedBy: [null] }],
     votesVisible: null,
     active: null,
     _id: '',
     question: '',
-    __v: 0,
+    __v: null,
   },
 };
 
