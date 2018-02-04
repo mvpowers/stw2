@@ -2,15 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Modal, Form } from 'semantic-ui-react';
 
-const VoteModal = ({ modalStatus, modalOpen, modalClose, option }) => (
+const VoteModal = ({
+  modalStatus,
+  modalOpen,
+  modalClose,
+  voteId,
+  voteName,
+  displayName,
+}) => (
   <Modal
     trigger={
       <Button
         basic
         fluid
         color="blue"
-        user={option}
         onClick={modalOpen}
+        id={voteId}
+        name={voteName}
       >
         Select
       </Button>
@@ -19,7 +27,7 @@ const VoteModal = ({ modalStatus, modalOpen, modalClose, option }) => (
     open={modalStatus}
     onClose={modalClose}
   >
-    <Modal.Header>I never really liked him either</Modal.Header>
+    <Modal.Header>I never really liked {displayName} either</Modal.Header>
     <Modal.Content>
       <Modal.Description>
         <Form>
@@ -31,7 +39,6 @@ const VoteModal = ({ modalStatus, modalOpen, modalClose, option }) => (
             basic
             fluid
             color="green"
-            option={option}
             onClick={modalClose}
           >
             Submit
@@ -46,7 +53,9 @@ VoteModal.propTypes = {
   modalStatus: PropTypes.bool.isRequired,
   modalOpen: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
-  option: PropTypes.string,
+  voteId: PropTypes.number.isRequired,
+  voteName: PropTypes.string.isRequired,
+  displayName: PropTypes.string.isRequired,
 };
 
 export default VoteModal;

@@ -26,15 +26,7 @@ class VotePage extends Component {
 VotePage.propTypes = {
   fetchResult: PropTypes.func.isRequired,
   result: PropTypes.shape({
-    data: PropTypes.shape({
-      votes: PropTypes.array,
-      comments: PropTypes.array,
-      votesVisible: PropTypes.bool,
-      active: PropTypes.bool,
-      _id: PropTypes.string,
-      question: PropTypes.string.isRequired,
-      __v: PropTypes.number,
-    }).isRequired,
+    data: PropTypes.object.isRequired,
   }).isRequired,
 };
 

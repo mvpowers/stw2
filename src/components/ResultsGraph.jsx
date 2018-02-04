@@ -46,6 +46,6 @@ ResultsGraph.PropTyles = {
   data: PropTypes.shape({
     votes: PropTypes.array,
   }).isRequired,
-}
+};
 
 export default ResultsGraph;
