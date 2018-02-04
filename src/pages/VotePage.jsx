@@ -6,7 +6,7 @@ import { Dimmer, Segment } from 'semantic-ui-react';
 import Question from '../components/Question';
 import VoteOptions from '../components/VoteOptions';
 import WaitDimmer from '../components/WaitDimmer';
-import { updateComment, updateId, openModal, closeModal, fetchResult } from '../store/vote/actions';
+import { fetchResult } from '../store/result/actions';
 
 class VotePage extends Component {
   componentDidMount() {
@@ -16,45 +16,34 @@ class VotePage extends Component {
     return (
       <Dimmer.Dimmable as={Segment} basic>
         <WaitDimmer />
-        <Question data={this.props.question} />
-        <VoteOptions
-          modalStatus={this.props.modalStatus}
-          modalOpen={this.props.openModal}
-          modalClose={this.props.closeModal}
-          handleCommentChange={this.props.updateComment}
-          handleVoteIdChange={this.props.updateId}
-        />
+        <Question data={this.props.result} />
+        <VoteOptions />
       </Dimmer.Dimmable>
     );
   }
 }
 
 VotePage.propTypes = {
-  modalStatus: PropTypes.bool.isRequired,
-  openModal: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
-  updateComment: PropTypes.func.isRequired,
-  updateId: PropTypes.func.isRequired,
+  result: PropTypes.object.isRequired,
   fetchResult: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    voteId: state.vote.id,
-    comment: state.vote.comment,
-    modalStatus: state.vote.modalStatus,
-    question: state.vote.vote,
+    voteId: state.result.id,
+    comment: state.result.comment,
+    modalStatus: state.result.modalStatus,
+    result: state.result,
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    updateComment,
-    updateId,
-    openModal,
-    closeModal,
-    fetchResult,
-  }, dispatch);
+  return bindActionCreators(
+    {
+      fetchResult,
+    },
+    dispatch,
+  );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(VotePage);

@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { Card } from 'semantic-ui-react';
 import VoteModal from './VoteModal';
 
@@ -9,46 +8,46 @@ const data = [
   { id: 3, name: 'Larry', description: 'Dresses cats up for halloween' },
 ];
 
-const VoteOptions = ({
-  modalStatus,
-  modalOpen,
-  modalClose,
-  handleCommentChange,
-  handleVoteIdChange,
-}) => (
-  <Card.Group itemsPerRow={1}>
-    {data.map(option =>
-      (
-        <Card key={option.id}>
-          <Card.Content>
-            <Card.Header>
-              {option.name}
-            </Card.Header>
-            <Card.Meta>
-              {option.description}
-            </Card.Meta>
-          </Card.Content>
-          <Card.Content>
-            <VoteModal
-              modalStatus={modalStatus}
-              modalOpen={modalOpen}
-              modalClose={modalClose}
-              handleCommentChange={handleCommentChange}
-              option={option.id}
-              handleVoteIdChange={handleVoteIdChange}
-            />
-          </Card.Content>
-        </Card>
-      ))}
-  </Card.Group>
-);
-
-VoteOptions.propTypes = {
-  modalStatus: PropTypes.bool.isRequired,
-  modalOpen: PropTypes.func.isRequired,
-  modalClose: PropTypes.func.isRequired,
-  handleCommentChange: PropTypes.func.isRequired,
-  handleVoteIdChange: PropTypes.func.isRequired,
-};
+class VoteOptions extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalStatus: false,
+    };
+    this.modalOpen = this.modalOpen.bind(this);
+    this.modalClose = this.modalClose.bind(this);
+  }
+  modalOpen() {
+    this.setState({
+      modalStatus: true,
+    });
+  }
+  modalClose() {
+    this.setState({
+      modalStatus: false,
+    });
+  }
+  render() {
+    return (
+      <Card.Group itemsPerRow={1}>
+        {data.map(option => (
+          <Card key={option.id}>
+            <Card.Content>
+              <Card.Header>{option.name}</Card.Header>
+              <Card.Meta>{option.description}</Card.Meta>
+            </Card.Content>
+            <Card.Content>
+              <VoteModal
+                modalStatus={this.state.modalStatus}
+                modalOpen={this.modalOpen}
+                modalClose={this.modalClose}
+              />
+            </Card.Content>
+          </Card>
+        ))}
+      </Card.Group>
+    );
+  }
+}
 
 export default VoteOptions;

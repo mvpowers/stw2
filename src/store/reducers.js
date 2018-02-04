@@ -1,9 +1,6 @@
 import { combineReducers } from 'redux';
-
-import comments from './comments/reducers';
-import vote from './vote/reducers';
+import result from './result/reducers';
 
 export default combineReducers({
-  comments,
-  vote,
+  result,
 });
