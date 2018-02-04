@@ -1,14 +1,22 @@
 import { FETCH_RESULT } from '../constants';
 
-const voteReducer = (
-  state = { modalStatus: false, isFetching: false, vote: { result: '' } },
-  action,
-) => {
+const initialState = {
+  data: {
+    votes: [],
+    comments: [],
+    votesVisible: null,
+    active: null,
+    _id: '',
+    question: '',
+    __v: 0,
+  },
+};
+
+const voteReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_RESULT:
       return Object.assign({}, state, {
-        ...state,
-        vote: action.payload,
+        data: action.payload,
       });
 
     default:

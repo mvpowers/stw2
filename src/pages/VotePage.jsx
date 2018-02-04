@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Dimmer, Segment } from 'semantic-ui-react';
-import Question from '../components/Question';
 import VoteOptions from '../components/VoteOptions';
+import Question from '../components/Question';
 import WaitDimmer from '../components/WaitDimmer';
 import { fetchResult } from '../store/result/actions';
 
@@ -16,7 +16,7 @@ class VotePage extends Component {
     return (
       <Dimmer.Dimmable as={Segment} basic>
         <WaitDimmer />
-        <Question data={this.props.result} />
+        <Question data={this.props.result.data} />
         <VoteOptions />
       </Dimmer.Dimmable>
     );
@@ -24,15 +24,22 @@ class VotePage extends Component {
 }
 
 VotePage.propTypes = {
-  result: PropTypes.object.isRequired,
   fetchResult: PropTypes.func.isRequired,
+  result: PropTypes.shape({
+    data: PropTypes.shape({
+      votes: PropTypes.array,
+      comments: PropTypes.array,
+      votesVisible: PropTypes.bool,
+      active: PropTypes.bool,
+      _id: PropTypes.string,
+      question: PropTypes.string.isRequired,
+      __v: PropTypes.number,
+    }).isRequired,
+  }).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    voteId: state.result.id,
-    comment: state.result.comment,
-    modalStatus: state.result.modalStatus,
     result: state.result,
   };
 }
