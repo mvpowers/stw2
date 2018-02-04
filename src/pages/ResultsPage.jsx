@@ -13,12 +13,11 @@ class ResultsPage extends Component {
     this.props.fetchResult();
   }
   render() {
-    console.log('result', this.props.result.data)
     return (
       <Segment basic>
         <Question data={this.props.result.data} />
         <Segment>
-          <ResultsChart />
+          <ResultsChart data={this.props.result.data} />
         </Segment>
         <Comments data={this.props.result.data} />
       </Segment>
@@ -27,7 +26,9 @@ class ResultsPage extends Component {
 }
 
 ResultsPage.propTypes = {
-  result: PropTypes.arrayOf(Object).isRequired,
+  result: PropTypes.shape({
+    data: PropTypes.object.isRequired,
+  }).isRequired,
   fetchResult: PropTypes.func.isRequired,
 };
 
