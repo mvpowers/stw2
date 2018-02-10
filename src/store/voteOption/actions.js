@@ -8,7 +8,7 @@ const getVoteOptions = data => {
   };
 };
 
-export function fetchVoteOptions() {
+export const fetchVoteOptions = () => {
   return dispatch =>
     axios
       .get('http://localhost:9000/voteOption')
@@ -18,4 +18,4 @@ export function fetchVoteOptions() {
       .catch(err => {
         console.log(err);
       });
-}
+};

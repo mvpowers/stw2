@@ -15,7 +15,7 @@ const getQuestion = data => {
   };
 };
 
-export function fetchResult() {
+export const fetchResult = () => {
   return dispatch =>
     axios
       .get('http://localhost:9000/result/active')
@@ -25,9 +25,9 @@ export function fetchResult() {
       .catch(err => {
         console.log(err);
       });
-}
+};
 
-export function fetchQuestion() {
+export const fetchQuestion = () => {
   return dispatch =>
     axios
       .get('http://localhost:9000/result/question')
@@ -37,4 +37,10 @@ export function fetchQuestion() {
       .catch(err => {
         console.log(err);
       });
-}
+};
+
+// export const submitVote = () => {
+//   return dispatch =>
+//     axios
+//       .post
+// }

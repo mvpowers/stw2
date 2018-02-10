@@ -9,6 +9,7 @@ const VoteModal = ({
   voteId,
   voteName,
   displayName,
+  submitVote,
 }) => (
   <Modal
     trigger={
@@ -39,7 +40,7 @@ const VoteModal = ({
             basic
             fluid
             color="green"
-            onClick={modalClose}
+            onClick={submitVote}
           >
             Submit
           </Form.Button>
@@ -56,6 +57,7 @@ VoteModal.propTypes = {
   voteId: PropTypes.string.isRequired,
   voteName: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
+  submitVote: PropTypes.func.isRequired,
 };
 
 export default VoteModal;

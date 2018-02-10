@@ -23,6 +23,7 @@ const COLORS = [
 const ResultsGraph = ({ data }) => (
   <ResponsiveContainer width="100%" height={300}>
     <PieChart width={600} height={300}>
+      {console.log('graph data', data.votes)}
       <Pie
         dataKey="value"
         data={data.votes}

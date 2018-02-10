@@ -8,9 +8,11 @@ class VoteOptions extends Component {
     this.state = {
       modalStatus: false,
       currentVoteName: '',
+      currentVoteId: '',
     };
     this.modalOpen = this.modalOpen.bind(this);
     this.modalClose = this.modalClose.bind(this);
+    this.submitVote = this.submitVote.bind(this);
   }
   modalOpen(e) {
     this.setState({
@@ -20,6 +22,15 @@ class VoteOptions extends Component {
     });
   }
   modalClose() {
+    this.setState({
+      modalStatus: false,
+    });
+  }
+  submitVote() {
+    console.log({
+      voteName: this.state.currentVoteName,
+      voteId: this.state.currentVoteId,
+    });
     this.setState({
       modalStatus: false,
     });
@@ -42,6 +53,7 @@ class VoteOptions extends Component {
                 voteId={option._id}
                 voteName={option.name}
                 displayName={this.state.currentVoteName}
+                submitVote={this.submitVote}
               />
             </Card.Content>
           </Card>
