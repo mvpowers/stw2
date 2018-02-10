@@ -5,4 +5,4 @@ npm run server
 npm start
 ```
 ## TODO
-- [ ] write readme
+- [ ] Write readme
