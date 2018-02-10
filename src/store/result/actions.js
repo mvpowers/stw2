@@ -12,7 +12,7 @@ const getResult = data => {
 export function fetchResult() {
   return dispatch =>
     axios
-      .get('http://localhost:9000/result/question')
+      .get('http://localhost:9000/result/active')
       .then(res => {
         dispatch(getResult(res.data));
       })
