@@ -1,6 +1,6 @@
 ## Start
 ```bash
-sudo server mongod start
+sudo service mongod start
 npm run server
 npm start
 ```
