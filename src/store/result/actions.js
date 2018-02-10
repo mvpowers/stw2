@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import { FETCH_RESULT, FETCH_QUESTION } from '../constants';
 
 const getResult = data => {
@@ -24,7 +23,7 @@ export function fetchResult() {
         dispatch(getResult(res.data));
       })
       .catch(err => {
-        console.log('Error:', err);
+        console.log(err);
       });
 }
 
@@ -36,6 +35,6 @@ export function fetchQuestion() {
         dispatch(getQuestion(res.data));
       })
       .catch(err => {
-        console.log('Error:', err);
+        console.log(err);
       });
 }

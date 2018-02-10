@@ -53,7 +53,7 @@ VoteModal.propTypes = {
   modalStatus: PropTypes.bool.isRequired,
   modalOpen: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
-  voteId: PropTypes.number.isRequired,
+  voteId: PropTypes.string.isRequired,
   voteName: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
 };

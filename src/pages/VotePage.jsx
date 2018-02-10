@@ -7,18 +7,20 @@ import VoteOptions from '../components/VoteOptions';
 import Question from '../components/Question';
 import WaitDimmer from '../components/WaitDimmer';
 import { fetchQuestion } from '../store/result/actions';
+import { fetchVoteOptions } from '../store/voteOption/actions';
 
 class VotePage extends Component {
   componentDidMount() {
     this.props.fetchQuestion();
+    this.props.fetchVoteOptions();
   }
   render() {
-    const { result } = this.props;
+    const { result, voteOptions } = this.props;
     return (
       <Dimmer.Dimmable as={Segment} basic>
         <WaitDimmer />
         <Question data={result.data} />
-        <VoteOptions />
+        <VoteOptions data={voteOptions.data} />
       </Dimmer.Dimmable>
     );
   }
@@ -26,14 +28,19 @@ class VotePage extends Component {
 
 VotePage.propTypes = {
   fetchQuestion: PropTypes.func.isRequired,
+  fetchVoteOptions: PropTypes.func.isRequired,
   result: PropTypes.shape({
     data: PropTypes.object.isRequired,
+  }).isRequired,
+  voteOptions: PropTypes.shape({
+    data: PropTypes.arrayOf(String).isRequired,
   }).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     result: state.result,
+    voteOptions: state.voteOptions,
   };
 }
 
@@ -41,6 +48,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       fetchQuestion,
+      fetchVoteOptions,
     },
     dispatch,
   );
