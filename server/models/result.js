@@ -4,7 +4,9 @@ const voteSchema = new mongoose.Schema({
   name: { type: String },
   votes: {
     type: Number,
-    required() { return this.name !== null; },
+    required() {
+      return this.name !== null;
+    },
   },
 });
 
@@ -12,11 +14,15 @@ const commentSchema = new mongoose.Schema({
   voteFor: { type: String },
   text: {
     type: String,
-    required() { return this.voteFor !== null; },
+    required() {
+      return this.voteFor !== null;
+    },
   },
   likes: {
     type: Number,
-    required() { return this.voteFor !== null; },
+    required() {
+      return this.voteFor !== null;
+    },
   },
 });
 

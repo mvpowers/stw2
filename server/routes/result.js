@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const result = require('../controllers/result');
+
+const router = express.Router();
 
 router.post('/question', result.addQuestion);
 router.get('/question', result.retrieveActiveQuestion);
