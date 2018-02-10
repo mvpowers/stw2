@@ -6,17 +6,18 @@ import { Dimmer, Segment } from 'semantic-ui-react';
 import VoteOptions from '../components/VoteOptions';
 import Question from '../components/Question';
 import WaitDimmer from '../components/WaitDimmer';
-import { fetchResult } from '../store/result/actions';
+import { fetchQuestion } from '../store/result/actions';
 
 class VotePage extends Component {
   componentDidMount() {
-    this.props.fetchResult();
+    this.props.fetchQuestion();
   }
   render() {
+    const { result } = this.props;
     return (
       <Dimmer.Dimmable as={Segment} basic>
         <WaitDimmer />
-        <Question data={this.props.result.data} />
+        <Question data={result.data} />
         <VoteOptions />
       </Dimmer.Dimmable>
     );
@@ -24,7 +25,7 @@ class VotePage extends Component {
 }
 
 VotePage.propTypes = {
-  fetchResult: PropTypes.func.isRequired,
+  fetchQuestion: PropTypes.func.isRequired,
   result: PropTypes.shape({
     data: PropTypes.object.isRequired,
   }).isRequired,
@@ -39,7 +40,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      fetchResult,
+      fetchQuestion,
     },
     dispatch,
   );

@@ -13,13 +13,14 @@ class ResultsPage extends Component {
     this.props.fetchResult();
   }
   render() {
+    const { result } = this.props;
     return (
       <Segment basic>
-        <Question data={this.props.result.data} />
+        <Question data={result.data} />
         <Segment>
-          <ResultsChart data={this.props.result.data} />
+          <ResultsChart data={result.data} />
         </Segment>
-        <Comments data={this.props.result.data} />
+        <Comments data={result.data} />
       </Segment>
     );
   }

@@ -18,3 +18,12 @@ exports.retrieveActive = (req, res) => {
     res.json(data);
   });
 };
+
+exports.retrieveActiveQuestion = (req, res) => {
+  Result.findOne({ active: true }, 'question', (err, data) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(data);
+  });
+};

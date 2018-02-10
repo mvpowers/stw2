@@ -1,4 +1,4 @@
-import { FETCH_RESULT } from '../constants';
+import { FETCH_RESULT, FETCH_QUESTION } from '../constants';
 
 const initialState = {
   data: {
@@ -14,10 +14,20 @@ const initialState = {
 
 const voteReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_QUESTION:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          question: action.payload.question,
+        },
+      };
+
     case FETCH_RESULT:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         data: action.payload,
-      });
+      };
 
     default:
       return state;
