@@ -9,33 +9,33 @@ import {
 } from '../constants';
 
 export function updateComment(e) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: UPDATE_VOTE_COMMENT,
       payload: {
-        comment: e.target.value
+        comment: e.target.value,
       },
     });
   };
 }
 
 export function updateId(e) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: UPDATE_VOTE_ID,
       payload: {
-        userId: 3
-      }
+        userId: 3,
+      },
     });
   };
 }
 
 export function openModal(e) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: OPEN_MODAL,
       payload: {
-        userId: e.target.getAttribute("user")
+        userId: e.target.getAttribute('user'),
       },
     });
   };
@@ -44,26 +44,24 @@ export function openModal(e) {
 export function closeModal() {
   return dispatch => {
     dispatch({
-      type: CLOSE_MODAL
+      type: CLOSE_MODAL,
     });
   };
 }
 
-const getResult = data => {
-  return {
-    type: FETCH_RESULT,
-    payload: data,
-  };
-};
+const getResult = data => ({
+  type: FETCH_RESULT,
+  payload: data,
+});
 
 export function fetchResult() {
   return dispatch =>
     axios
-      .get("http://localhost:9000/result/question")
+      .get('http://localhost:9000/result/question')
       .then(res => {
         dispatch(getResult(res.data));
       })
       .catch(err => {
-        console.log("Error:", err);
+        console.log('Error:', err);
       });
 }
