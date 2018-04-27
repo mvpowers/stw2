@@ -6,8 +6,12 @@ import { Dimmer, Segment } from 'semantic-ui-react';
 import VoteOptions from '../components/VoteOptions';
 import Question from '../components/Question';
 import WaitDimmer from '../components/WaitDimmer';
-import { fetchQuestion, submitVote } from '../store/result/actions';
 import { fetchVoteOptions } from '../store/voteOption/actions';
+import {
+  fetchQuestion,
+  submitVote,
+  submitComment,
+} from '../store/result/actions';
 
 class VotePage extends Component {
   constructor() {
@@ -16,6 +20,7 @@ class VotePage extends Component {
       modalStatus: false,
       currentVoteName: '',
       currentVoteId: '',
+      currentComment: '',
     };
   }
 
@@ -39,16 +44,30 @@ class VotePage extends Component {
     });
   };
 
-  handleSubmit = () => {
-    submitVote(this.state.currentVoteId, this.state.currentVoteName);
+  handleSubmit = e => {
+    const { currentVoteId, currentVoteName, currentComment } = this.state;
+    e.preventDefault();
+    submitVote(currentVoteId, currentVoteName);
+    if (currentComment) {
+      submitComment(currentVoteId, currentVoteName, currentComment);
+    }
     this.setState({
       modalStatus: false,
     });
   };
 
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
   render() {
     const { result, voteOptions } = this.props;
-    const { modalStatus, currentVoteName, currentVoteId } = this.state;
+    const {
+      modalStatus,
+      currentVoteName,
+      currentVoteId,
+      currentComment,
+    } = this.state;
     return (
       <Dimmer.Dimmable as={Segment} basic>
         <WaitDimmer />
@@ -59,8 +78,10 @@ class VotePage extends Component {
           modalOpen={this.modalOpen}
           modalClose={this.modalClose}
           handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
           currentVoteId={currentVoteId}
           currentVoteName={currentVoteName}
+          currentComment={currentComment}
         />
       </Dimmer.Dimmable>
     );

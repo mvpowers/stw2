@@ -8,8 +8,10 @@ const VoteModal = ({
   modalClose,
   voteId,
   voteName,
-  displayName,
-  submitVote,
+  currentVoteName,
+  handleSubmit,
+  handleChange,
+  currentComment,
 }) => (
   <Modal
     trigger={
@@ -28,15 +30,17 @@ const VoteModal = ({
     open={modalStatus}
     onClose={modalClose}
   >
-    <Modal.Header>I never really liked {displayName} either</Modal.Header>
+    <Modal.Header>I never really liked {currentVoteName} either</Modal.Header>
     <Modal.Content>
       <Modal.Description>
         <Form>
           <Form.TextArea
-            name="comment"
+            name="currentComment"
+            value={currentComment}
             placeholder="Leave a comment (optional)"
+            onChange={handleChange}
           />
-          <Form.Button basic fluid color="green" onClick={submitVote}>
+          <Form.Button basic fluid color="green" onClick={handleSubmit}>
             Submit
           </Form.Button>
         </Form>
@@ -51,8 +55,10 @@ VoteModal.propTypes = {
   modalClose: PropTypes.func.isRequired,
   voteId: PropTypes.string.isRequired,
   voteName: PropTypes.string.isRequired,
-  displayName: PropTypes.string.isRequired,
-  submitVote: PropTypes.func.isRequired,
+  currentVoteName: PropTypes.string.isRequired,
+  currentComment: PropTypes.string.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default VoteModal;

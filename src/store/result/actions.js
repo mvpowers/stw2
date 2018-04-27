@@ -40,3 +40,14 @@ export const submitVote = (voteId, name) =>
     .catch(err => {
       console.log(err);
     });
+
+export const submitComment = (voteId, voteFor, text) =>
+  axios
+    .post('http://localhost:9000/result/comment', {
+      voteId,
+      voteFor,
+      text,
+    })
+    .catch(err => {
+      console.log(err);
+    });

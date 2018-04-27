@@ -10,6 +10,7 @@ const VoteOptions = ({
   modalClose,
   currentVoteName,
   handleSubmit,
+  handleChange,
 }) => (
   <Card.Group itemsPerRow={1}>
     {data.map(option => (
@@ -24,8 +25,9 @@ const VoteOptions = ({
             modalClose={modalClose}
             voteId={option._id}
             voteName={option.name}
-            displayName={currentVoteName}
-            submitVote={handleSubmit}
+            currentVoteName={currentVoteName}
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
           />
         </Card.Content>
       </Card>
@@ -45,6 +47,7 @@ VoteOptions.propTypes = {
   modalClose: PropTypes.func.isRequired,
   currentVoteName: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default VoteOptions;
