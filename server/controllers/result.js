@@ -33,7 +33,7 @@ exports.submitVote = (req, res) => {
     {
       active: true,
       votes: {
-        $elemMatch: { name: req.body.name },
+        $elemMatch: { name: req.body.name, voteId: req.body.voteId },
       },
     },
     (err, data) => {
@@ -43,14 +43,22 @@ exports.submitVote = (req, res) => {
       if (data.length === 0) {
         Result.update(
           { active: true },
-          { $push: { votes: { name: req.body.name, value: 1 } } },
+          {
+            $push: {
+              votes: { name: req.body.name, voteId: req.body.voteId, value: 1 },
+            },
+          },
           () => {
             res.send(200);
           },
         );
       } else {
         Result.update(
-          { active: true, 'votes.name': req.body.name },
+          {
+            active: true,
+            'votes.name': req.body.name,
+            'votes.voteId': req.body.voteId,
+          },
           { $inc: { 'votes.$.value': 1 } },
           () => {
             res.send(200);

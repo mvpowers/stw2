@@ -64,10 +64,12 @@ class VoteOptions extends Component {
 }
 
 VoteOptions.propTypes = {
-  data: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-  }).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      name: PropTypes.string,
+    }),
+  ).isRequired,
 };
 
 export default VoteOptions;
