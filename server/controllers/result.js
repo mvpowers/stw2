@@ -29,14 +29,34 @@ exports.retrieveActiveQuestion = (req, res) => {
 };
 
 exports.submitVote = (req, res) => {
-  Result.update(
-    { active: true },
-    { $push: { votes: { name: req.body.name, value: 1 } } },
+  Result.find(
+    {
+      active: true,
+      votes: {
+        $elemMatch: { name: req.body.name },
+      },
+    },
     (err, data) => {
       if (err) {
         res.send(err);
       }
-      res.json(data);
+      if (data.length === 0) {
+        Result.update(
+          { active: true },
+          { $push: { votes: { name: req.body.name, value: 1 } } },
+          () => {
+            res.send(200);
+          },
+        );
+      } else {
+        Result.update(
+          { active: true, 'votes.name': req.body.name },
+          { $inc: { 'votes.$.value': 1 } },
+          () => {
+            res.send(200);
+          },
+        );
+      }
     },
   );
 };

@@ -32,6 +32,4 @@ export const fetchQuestion = () => dispatch =>
     });
 
 export const postVote = () => dispatch =>
-  axios.post('http://localhost:9000/result/question', {
-
-  })
+  axios.post('http://localhost:9000/result/question', {});
