@@ -29,7 +29,6 @@ const styles = {
 
 const ResultsGraph = ({ data }) => (
   <div>
-    {console.log('graph data', data)}
     {data.votes.length > 0 ? (
       <ResponsiveContainer width="100%" height={300}>
         <PieChart width={600} height={300}>

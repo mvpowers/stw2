@@ -49,7 +49,7 @@ exports.submitVote = (req, res) => {
             },
           },
           () => {
-            res.send(200);
+            res.sendStatus(200);
           },
         );
       } else {
@@ -61,7 +61,7 @@ exports.submitVote = (req, res) => {
           },
           { $inc: { 'votes.$.value': 1 } },
           () => {
-            res.send(200);
+            res.sendStatus(200);
           },
         );
       }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'semantic-ui-react';
 import { VoteModal } from '../components';
+import { submitVote } from '../store/result/actions';
 
 class VoteOptions extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class VoteOptions extends Component {
     };
     this.modalOpen = this.modalOpen.bind(this);
     this.modalClose = this.modalClose.bind(this);
-    this.submitVote = this.submitVote.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   modalOpen(e) {
     this.setState({
@@ -27,11 +28,8 @@ class VoteOptions extends Component {
       modalStatus: false,
     });
   }
-  submitVote() {
-    console.log({
-      voteName: this.state.currentVoteName,
-      voteId: this.state.currentVoteId,
-    });
+  handleSubmit() {
+    submitVote(this.state.currentVoteId, this.state.currentVoteName);
     this.setState({
       modalStatus: false,
     });
@@ -53,7 +51,7 @@ class VoteOptions extends Component {
                 voteId={option._id}
                 voteName={option.name}
                 displayName={this.state.currentVoteName}
-                submitVote={this.submitVote}
+                submitVote={this.handleSubmit}
               />
             </Card.Content>
           </Card>

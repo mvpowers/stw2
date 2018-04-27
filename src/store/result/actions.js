@@ -31,5 +31,12 @@ export const fetchQuestion = () => dispatch =>
       console.log(err);
     });
 
-export const postVote = () => dispatch =>
-  axios.post('http://localhost:9000/result/question', {});
+export const submitVote = (voteId, name) =>
+  axios
+    .post('http://localhost:9000/result/vote', {
+      voteId,
+      name,
+    })
+    .catch(err => {
+      console.log(err);
+    });
