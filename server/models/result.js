@@ -19,11 +19,9 @@ const commentSchema = new mongoose.Schema({
       return this.voteFor !== null;
     },
   },
-  likes: {
-    type: Number,
-    required() {
-      return this.voteFor !== null;
-    },
+  likedBy: {
+    type: Array,
+    default: [],
   },
 });
 

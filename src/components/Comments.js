@@ -17,9 +17,7 @@ const Comments = ({ data }) => (
         style={{ color: '#333' }}
       >
         <Card.Content extra>Vote for {comment.voteFor}</Card.Content>
-        <Card.Content className="Comment-body">
-          {comment.commentText}
-        </Card.Content>
+        <Card.Content className="Comment-body">{comment.text}</Card.Content>
         <Card.Content extra>
           <Icon
             name="heart"

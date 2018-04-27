@@ -10,7 +10,7 @@ exports.addQuestion = (req, res) => {
   });
 };
 
-exports.retrieveActive = (req, res) => {
+exports.retrieveActiveResult = (req, res) => {
   Result.findOne({ active: true }, (err, data) => {
     if (err) {
       res.send(err);
@@ -65,6 +65,19 @@ exports.submitVote = (req, res) => {
           },
         );
       }
+    },
+  );
+};
+
+exports.addComment = (req, res) => {
+  Result.findOneAndUpdate(
+    { active: true },
+    { $push: { comments: { voteFor: req.body.voteFor, text: req.body.text } } },
+    (err, data) => {
+      if (err) {
+        res.send(err);
+      }
+      res.json(data);
     },
   );
 };
