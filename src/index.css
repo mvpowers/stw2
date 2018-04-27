@@ -3,3 +3,7 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.dimmed.dimmable > .ui.modals.dimmer.visible {
+  display: flex !important;
+}

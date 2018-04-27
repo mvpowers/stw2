@@ -1,9 +1,0 @@
-{
-  "extends": [
-    "airbnb",
-    "plugin:prettier/recommended"
-  ],
-  "rules": {
-    "func-names": ["error", "never"]
-  }
-}

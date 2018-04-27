@@ -8,7 +8,7 @@ import {
   Cell,
   ResponsiveContainer,
 } from 'recharts';
-import NoData from './NoData';
+import { NoData } from '../components';
 
 const COLORS = [
   '#92a8d1',
@@ -20,6 +20,12 @@ const COLORS = [
   '#f7786b',
   '#c94c4c',
 ];
+
+const styles = {
+  center: {
+    display: 'grid',
+  },
+};
 
 const ResultsGraph = ({ data }) => (
   <div>
@@ -45,12 +51,14 @@ const ResultsGraph = ({ data }) => (
         </PieChart>
       </ResponsiveContainer>
     ) : (
-      <NoData />
+      <div style={styles.center}>
+        <NoData />
+      </div>
     )}
   </div>
 );
 
-ResultsGraph.PropTyles = {
+ResultsGraph.propTypes = {
   data: PropTypes.shape({
     votes: PropTypes.array,
   }).isRequired,

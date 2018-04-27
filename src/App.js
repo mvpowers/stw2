@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Container } from 'semantic-ui-react';
 import { Switch, Route } from 'react-router';
 import './App.css';
@@ -20,21 +20,17 @@ const scrollStyle = {
   overflowY: 'auto',
 };
 
-class App extends Component {
-  render() {
-    return (
-      <div style={flexStyle}>
-        <TopNav />
-        <Container style={scrollStyle}>
-          <Switch>
-            <Route path="/vote" component={VotePage} />
-            <Route path="/results" component={ResultsPage} />
-            <Route path="/login" component={LoginPage} />
-          </Switch>
-        </Container>
-      </div>
-    );
-  }
-}
+const App = () => (
+  <div style={flexStyle}>
+    <TopNav />
+    <Container style={scrollStyle}>
+      <Switch>
+        <Route path="/vote" component={VotePage} />
+        <Route path="/results" component={ResultsPage} />
+        <Route path="/login" component={LoginPage} />
+      </Switch>
+    </Container>
+  </div>
+);
 
 export default App;

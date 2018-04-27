@@ -36,12 +36,7 @@ const VoteModal = ({
             name="comment"
             placeholder="Leave a comment (optional)"
           />
-          <Form.Button
-            basic
-            fluid
-            color="green"
-            onClick={submitVote}
-          >
+          <Form.Button basic fluid color="green" onClick={submitVote}>
             Submit
           </Form.Button>
         </Form>

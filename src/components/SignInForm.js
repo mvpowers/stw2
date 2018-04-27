@@ -14,8 +14,11 @@ const SignInForm = ({ active }) => {
           <label>Password</label>
           <input type="password" placeholder="Password" />
         </Form.Field>
-        <Button type="submit" fluid>Submit</Button>
-      </Form>);
+        <Button type="submit" fluid>
+          Submit
+        </Button>
+      </Form>
+    );
   }
   return (
     <Form>
@@ -39,8 +42,11 @@ const SignInForm = ({ active }) => {
         <label>Verify Password</label>
         <input type="password" placeholder="Verify Password" />
       </Form.Field>
-      <Button type="submit" fluid>Submit</Button>
-    </Form>);
+      <Button type="submit" fluid>
+        Submit
+      </Button>
+    </Form>
+  );
 };
 
 SignInForm.propTypes = {

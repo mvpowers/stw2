@@ -10,8 +10,12 @@ const TopNav = () => (
     <Menu.Menu position="right">
       <Dropdown item icon="bars">
         <Dropdown.Menu>
-          <Dropdown.Item as={Link} to="/vote">Vote</Dropdown.Item>
-          <Dropdown.Item as={Link} to="/results">Results</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/vote">
+            Vote
+          </Dropdown.Item>
+          <Dropdown.Item as={Link} to="/results">
+            Results
+          </Dropdown.Item>
           <Dropdown.Item>Past Results</Dropdown.Item>
           <Dropdown.Item>Sign Out</Dropdown.Item>
         </Dropdown.Menu>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Card } from 'semantic-ui-react';
-import VoteModal from './VoteModal';
+import { VoteModal } from '../components';
 
 class VoteOptions extends Component {
   constructor(props) {
@@ -43,7 +44,6 @@ class VoteOptions extends Component {
           <Card key={option._id}>
             <Card.Content>
               <Card.Header>{option.name}</Card.Header>
-              <Card.Meta>{option.description}</Card.Meta>
             </Card.Content>
             <Card.Content>
               <VoteModal
@@ -62,5 +62,12 @@ class VoteOptions extends Component {
     );
   }
 }
+
+VoteOptions.propTypes = {
+  data: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+  }).isRequired,
+};
 
 export default VoteOptions;
