@@ -10,7 +10,8 @@ import { fetchResult } from '../store/result/actions';
 
 class ResultsPage extends Component {
   componentDidMount() {
-    this.props.fetchResult();
+    const { fetchResult } = this.props;
+    fetchResult();
   }
   render() {
     const { result } = this.props;

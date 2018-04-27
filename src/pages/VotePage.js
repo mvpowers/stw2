@@ -6,21 +6,62 @@ import { Dimmer, Segment } from 'semantic-ui-react';
 import VoteOptions from '../components/VoteOptions';
 import Question from '../components/Question';
 import WaitDimmer from '../components/WaitDimmer';
-import { fetchQuestion } from '../store/result/actions';
+import { fetchQuestion, submitVote } from '../store/result/actions';
 import { fetchVoteOptions } from '../store/voteOption/actions';
 
 class VotePage extends Component {
-  componentDidMount() {
-    this.props.fetchQuestion();
-    this.props.fetchVoteOptions();
+  constructor() {
+    super();
+    this.state = {
+      modalStatus: false,
+      currentVoteName: '',
+      currentVoteId: '',
+    };
   }
+
+  componentDidMount() {
+    const { fetchQuestion, fetchVoteOptions } = this.props;
+    fetchQuestion();
+    fetchVoteOptions();
+  }
+
+  modalOpen = e => {
+    this.setState({
+      modalStatus: true,
+      currentVoteId: e.target.id,
+      currentVoteName: e.target.name,
+    });
+  };
+
+  modalClose = () => {
+    this.setState({
+      modalStatus: false,
+    });
+  };
+
+  handleSubmit = () => {
+    submitVote(this.state.currentVoteId, this.state.currentVoteName);
+    this.setState({
+      modalStatus: false,
+    });
+  };
+
   render() {
     const { result, voteOptions } = this.props;
+    const { modalStatus, currentVoteName, currentVoteId } = this.state;
     return (
       <Dimmer.Dimmable as={Segment} basic>
         <WaitDimmer />
         <Question data={result.data} />
-        <VoteOptions data={voteOptions.data} />
+        <VoteOptions
+          data={voteOptions.data}
+          modalStatus={modalStatus}
+          modalOpen={this.modalOpen}
+          modalClose={this.modalClose}
+          handleSubmit={this.handleSubmit}
+          currentVoteId={currentVoteId}
+          currentVoteName={currentVoteName}
+        />
       </Dimmer.Dimmable>
     );
   }
