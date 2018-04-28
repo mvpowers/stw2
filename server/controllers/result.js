@@ -81,3 +81,16 @@ exports.addComment = (req, res) => {
     },
   );
 };
+
+exports.likeComment = (req, res) => {
+  Result.findOneAndUpdate(
+    { 'comments._id': req.body.commentId },
+    { $push: { 'comments.$.likedBy': req.body.userId } },
+    (err, data) => {
+      if (err) {
+        res.send(err);
+      }
+      res.send(data);
+    },
+  );
+};

@@ -1,3 +1,4 @@
 export const FETCH_RESULT = 'FETCH_RESULT';
 export const FETCH_QUESTION = 'FETCH_QUESTION';
 export const FETCH_VOTE_OPTIONS = 'FETCH_VOTE_OPTIONS';
+export const TOGGLE_LIKE = 'TOGGLE_LIKE';

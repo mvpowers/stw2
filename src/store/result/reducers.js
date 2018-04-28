@@ -1,4 +1,4 @@
-import { FETCH_RESULT, FETCH_QUESTION } from '../constants';
+import { FETCH_RESULT, FETCH_QUESTION, TOGGLE_LIKE } from '../constants';
 
 const initialState = {
   data: {
@@ -27,6 +27,11 @@ const voteReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload,
+      };
+
+    case TOGGLE_LIKE:
+      return {
+        ...state,
       };
 
     default:

@@ -8,5 +8,6 @@ router.get('/question', result.retrieveActiveQuestion);
 router.get('/active', result.retrieveActiveResult);
 router.post('/vote', result.submitVote);
 router.post('/comment', result.addComment);
+router.post('/like', result.likeComment);
 
 module.exports = router;
