@@ -60,8 +60,11 @@ exports.submitVote = (req, res) => {
             'votes.voteId': req.body.voteId,
           },
           { $inc: { 'votes.$.value': 1 } },
-          () => {
-            res.sendStatus(200);
+          (updateErr, updateData) => {
+            if (updateErr) {
+              res.json(updateErr);
+            }
+            res.json(updateData);
           },
         );
       }
@@ -83,14 +86,46 @@ exports.addComment = (req, res) => {
 };
 
 exports.likeComment = (req, res) => {
-  Result.findOneAndUpdate(
-    { 'comments._id': req.body.commentId },
-    { $push: { 'comments.$.likedBy': req.body.userId } },
+  Result.find(
+    {
+      active: true,
+      comments: {
+        $elemMatch: { _id: req.body.commentId, likedBy: req.body.userId },
+      },
+    },
     (err, data) => {
       if (err) {
         res.send(err);
       }
-      res.send(data);
+      if (data.length === 0) {
+        Result.update(
+          {
+            active: true,
+            'comments._id': req.body.commentId,
+          },
+          { $push: { 'comments.$.likedBy': req.body.userId } },
+          (updateErr, updateData) => {
+            if (updateErr) {
+              res.json(updateErr);
+            }
+            res.json(updateData);
+          },
+        );
+      } else {
+        Result.update(
+          {
+            active: true,
+            'comments._id': req.body.commentId,
+          },
+          { $pull: { 'comments.$.likedBy': req.body.userId } },
+          (updateErr, updateData) => {
+            if (updateErr) {
+              res.json(updateErr);
+            }
+            res.json(updateData);
+          },
+        );
+      }
     },
   );
 };
