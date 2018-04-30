@@ -37,7 +37,7 @@ exports.authUser = (req, res) => {
     }
     const payload = { admin: data.admin };
     const token = jwt.sign(payload, config.SECRET, {
-      expiresIn: 5,
+      expiresIn: '5h',
     });
     res.json({ token });
   });
