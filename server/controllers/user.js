@@ -24,33 +24,21 @@ exports.getAllUsers = (req, res) => {
 exports.authUser = (req, res) => {
   User.findOne({ phone: req.body.phone }, (err, data) => {
     if (err) {
-      res.send(err);
+      return res.status(500);
     }
     if (!data) {
-      res.json({
-        success: false,
-        message: 'Authentication failed. User not found',
-      });
-    } else if (data) {
-      if (data.password !== req.body.password) {
-        res.json({
-          success: false,
-          message: 'Authentication failed. Wrong password.',
-        });
-      }
-      const payload = {
-        admin: data.admin,
-      };
-
-      const token = jwt.sign(payload, config.SECRET, {
-        expiresIn: 5,
-      });
-
-      res.json({
-        success: true,
-        message: 'Enjoy your token!',
-        token,
-      });
+      return res.status(404).send('User not found');
     }
+
+    const validUser = data.password === req.body.password;
+
+    if (!validUser) {
+      return res.status(401).send({ auth: false, token: null });
+    }
+    const payload = { admin: data.admin };
+    const token = jwt.sign(payload, config.SECRET, {
+      expiresIn: 5,
+    });
+    res.json({ token });
   });
 };
