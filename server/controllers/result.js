@@ -98,12 +98,13 @@ exports.likeComment = (req, res) => {
         res.send(err);
       }
       if (data.length === 0) {
-        Result.update(
+        Result.findOneAndUpdate(
           {
             active: true,
             'comments._id': req.body.commentId,
           },
           { $push: { 'comments.$.likedBy': req.body.userId } },
+          { new: true },
           (updateErr, updateData) => {
             if (updateErr) {
               res.json(updateErr);
@@ -112,12 +113,13 @@ exports.likeComment = (req, res) => {
           },
         );
       } else {
-        Result.update(
+        Result.findOneAndUpdate(
           {
             active: true,
             'comments._id': req.body.commentId,
           },
           { $pull: { 'comments.$.likedBy': req.body.userId } },
+          { new: true },
           (updateErr, updateData) => {
             if (updateErr) {
               res.json(updateErr);

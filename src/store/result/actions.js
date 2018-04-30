@@ -57,13 +57,14 @@ export const submitComment = (voteId, voteFor, text) =>
       console.log(err);
     });
 
-export const toggleLike = (commentId, userId) => dispatch =>
+export const toggleLike = (userId, commentId) => dispatch =>
   axios
     .post('http://localhost:9000/result/like', {
-      commentId,
       userId,
+      commentId,
     })
     .then(res => {
+      console.log('response', res);
       dispatch(postLike(res.data));
     })
     .catch(err => {

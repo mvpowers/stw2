@@ -6,13 +6,19 @@ import { Segment } from 'semantic-ui-react';
 import ResultsChart from '../components/ResultsGraph';
 import Comments from '../components/Comments';
 import Question from '../components/Question';
-import { fetchResult } from '../store/result/actions';
+import { fetchResult, toggleLike } from '../store/result/actions';
 
 class ResultsPage extends Component {
   componentDidMount() {
     const { fetchResult } = this.props;
     fetchResult();
   }
+
+  handleLike = (userId, commentId) => {
+    const { toggleLike } = this.props;
+    toggleLike(userId, commentId);
+  };
+
   render() {
     const { result } = this.props;
     return (
@@ -21,7 +27,7 @@ class ResultsPage extends Component {
         <Segment>
           <ResultsChart data={result.data} />
         </Segment>
-        <Comments data={result.data} />
+        <Comments data={result.data} toggleLike={this.handleLike} />
       </Segment>
     );
   }
@@ -32,21 +38,14 @@ ResultsPage.propTypes = {
     data: PropTypes.object.isRequired,
   }).isRequired,
   fetchResult: PropTypes.func.isRequired,
+  toggleLike: PropTypes.func.isRequired,
 };
 
-function mapStateToProps(state) {
-  return {
-    result: state.result,
-  };
-}
+const mapStateToProps = state => ({
+  result: state.result,
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      fetchResult,
-    },
-    dispatch,
-  );
-}
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ fetchResult, toggleLike }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResultsPage);

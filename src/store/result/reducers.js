@@ -32,6 +32,7 @@ const voteReducer = (state = initialState, action) => {
     case TOGGLE_LIKE:
       return {
         ...state,
+        comments: action.payload.comments,
       };
 
     default:
