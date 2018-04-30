@@ -21,8 +21,8 @@ exports.getAllUsers = (req, res) => {
   });
 };
 
-exports.authUser = (req, res) => {
-  User.findOne({ phone: req.body.phone }, (err, data) => {
+exports.getToken = (req, res) => {
+  User.findOne({ email: req.body.email }, (err, data) => {
     if (err) {
       return res.status(500);
     }

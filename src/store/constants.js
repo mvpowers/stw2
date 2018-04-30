@@ -2,3 +2,6 @@ export const FETCH_RESULT = 'FETCH_RESULT';
 export const FETCH_QUESTION = 'FETCH_QUESTION';
 export const FETCH_VOTE_OPTIONS = 'FETCH_VOTE_OPTIONS';
 export const TOGGLE_LIKE = 'TOGGLE_LIKE';
+export const TOKEN_PENDING = 'TOKEN_PENDING';
+export const TOKEN_SUCCESS = 'TOKEN_SUCCESS';
+export const TOKEN_FAIL = 'TOKEN_FAIL';

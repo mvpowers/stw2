@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Segment, Menu } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { SigninForm, SignupForm } from '../components';
+import { fetchToken } from '../store/user/actions';
 
-class VotePage extends Component {
+class LoginPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -23,6 +26,12 @@ class VotePage extends Component {
     this.setState({
       [e.target.id]: e.target.value,
     });
+  };
+
+  signinSubmit = () => {
+    // e.preventDefault();
+    const { signinEmail, signinPassword } = this.state;
+    this.props.fetchToken(signinEmail, signinPassword);
   };
 
   render() {
@@ -54,6 +63,7 @@ class VotePage extends Component {
           {activeItem === 'signin' && (
             <SigninForm
               handleChange={this.handleChange}
+              signinSubmit={this.signinSubmit}
               signinEmail={signinEmail}
               signinPassword={signinPassword}
             />
@@ -74,4 +84,19 @@ class VotePage extends Component {
   }
 }
 
-export default VotePage;
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      fetchToken,
+    },
+    dispatch,
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

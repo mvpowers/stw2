@@ -2,7 +2,12 @@ import React from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
-const SigninForm = ({ handleChange, signinEmail, signinPassword }) => (
+const SigninForm = ({
+  handleChange,
+  signinEmail,
+  signinPassword,
+  signinSubmit,
+}) => (
   <Form>
     <Form.Field>
       <label htmlFor="signinEmail">
@@ -27,7 +32,7 @@ const SigninForm = ({ handleChange, signinEmail, signinPassword }) => (
         />
       </label>
     </Form.Field>
-    <Button type="submit" fluid>
+    <Button type="submit" fluid onClick={() => signinSubmit(signinEmail, signinPassword)}>
       Submit
     </Button>
   </Form>
@@ -35,6 +40,7 @@ const SigninForm = ({ handleChange, signinEmail, signinPassword }) => (
 
 SigninForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
+  signinSubmit: PropTypes.func.isRequired,
   signinEmail: PropTypes.string.isRequired,
   signinPassword: PropTypes.string.isRequired,
 };
