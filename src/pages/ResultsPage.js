@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Segment } from 'semantic-ui-react';
-import ResultsChart from '../components/ResultsGraph';
+import ResultsGraph from '../components/ResultsGraph';
 import Comments from '../components/Comments';
 import Question from '../components/Question';
 import { fetchResult, toggleLike } from '../store/result/actions';
@@ -25,7 +25,7 @@ class ResultsPage extends Component {
       <Segment basic>
         <Question data={result.data} />
         <Segment>
-          <ResultsChart data={result.data} />
+          <ResultsGraph data={result.data} />
         </Segment>
         <Comments data={result.data} toggleLike={this.handleLike} />
       </Segment>

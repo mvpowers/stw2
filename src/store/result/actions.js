@@ -64,7 +64,6 @@ export const toggleLike = (userId, commentId) => dispatch =>
       commentId,
     })
     .then(res => {
-      console.log('response', res);
       dispatch(postLike(res.data));
     })
     .catch(err => {
