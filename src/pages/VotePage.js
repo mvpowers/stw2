@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { Dimmer, Segment } from 'semantic-ui-react';
-import VoteOptions from '../components/VoteOptions';
-import Question from '../components/Question';
-import WaitDimmer from '../components/WaitDimmer';
+import { VoteOptions, Question, Wait } from '../components';
 import { fetchVoteOptions } from '../store/voteOption/actions';
 import {
   fetchQuestion,
@@ -68,22 +65,27 @@ class VotePage extends Component {
       currentVoteId,
       currentComment,
     } = this.state;
+    const waitingForResults = false; // placeholder for testing user voted boolean
     return (
-      <Dimmer.Dimmable as={Segment} basic>
-        <WaitDimmer />
-        <Question data={result.data} />
-        <VoteOptions
-          data={voteOptions.data}
-          modalStatus={modalStatus}
-          modalOpen={this.modalOpen}
-          modalClose={this.modalClose}
-          handleSubmit={this.handleSubmit}
-          handleChange={this.handleChange}
-          currentVoteId={currentVoteId}
-          currentVoteName={currentVoteName}
-          currentComment={currentComment}
-        />
-      </Dimmer.Dimmable>
+      <div>
+        {waitingForResults && <Wait />}
+        {!waitingForResults && (
+          <div>
+            <Question data={result.data} />
+            <VoteOptions
+              data={voteOptions.data}
+              modalStatus={modalStatus}
+              modalOpen={this.modalOpen}
+              modalClose={this.modalClose}
+              handleSubmit={this.handleSubmit}
+              handleChange={this.handleChange}
+              currentVoteId={currentVoteId}
+              currentVoteName={currentVoteName}
+              currentComment={currentComment}
+            />
+          </div>
+        )}
+      </div>
     );
   }
 }

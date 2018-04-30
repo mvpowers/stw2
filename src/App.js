@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
 import { Switch, Route } from 'react-router';
-import './App.css';
 import TopNav from './components/TopNav';
 
 import VotePage from './pages/VotePage';
@@ -18,6 +17,7 @@ const scrollStyle = {
   flexGrow: 1,
   overflowX: 'hidden',
   overflowY: 'auto',
+  zIndex: 0,
 };
 
 const App = () => (

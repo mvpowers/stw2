@@ -1,9 +1,40 @@
+html, body, #root {
+  overflow: hidden;
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
 }
 
+body ::-webkit-scrollbar {
+  width: 0;
+}
+
 .dimmed.dimmable > .ui.modals.dimmer.visible {
   display: flex !important;
+}
+
+a.ui.fluid.card {
+  line-height: 1.15;
+}
+
+a.ui.fluid.card:hover {
+  transform: translateY(0);
+}
+
+.comment-body {
+  font-size: large;
+  font-weight: bold;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.wait {
+  display: block!important;
+  margin: 20% auto 0 auto!important;
 }

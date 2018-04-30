@@ -49,6 +49,10 @@ const VoteModal = ({
   </Modal>
 );
 
+VoteModal.defaultProps = {
+  currentComment: '',
+};
+
 VoteModal.propTypes = {
   modalStatus: PropTypes.bool.isRequired,
   modalOpen: PropTypes.func.isRequired,
@@ -56,7 +60,7 @@ VoteModal.propTypes = {
   voteId: PropTypes.string.isRequired,
   voteName: PropTypes.string.isRequired,
   currentVoteName: PropTypes.string.isRequired,
-  currentComment: PropTypes.string.isRequired,
+  currentComment: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
 };

@@ -6,4 +6,4 @@ export { default as SignInForm } from './SignInForm';
 export { default as TopNav } from './TopNav';
 export { default as VoteModal } from './VoteModal';
 export { default as VoteOptions } from './VoteOptions';
-export { default as WaitDimmer } from './WaitDimmer';
+export { default as Wait } from './Wait';
