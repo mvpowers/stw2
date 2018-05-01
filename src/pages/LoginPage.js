@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Segment, Menu } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -28,13 +29,13 @@ class LoginPage extends Component {
     });
   };
 
-  signinSubmit = () => {
-    // e.preventDefault();
-    const { signinEmail, signinPassword } = this.state;
-    this.props.fetchToken(signinEmail, signinPassword);
+  signinSubmit = (email, password) => {
+    const { fetchToken } = this.props;
+    fetchToken(email, password);
   };
 
   render() {
+    const { user } = this.props;
     const {
       activeItem,
       signinEmail,
@@ -66,6 +67,8 @@ class LoginPage extends Component {
               signinSubmit={this.signinSubmit}
               signinEmail={signinEmail}
               signinPassword={signinPassword}
+              pending={user.pending}
+              error={user.error}
             />
           )}
           {activeItem === 'signup' && (
@@ -76,6 +79,8 @@ class LoginPage extends Component {
               signupPhone={signupPhone}
               signupPassword={signupPassword}
               signupVerifyPassword={signupVerifyPassword}
+              pending={user.pending}
+              error={user.error}
             />
           )}
         </Segment>
@@ -84,19 +89,19 @@ class LoginPage extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-  };
-}
+LoginPage.propTypes = {
+  user: PropTypes.shape({
+    pending: PropTypes.bool,
+    error: PropTypes.string,
+  }).isRequired,
+  fetchToken: PropTypes.func.isRequired,
+};
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      fetchToken,
-    },
-    dispatch,
-  );
-}
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ fetchToken }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

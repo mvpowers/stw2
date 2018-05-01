@@ -6,10 +6,10 @@ const initialState = {
   email: '',
   phone: '',
   admin: '',
-  error: null,
+  error: '',
 };
 
-const voteOptionReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case TOKEN_PENDING:
       return {
@@ -27,7 +27,7 @@ const voteOptionReducer = (state = initialState, action) => {
     case TOKEN_FAIL:
       return {
         ...state,
-        error: action.payload,
+        error: action.payload.response.data,
         pending: false,
       };
 
@@ -36,4 +36,4 @@ const voteOptionReducer = (state = initialState, action) => {
   }
 };
 
-export default voteOptionReducer;
+export default userReducer;

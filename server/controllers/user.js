@@ -33,7 +33,7 @@ exports.getToken = (req, res) => {
     const validUser = data.password === req.body.password;
 
     if (!validUser) {
-      return res.status(401).send({ auth: false, token: null });
+      return res.status(401).send('Incorrect password');
     }
     const payload = { admin: data.admin };
     const token = jwt.sign(payload, config.SECRET, {
