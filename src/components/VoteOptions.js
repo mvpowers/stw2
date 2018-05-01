@@ -9,6 +9,7 @@ const VoteOptions = ({
   modalOpen,
   modalClose,
   currentVoteName,
+  currentComment,
   handleSubmit,
   handleChange,
 }) => (
@@ -28,6 +29,7 @@ const VoteOptions = ({
             currentVoteName={currentVoteName}
             handleSubmit={handleSubmit}
             handleChange={handleChange}
+            currentComment={currentComment}
           />
         </Card.Content>
       </Card>
@@ -46,6 +48,7 @@ VoteOptions.propTypes = {
   modalOpen: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
   currentVoteName: PropTypes.string.isRequired,
+  currentComment: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
 };

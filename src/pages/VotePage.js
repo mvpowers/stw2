@@ -22,7 +22,10 @@ class VotePage extends Component {
   }
 
   componentDidMount() {
-    const { fetchQuestion, fetchVoteOptions } = this.props;
+    const { user, fetchQuestion, fetchVoteOptions, history } = this.props;
+    if (!user.token) {
+      history.push('/login');
+    }
     fetchQuestion();
     fetchVoteOptions();
   }
@@ -99,10 +102,17 @@ VotePage.propTypes = {
   voteOptions: PropTypes.shape({
     data: PropTypes.arrayOf(String).isRequired,
   }).isRequired,
+  user: PropTypes.shape({
+    token: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
+    user: state.user,
     result: state.result,
     voteOptions: state.voteOptions,
   };

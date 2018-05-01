@@ -10,7 +10,10 @@ import { fetchResult, toggleLike } from '../store/result/actions';
 
 class ResultsPage extends Component {
   componentDidMount() {
-    const { fetchResult } = this.props;
+    const { user, history, fetchResult } = this.props;
+    if (!user.token) {
+      history.push('/login');
+    }
     fetchResult();
   }
 
@@ -39,9 +42,16 @@ ResultsPage.propTypes = {
   }).isRequired,
   fetchResult: PropTypes.func.isRequired,
   toggleLike: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    token: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({
+  user: state.user,
   result: state.result,
 });
 

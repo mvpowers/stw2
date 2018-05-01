@@ -21,6 +21,13 @@ class LoginPage extends Component {
     };
   }
 
+  componentDidUpdate() {
+    const { user, history } = this.props;
+    if (user.token) {
+      history.push('/vote');
+    }
+  }
+
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   handleChange = e => {
@@ -46,6 +53,7 @@ class LoginPage extends Component {
       signupPassword,
       signupVerifyPassword,
     } = this.state;
+
     return (
       <Segment>
         <Menu pointing secondary widths={2}>
@@ -95,6 +103,9 @@ LoginPage.propTypes = {
     error: PropTypes.string,
   }).isRequired,
   fetchToken: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({

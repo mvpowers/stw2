@@ -6,6 +6,7 @@ const initialState = {
   email: '',
   phone: '',
   admin: '',
+  token: '',
   error: '',
 };
 
@@ -14,6 +15,7 @@ const userReducer = (state = initialState, action) => {
     case TOKEN_PENDING:
       return {
         ...state,
+        error: '',
         pending: true,
       };
 
