@@ -26,8 +26,8 @@ class VotePage extends Component {
     if (!user.token) {
       history.push('/login');
     }
-    fetchQuestion();
-    fetchVoteOptions();
+    fetchQuestion(user.token);
+    fetchVoteOptions(user.token);
   }
 
   modalOpen = e => {

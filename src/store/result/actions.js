@@ -27,10 +27,11 @@ export const fetchResult = () => dispatch =>
       console.log(err);
     });
 
-export const fetchQuestion = () => dispatch =>
+export const fetchQuestion = token => dispatch =>
   axios
     .get(
       `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/question`,
+      { headers: { 'X-Access-Token': token } },
     )
     .then(res => {
       dispatch(getQuestion(res.data));

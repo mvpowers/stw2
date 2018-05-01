@@ -7,9 +7,11 @@ const getVoteOptions = data => ({
   payload: data,
 });
 
-export const fetchVoteOptions = () => dispatch =>
+export const fetchVoteOptions = token => dispatch =>
   axios
-    .get(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/voteOption`)
+    .get(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/voteOption`, {
+      headers: { 'x-access-token': token },
+    })
     .then(res => {
       dispatch(getVoteOptions(res.data));
     })
