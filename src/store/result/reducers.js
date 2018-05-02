@@ -17,6 +17,7 @@ const initialState = {
   _id: '',
   question: '',
   pending: false,
+  error: '',
 };
 
 const voteReducer = (state = initialState, action) => {

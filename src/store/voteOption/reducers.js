@@ -13,6 +13,7 @@ const initialState = {
       description: '',
     },
   ],
+  error: '',
 };
 
 const voteOptionReducer = (state = initialState, action) => {

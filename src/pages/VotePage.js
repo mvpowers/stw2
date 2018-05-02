@@ -39,7 +39,6 @@ class VotePage extends Component {
     }
   }
 
-
   modalOpen = e => {
     this.setState({
       modalStatus: true,

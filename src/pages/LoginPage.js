@@ -54,7 +54,7 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { user } = this.props;
+    const { user, result, voteOptions } = this.props;
     const {
       activeItem,
       signinEmail,
@@ -88,7 +88,7 @@ class LoginPage extends Component {
               signinEmail={signinEmail}
               signinPassword={signinPassword}
               pending={user.pending}
-              error={user.error}
+              error={user.error || result.error || voteOptions.error}
             />
           )}
           {activeItem === 'signup' && (
@@ -114,7 +114,15 @@ LoginPage.propTypes = {
     pending: PropTypes.bool,
     error: PropTypes.string,
   }).isRequired,
+  result: PropTypes.shape({
+    error: PropTypes.string,
+  }).isRequired,
+  voteOptions: PropTypes.shape({
+    error: PropTypes.string,
+  }).isRequired,
   fetchToken: PropTypes.func.isRequired,
+  clearVoteOptionErrors: PropTypes.func.isRequired,
+  clearResultErrors: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,

@@ -58,7 +58,16 @@ const ResultsGraph = ({ votes }) => (
 );
 
 ResultsGraph.propTypes = {
-  votes: PropTypes.array,
+  votes: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      value: PropTypes.number,
+    }),
+  ),
+};
+
+ResultsGraph.defaultProps = {
+  votes: [{ name: '', value: 0 }],
 };
 
 export default ResultsGraph;
