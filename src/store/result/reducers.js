@@ -1,8 +1,11 @@
 import {
-  FETCH_RESULT,
-  FETCH_QUESTION,
+  RESULT_PENDING,
+  RESULT_SUCCESS,
+  RESULT_FAIL,
+  QUESTION_PENDING,
+  QUESTION_SUCCESS,
+  QUESTION_FAIL,
   TOGGLE_LIKE,
-  RESULTS_PENDING,
 } from '../constants';
 
 const initialState = {
@@ -17,22 +20,43 @@ const initialState = {
 
 const voteReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_QUESTION:
-      return {
-        ...state,
-        question: action.payload.question,
-      };
-
-    case RESULTS_PENDING:
+    case QUESTION_PENDING:
       return {
         ...state,
         pending: true,
       };
 
-    case FETCH_RESULT:
+    case QUESTION_SUCCESS:
+      return {
+        ...state,
+        question: action.payload.question,
+        pending: false,
+      };
+
+    case QUESTION_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+        pending: false,
+      };
+
+    case RESULT_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+
+    case RESULT_SUCCESS:
       return {
         ...state,
         ...action.payload,
+        pending: false,
+      };
+
+    case RESULT_FAIL:
+      return {
+        ...state,
+        error: action.payload,
         pending: false,
       };
 

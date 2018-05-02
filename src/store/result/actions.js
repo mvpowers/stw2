@@ -1,19 +1,32 @@
 import axios from 'axios';
 import config from '../../config';
 import {
-  FETCH_RESULT,
-  FETCH_QUESTION,
+  RESULT_PENDING,
+  RESULT_SUCCESS,
+  RESULT_FAIL,
+  QUESTION_PENDING,
+  QUESTION_SUCCESS,
+  QUESTION_FAIL,
   TOGGLE_LIKE,
-  RESULTS_PENDING,
 } from '../constants';
 
 const getResult = data => ({
-  type: FETCH_RESULT,
+  type: RESULT_SUCCESS,
+  payload: data,
+});
+
+const failedResult = data => ({
+  type: RESULT_FAIL,
   payload: data,
 });
 
 const getQuestion = data => ({
-  type: FETCH_QUESTION,
+  type: QUESTION_SUCCESS,
+  payload: data,
+});
+
+const failedQuestion = data => ({
+  type: QUESTION_FAIL,
   payload: data,
 });
 
@@ -23,18 +36,19 @@ const postLike = data => ({
 });
 
 export const fetchResult = () => dispatch => {
-  dispatch({ type: RESULTS_PENDING });
+  dispatch({ type: RESULT_PENDING });
   axios
     .get(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/active`)
     .then(res => {
       dispatch(getResult(res.data));
     })
     .catch(err => {
-      console.log(err);
+      dispatch(failedResult(err.response.data));
     });
 };
 
-export const fetchQuestion = token => dispatch =>
+export const fetchQuestion = token => dispatch => {
+  dispatch({ type: QUESTION_PENDING });
   axios
     .get(
       `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/question`,
@@ -44,8 +58,9 @@ export const fetchQuestion = token => dispatch =>
       dispatch(getQuestion(res.data));
     })
     .catch(err => {
-      console.log(err);
+      dispatch(failedQuestion(err.response.data));
     });
+};
 
 export const submitVote = (voteId, name) =>
   axios

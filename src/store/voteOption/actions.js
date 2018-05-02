@@ -1,14 +1,24 @@
 import axios from 'axios';
 import config from '../../config';
-import { FETCH_VOTE_OPTIONS } from '../constants';
+import {
+  VOTE_OPTIONS_PENDING,
+  VOTE_OPTIONS_SUCCESS,
+  VOTE_OPTIONS_FAIL,
+} from '../constants';
 
-const getVoteOptions = data => ({
-  type: FETCH_VOTE_OPTIONS,
+const failedVoteOptions = data => ({
+  type: VOTE_OPTIONS_FAIL,
   payload: data,
 });
 
-export const fetchVoteOptions = token => dispatch =>
-  axios
+const getVoteOptions = data => ({
+  type: VOTE_OPTIONS_SUCCESS,
+  payload: data,
+});
+
+export const fetchVoteOptions = token => dispatch => {
+  dispatch({ type: VOTE_OPTIONS_PENDING });
+  return axios
     .get(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/voteOption`, {
       headers: { 'x-access-token': token },
     })
@@ -16,5 +26,6 @@ export const fetchVoteOptions = token => dispatch =>
       dispatch(getVoteOptions(res.data));
     })
     .catch(err => {
-      console.log(err);
+      dispatch(failedVoteOptions(err.response.data));
     });
+};
