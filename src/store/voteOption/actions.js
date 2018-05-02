@@ -4,6 +4,7 @@ import {
   VOTE_OPTIONS_PENDING,
   VOTE_OPTIONS_SUCCESS,
   VOTE_OPTIONS_FAIL,
+  VOTE_OPTIONS_ERROR_CLEAR,
 } from '../constants';
 
 const failedVoteOptions = data => ({
@@ -15,6 +16,8 @@ const getVoteOptions = data => ({
   type: VOTE_OPTIONS_SUCCESS,
   payload: data,
 });
+
+export const clearVoteOptionErrors = () => ({ type: VOTE_OPTIONS_ERROR_CLEAR });
 
 export const fetchVoteOptions = token => dispatch => {
   dispatch({ type: VOTE_OPTIONS_PENDING });

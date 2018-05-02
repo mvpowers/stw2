@@ -8,6 +8,7 @@ import {
   QUESTION_SUCCESS,
   QUESTION_FAIL,
   TOGGLE_LIKE,
+  RESULT_ERROR_CLEAR,
 } from '../constants';
 
 const getResult = data => ({
@@ -35,10 +36,15 @@ const postLike = data => ({
   payload: data,
 });
 
-export const fetchResult = () => dispatch => {
+export const clearResultErrors = () => ({ type: RESULT_ERROR_CLEAR });
+
+export const fetchResult = token => dispatch => {
   dispatch({ type: RESULT_PENDING });
   axios
-    .get(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/active`)
+    .get(
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/active`,
+      { headers: { 'X-Access-Token': token } },
+    )
     .then(res => {
       dispatch(getResult(res.data));
     })

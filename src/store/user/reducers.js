@@ -1,4 +1,9 @@
-import { TOKEN_PENDING, TOKEN_SUCCESS, TOKEN_FAIL } from '../constants';
+import {
+  TOKEN_PENDING,
+  TOKEN_SUCCESS,
+  TOKEN_FAIL,
+  TOKEN_CLEAR,
+} from '../constants';
 
 const initialState = {
   pending: false,
@@ -31,6 +36,12 @@ const userReducer = (state = initialState, action) => {
         ...state,
         error: action.payload.response.data,
         pending: false,
+      };
+
+    case TOKEN_CLEAR:
+      return {
+        ...state,
+        token: '',
       };
 
     default:

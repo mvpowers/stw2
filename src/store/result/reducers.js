@@ -6,6 +6,7 @@ import {
   QUESTION_SUCCESS,
   QUESTION_FAIL,
   TOGGLE_LIKE,
+  RESULT_ERROR_CLEAR,
 } from '../constants';
 
 const initialState = {
@@ -64,6 +65,12 @@ const voteReducer = (state = initialState, action) => {
       return {
         ...state,
         comments: [...action.payload.comments],
+      };
+
+    case RESULT_ERROR_CLEAR:
+      return {
+        ...state,
+        error: '',
       };
 
     default:

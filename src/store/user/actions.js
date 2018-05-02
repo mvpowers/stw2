@@ -1,6 +1,11 @@
 import axios from 'axios';
 import config from '../../config';
-import { TOKEN_PENDING, TOKEN_SUCCESS, TOKEN_FAIL } from '../constants';
+import {
+  TOKEN_PENDING,
+  TOKEN_SUCCESS,
+  TOKEN_FAIL,
+  TOKEN_CLEAR,
+} from '../constants';
 
 const getToken = data => ({
   type: TOKEN_SUCCESS,
@@ -11,6 +16,8 @@ const failedToken = data => ({
   type: TOKEN_FAIL,
   payload: data,
 });
+
+export const clearToken = () => ({ type: TOKEN_CLEAR });
 
 export const fetchToken = (email, password) => dispatch => {
   dispatch({ type: TOKEN_PENDING });

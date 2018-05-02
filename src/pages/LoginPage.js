@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { SigninForm, SignupForm } from '../components';
 import { fetchToken } from '../store/user/actions';
+import { clearVoteOptionErrors } from '../store/voteOption/actions';
+import { clearResultErrors } from '../store/result/actions';
 
 class LoginPage extends Component {
   constructor() {
@@ -37,7 +39,17 @@ class LoginPage extends Component {
   };
 
   signinSubmit = (email, password) => {
-    const { fetchToken } = this.props;
+    const {
+      result,
+      voteOptions,
+      fetchToken,
+      clearVoteOptionErrors,
+      clearResultErrors,
+    } = this.props;
+    if (result.error || voteOptions.error) {
+      clearResultErrors();
+      clearVoteOptionErrors();
+    }
     fetchToken(email, password);
   };
 
@@ -110,9 +122,18 @@ LoginPage.propTypes = {
 
 const mapStateToProps = state => ({
   user: state.user,
+  result: state.result,
+  voteOptions: state.voteOptions,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchToken }, dispatch);
+  bindActionCreators(
+    {
+      fetchToken,
+      clearVoteOptionErrors,
+      clearResultErrors,
+    },
+    dispatch,
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

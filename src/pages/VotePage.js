@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { VoteOptions, Question, Wait } from '../components';
 import { fetchVoteOptions } from '../store/voteOption/actions';
+import { clearToken } from '../store/user/actions';
 import {
   fetchQuestion,
   submitVote,
@@ -29,6 +30,15 @@ class VotePage extends Component {
     fetchQuestion(user.token);
     fetchVoteOptions(user.token);
   }
+
+  componentDidUpdate() {
+    const { user, voteOptions, history, clearToken } = this.props;
+    if (user.error || voteOptions.error) {
+      clearToken();
+      history.push('/login');
+    }
+  }
+
 
   modalOpen = e => {
     this.setState({
@@ -108,6 +118,7 @@ VotePage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  clearToken: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -123,6 +134,7 @@ function mapDispatchToProps(dispatch) {
     {
       fetchQuestion,
       fetchVoteOptions,
+      clearToken,
     },
     dispatch,
   );

@@ -6,6 +6,7 @@ import { Segment } from 'semantic-ui-react';
 import ResultsGraph from '../components/ResultsGraph';
 import { Comments, Question, Wait } from '../components';
 import { fetchResult, toggleLike } from '../store/result/actions';
+import { clearToken } from '../store/user/actions';
 
 class ResultsPage extends Component {
   componentDidMount() {
@@ -13,7 +14,15 @@ class ResultsPage extends Component {
     if (!user.token) {
       history.push('/login');
     }
-    fetchResult();
+    fetchResult(user.token);
+  }
+
+  componentDidUpdate() {
+    const { user, result, history, clearToken } = this.props;
+    if (user.error || result.error) {
+      clearToken();
+      history.push('/login');
+    }
   }
 
   handleLike = (userId, commentId) => {
@@ -52,6 +61,7 @@ ResultsPage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  clearToken: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -60,6 +70,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchResult, toggleLike }, dispatch);
+  bindActionCreators({ fetchResult, toggleLike, clearToken }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ResultsPage);

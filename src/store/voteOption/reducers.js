@@ -2,6 +2,7 @@ import {
   VOTE_OPTIONS_PENDING,
   VOTE_OPTIONS_SUCCESS,
   VOTE_OPTIONS_FAIL,
+  VOTE_OPTIONS_ERROR_CLEAR,
 } from '../constants';
 
 const initialState = {
@@ -34,6 +35,11 @@ const voteOptionReducer = (state = initialState, action) => {
         ...state,
         pending: false,
         error: action.payload,
+      };
+    case VOTE_OPTIONS_ERROR_CLEAR:
+      return {
+        ...state,
+        error: '',
       };
 
     default:
