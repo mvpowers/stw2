@@ -27,21 +27,21 @@ const styles = {
   },
 };
 
-const ResultsGraph = ({ data }) => (
+const ResultsGraph = ({ votes }) => (
   <div>
-    {data.votes.length > 0 ? (
+    {votes.length > 0 ? (
       <ResponsiveContainer width="100%" height={300}>
         <PieChart width={600} height={300}>
           <Pie
             dataKey="value"
-            data={data.votes}
+            data={votes}
             cx="50%"
             cy="50%"
             innerRadius={50}
             outerRadius={100}
             fill="#82ca9d"
           >
-            {data.votes.map((entry, index) => (
+            {votes.map((entry, index) => (
               <Cell key={entry} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
@@ -58,9 +58,7 @@ const ResultsGraph = ({ data }) => (
 );
 
 ResultsGraph.propTypes = {
-  data: PropTypes.shape({
-    votes: PropTypes.array,
-  }).isRequired,
+  votes: PropTypes.array,
 };
 
 export default ResultsGraph;

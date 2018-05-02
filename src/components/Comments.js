@@ -4,9 +4,9 @@ import { Card, Icon } from 'semantic-ui-react';
 
 const userData = { id: 10, name: 'Mikey' };
 
-const Comments = ({ data, toggleLike }) => (
+const Comments = ({ comments, toggleLike }) => (
   <Card.Group itemsPerRow={1}>
-    {data.comments.map(comment => (
+    {comments.map(comment => (
       <Card
         fluid
         key={comment._id}
@@ -32,9 +32,14 @@ const Comments = ({ data, toggleLike }) => (
 );
 
 Comments.propTypes = {
-  data: PropTypes.shape({
-    comments: PropTypes.array.isRequired,
-  }).isRequired,
+  comments: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string,
+      likedBy: PropTypes.array,
+      voteFor: PropTypes.string,
+      text: PropTypes.string,
+    }),
+  ).isRequired,
   toggleLike: PropTypes.func.isRequired,
 };
 

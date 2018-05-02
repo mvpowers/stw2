@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Message } from 'semantic-ui-react';
 
-const Question = ({ data }) => (
-  <Message icon="question circle outline" header={data.question} />
+const Question = ({ question }) => (
+  <Message icon="question circle outline" header={question} />
 );
 
 Question.propTypes = {
-  data: PropTypes.shape({
-    question: PropTypes.string.isRequired,
-  }).isRequired,
+  question: PropTypes.string.isRequired,
 };
 
 export default Question;

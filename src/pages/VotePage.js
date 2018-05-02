@@ -68,13 +68,12 @@ class VotePage extends Component {
       currentVoteId,
       currentComment,
     } = this.state;
-    const waitingForResults = false; // placeholder for testing user voted boolean
     return (
       <div>
-        {waitingForResults && <Wait />}
-        {!waitingForResults && (
+        {result.pending && <Wait />}
+        {!result.pending && (
           <div>
-            <Question data={result.data} />
+            <Question question={result.question} />
             <VoteOptions
               data={voteOptions.data}
               modalStatus={modalStatus}

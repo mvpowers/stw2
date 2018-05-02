@@ -23,26 +23,26 @@ class ResultsPage extends Component {
 
   render() {
     const { result } = this.props;
-    {
-      if (result.data.pending) {
-        return <Wait />;
-      }
-    }
     return (
-      <Segment basic>
-        <Question data={result.data} />
-        <Segment>
-          <ResultsGraph data={result.data} />
-        </Segment>
-        <Comments data={result.data} toggleLike={this.handleLike} />
-      </Segment>
+      <div>
+        {result.pending && <Wait />}
+        {!result.pending && (
+          <Segment basic>
+            <Question question={result.question} />
+            <Segment>
+              <ResultsGraph votes={result.votes} />
+            </Segment>
+            <Comments comments={result.comments} toggleLike={this.handleLike} />
+          </Segment>
+        )}
+      </div>
     );
   }
 }
 
 ResultsPage.propTypes = {
   result: PropTypes.shape({
-    data: PropTypes.object.isRequired,
+    question: PropTypes.string,
   }).isRequired,
   fetchResult: PropTypes.func.isRequired,
   toggleLike: PropTypes.func.isRequired,
