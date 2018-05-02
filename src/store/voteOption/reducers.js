@@ -1,7 +1,7 @@
 import { FETCH_VOTE_OPTIONS } from '../constants';
 
 const initialState = {
-  data: [
+  options: [
     {
       _id: '',
       name: '',
@@ -15,7 +15,7 @@ const voteOptionReducer = (state = initialState, action) => {
     case FETCH_VOTE_OPTIONS:
       return {
         ...state,
-        data: action.payload,
+        options: action.payload,
       };
 
     default:

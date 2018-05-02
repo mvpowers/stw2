@@ -22,7 +22,7 @@ class VotePage extends Component {
   }
 
   componentDidMount() {
-    const { user, fetchQuestion, fetchVoteOptions, history } = this.props;
+    const { user, history, fetchQuestion, fetchVoteOptions } = this.props;
     if (!user.token) {
       history.push('/login');
     }
@@ -75,7 +75,7 @@ class VotePage extends Component {
           <div>
             <Question question={result.question} />
             <VoteOptions
-              data={voteOptions.data}
+              data={voteOptions.options}
               modalStatus={modalStatus}
               modalOpen={this.modalOpen}
               modalClose={this.modalClose}
@@ -96,10 +96,11 @@ VotePage.propTypes = {
   fetchQuestion: PropTypes.func.isRequired,
   fetchVoteOptions: PropTypes.func.isRequired,
   result: PropTypes.shape({
-    data: PropTypes.object.isRequired,
+    pending: PropTypes.bool.isRequired,
+    question: PropTypes.string.isRequired,
   }).isRequired,
   voteOptions: PropTypes.shape({
-    data: PropTypes.arrayOf(String).isRequired,
+    options: PropTypes.arrayOf(String).isRequired,
   }).isRequired,
   user: PropTypes.shape({
     token: PropTypes.string,
