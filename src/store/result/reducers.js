@@ -1,4 +1,9 @@
-import { FETCH_RESULT, FETCH_QUESTION, TOGGLE_LIKE } from '../constants';
+import {
+  FETCH_RESULT,
+  FETCH_QUESTION,
+  TOGGLE_LIKE,
+  RESULTS_PENDING,
+} from '../constants';
 
 const initialState = {
   data: {
@@ -8,7 +13,7 @@ const initialState = {
     active: null,
     _id: '',
     question: '',
-    __v: null,
+    pending: false,
   },
 };
 
@@ -23,10 +28,22 @@ const voteReducer = (state = initialState, action) => {
         },
       };
 
+    case RESULTS_PENDING:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          pending: true,
+        },
+      };
+
     case FETCH_RESULT:
       return {
         ...state,
-        data: action.payload,
+        data: {
+          ...action.payload,
+          pending: false,
+        },
       };
 
     case TOGGLE_LIKE:

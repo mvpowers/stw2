@@ -4,8 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Segment } from 'semantic-ui-react';
 import ResultsGraph from '../components/ResultsGraph';
-import Comments from '../components/Comments';
-import Question from '../components/Question';
+import { Comments, Question, Wait } from '../components';
 import { fetchResult, toggleLike } from '../store/result/actions';
 
 class ResultsPage extends Component {
@@ -24,6 +23,11 @@ class ResultsPage extends Component {
 
   render() {
     const { result } = this.props;
+    {
+      if (result.data.pending) {
+        return <Wait />;
+      }
+    }
     return (
       <Segment basic>
         <Question data={result.data} />

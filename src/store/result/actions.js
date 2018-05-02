@@ -1,6 +1,11 @@
 import axios from 'axios';
 import config from '../../config';
-import { FETCH_RESULT, FETCH_QUESTION, TOGGLE_LIKE } from '../constants';
+import {
+  FETCH_RESULT,
+  FETCH_QUESTION,
+  TOGGLE_LIKE,
+  RESULTS_PENDING,
+} from '../constants';
 
 const getResult = data => ({
   type: FETCH_RESULT,
@@ -17,7 +22,8 @@ const postLike = data => ({
   payload: data,
 });
 
-export const fetchResult = () => dispatch =>
+export const fetchResult = () => dispatch => {
+  dispatch({ type: RESULTS_PENDING });
   axios
     .get(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/active`)
     .then(res => {
@@ -26,6 +32,7 @@ export const fetchResult = () => dispatch =>
     .catch(err => {
       console.log(err);
     });
+};
 
 export const fetchQuestion = token => dispatch =>
   axios
