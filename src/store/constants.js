@@ -14,3 +14,6 @@ export const TOKEN_PENDING = 'TOKEN_PENDING';
 export const TOKEN_SUCCESS = 'TOKEN_SUCCESS';
 export const TOKEN_FAIL = 'TOKEN_FAIL';
 export const TOKEN_CLEAR = 'TOKEN_CLEAR';
+export const SIGNUP_PENDING = 'SIGNUP_PENDING';
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_FAIL = 'SIGNUP_FAIL';

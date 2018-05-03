@@ -3,6 +3,9 @@ import {
   TOKEN_SUCCESS,
   TOKEN_FAIL,
   TOKEN_CLEAR,
+  SIGNUP_PENDING,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAIL,
 } from '../constants';
 
 const initialState = {
@@ -13,6 +16,8 @@ const initialState = {
   admin: '',
   token: '',
   error: '',
+  successMsg: '',
+  signupError: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -42,6 +47,29 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: '',
+      };
+
+    case SIGNUP_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+
+    case SIGNUP_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        successMsg: 'Registration successful. Please log in.',
+      };
+
+    case SIGNUP_FAIL:
+      Object.keys(action.payload).forEach(key =>
+        state.signupError.push(action.payload[key].msg),
+      );
+      return {
+        ...state,
+        pending: false,
+        signupError: state.signupError,
       };
 
     default:

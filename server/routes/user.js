@@ -18,6 +18,7 @@ router.post(
       .normalizeEmail(),
     check('phone')
       .isMobilePhone('en-US')
+      .withMessage('Phone number must be valid')
       .trim(),
     check('password')
       .isLength({ min: 5 })

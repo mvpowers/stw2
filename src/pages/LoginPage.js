@@ -4,7 +4,7 @@ import { Segment, Menu } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { SigninForm, SignupForm } from '../components';
-import { fetchToken } from '../store/user/actions';
+import { fetchToken, register } from '../store/user/actions';
 import { clearVoteOptionErrors } from '../store/voteOption/actions';
 import { clearResultErrors } from '../store/result/actions';
 
@@ -53,6 +53,11 @@ class LoginPage extends Component {
     fetchToken(email, password);
   };
 
+  signupSubmit = (name, email, phone, password) => {
+    const { register } = this.props;
+    register(name, email, phone, password);
+  };
+
   render() {
     const { user, result, voteOptions } = this.props;
     const {
@@ -94,13 +99,14 @@ class LoginPage extends Component {
           {activeItem === 'signup' && (
             <SignupForm
               handleChange={this.handleChange}
+              signupSubmit={this.signupSubmit}
               signupName={signupName}
               signupEmail={signupEmail}
               signupPhone={signupPhone}
               signupPassword={signupPassword}
               signupVerifyPassword={signupVerifyPassword}
               pending={user.pending}
-              error={user.error}
+              error={user.signupError}
             />
           )}
         </Segment>
@@ -113,6 +119,7 @@ LoginPage.propTypes = {
   user: PropTypes.shape({
     pending: PropTypes.bool,
     error: PropTypes.string,
+    signupError: PropTypes.string,
   }).isRequired,
   result: PropTypes.shape({
     error: PropTypes.string,
@@ -123,6 +130,7 @@ LoginPage.propTypes = {
   fetchToken: PropTypes.func.isRequired,
   clearVoteOptionErrors: PropTypes.func.isRequired,
   clearResultErrors: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
@@ -140,6 +148,7 @@ const mapDispatchToProps = dispatch =>
       fetchToken,
       clearVoteOptionErrors,
       clearResultErrors,
+      register,
     },
     dispatch,
   );

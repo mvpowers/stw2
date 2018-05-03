@@ -1,4 +1,5 @@
 export { default as Comments } from './Comments';
+export { default as ErrorMessage } from './ErrorMessage';
 export { default as NoData } from './NoData';
 export { default as Question } from './Question';
 export { default as ResultsGraph } from './ResultsGraph';
