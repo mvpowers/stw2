@@ -1,15 +1,22 @@
+const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator/check');
+const { matchedData } = require('express-validator/filter');
 const config = require('../config');
 const User = require('../models/user');
-const jwt = require('jsonwebtoken');
 
 exports.addUser = (req, res) => {
-  const user = new User(req.body);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.mapped() });
+  }
+  const user = new User(matchedData(req));
   user.save((err, data) => {
     if (err) {
-      res.send(err);
+      return res.status(423).json(err);
     }
-    res.json(data);
+    return res.json(data);
   });
+  return true;
 };
 
 exports.getAllUsers = (req, res) => {
