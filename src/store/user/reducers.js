@@ -16,7 +16,7 @@ const initialState = {
   admin: '',
   token: '',
   error: [],
-  successMsg: '',
+  newRegister: false,
   signupError: [],
 };
 
@@ -60,7 +60,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         pending: false,
-        successMsg: 'Registration successful. Please log in.',
+        newRegister: true,
       };
 
     case SIGNUP_FAIL:

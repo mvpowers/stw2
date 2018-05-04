@@ -23,6 +23,12 @@ class LoginPage extends Component {
     };
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.user.newRegister) {
+      this.setState({ activeItem: 'signin' });
+    }
+  }
+
   componentDidUpdate() {
     const { user, history } = this.props;
     if (user.token) {
@@ -55,7 +61,8 @@ class LoginPage extends Component {
 
   signupSubmit = (name, email, phone, password) => {
     const { register } = this.props;
-    register(name, email, phone, password);
+    const sanitizedPhone = phone.replace(/\D+/g, '');
+    register(name, email, sanitizedPhone, password);
   };
 
   render() {
@@ -92,8 +99,8 @@ class LoginPage extends Component {
               signinSubmit={this.signinSubmit}
               signinEmail={signinEmail}
               signinPassword={signinPassword}
+              newRegister={user.newRegister}
               pending={user.pending}
-              // error={user.error || result.error || voteOptions.error}
               error={[...user.error, ...result.error, ...voteOptions.error]}
             />
           )}
@@ -119,6 +126,7 @@ class LoginPage extends Component {
 LoginPage.propTypes = {
   user: PropTypes.shape({
     pending: PropTypes.bool,
+    newRegister: PropTypes.bool,
     error: PropTypes.arrayOf(PropTypes.string),
     signupError: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Message } from 'semantic-ui-react';
 import { ErrorMessage } from './';
 
 const SigninForm = ({
@@ -10,10 +10,18 @@ const SigninForm = ({
   signinSubmit,
   pending,
   error,
+  newRegister,
 }) => (
   <div>
     {error.length > 0 && (
       <ErrorMessage header="Login Failed" errorArr={error} />
+    )}
+    {newRegister && (
+      <Message
+        success
+        header="Registration Successful"
+        content="Please login"
+      />
     )}
     <Form>
       <Form.Field>
@@ -57,6 +65,7 @@ SigninForm.propTypes = {
   signinEmail: PropTypes.string.isRequired,
   signinPassword: PropTypes.string.isRequired,
   pending: PropTypes.bool.isRequired,
+  newRegister: PropTypes.bool.isRequired,
   error: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
