@@ -40,6 +40,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         error: [...state.error, action.payload.response.data],
+        newRegister: false,
         pending: false,
       };
 
@@ -64,22 +65,16 @@ const userReducer = (state = initialState, action) => {
       };
 
     case SIGNUP_FAIL:
-      if (action.payload.errors) {
-        Object.keys(action.payload.errors).forEach(key =>
-          state.signupError.push(action.payload.errors[key].msg),
-        );
-        return {
-          ...state,
-          pending: false,
-          signupError: state.signupError,
-        };
-      }
+      Object.keys(action.payload.errors).forEach(key =>
+        state.signupError.push(
+          action.payload.errors[key].msg || action.payload.errors[key].message,
+        ),
+      );
       return {
         ...state,
         pending: false,
-        signupError: [...state.signupError, action.payload.errmsg],
+        signupError: state.signupError,
       };
-
     default:
       return state;
   }

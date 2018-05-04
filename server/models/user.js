@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -16,4 +17,7 @@ const userSchema = new mongoose.Schema({
   admin: { type: Boolean, default: false },
 });
 
+userSchema.plugin(uniqueValidator, {
+  message: '{PATH} is already registered',
+});
 module.exports = mongoose.model('User', userSchema);
