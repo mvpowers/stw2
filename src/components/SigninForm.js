@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Form, Message } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { Button, Form } from 'semantic-ui-react';
+import { ErrorMessage } from './';
 
 const SigninForm = ({
   handleChange,
@@ -11,7 +12,9 @@ const SigninForm = ({
   error,
 }) => (
   <div>
-    {error && <Message error header="Login Failed" content={error} />}
+    {error.length > 0 && (
+      <ErrorMessage header="Login Failed" errorArr={error} />
+    )}
     <Form>
       <Form.Field>
         <label htmlFor="signinEmail">
@@ -54,7 +57,7 @@ SigninForm.propTypes = {
   signinEmail: PropTypes.string.isRequired,
   signinPassword: PropTypes.string.isRequired,
   pending: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
+  error: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default SigninForm;

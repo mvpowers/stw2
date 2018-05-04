@@ -13,7 +13,7 @@ const initialState = {
       description: '',
     },
   ],
-  error: '',
+  error: [],
 };
 
 const voteOptionReducer = (state = initialState, action) => {
@@ -35,12 +35,12 @@ const voteOptionReducer = (state = initialState, action) => {
       return {
         ...state,
         pending: false,
-        error: action.payload,
+        error: [...state.error, action.payload],
       };
     case VOTE_OPTIONS_ERROR_CLEAR:
       return {
         ...state,
-        error: '',
+        error: [],
       };
 
     default:

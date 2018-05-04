@@ -33,7 +33,7 @@ class VotePage extends Component {
 
   componentDidUpdate() {
     const { user, voteOptions, history, clearToken } = this.props;
-    if (user.error || voteOptions.error) {
+    if (user.error.length + voteOptions.error.length > 0) {
       clearToken();
       history.push('/login');
     }

@@ -15,7 +15,7 @@ const initialState = {
   phone: '',
   admin: '',
   token: '',
-  error: '',
+  error: [],
   successMsg: '',
   signupError: [],
 };
@@ -25,7 +25,7 @@ const userReducer = (state = initialState, action) => {
     case TOKEN_PENDING:
       return {
         ...state,
-        error: '',
+        error: [],
         pending: true,
       };
 
@@ -39,7 +39,7 @@ const userReducer = (state = initialState, action) => {
     case TOKEN_FAIL:
       return {
         ...state,
-        error: action.payload.response.data,
+        error: [...state.error, action.payload.response.data],
         pending: false,
       };
 
@@ -53,6 +53,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         pending: true,
+        signupError: [],
       };
 
     case SIGNUP_SUCCESS:
@@ -63,13 +64,20 @@ const userReducer = (state = initialState, action) => {
       };
 
     case SIGNUP_FAIL:
-      Object.keys(action.payload).forEach(key =>
-        state.signupError.push(action.payload[key].msg),
-      );
+      if (action.payload.errors) {
+        Object.keys(action.payload.errors).forEach(key =>
+          state.signupError.push(action.payload.errors[key].msg),
+        );
+        return {
+          ...state,
+          pending: false,
+          signupError: state.signupError,
+        };
+      }
       return {
         ...state,
         pending: false,
-        signupError: state.signupError,
+        signupError: [...state.signupError, action.payload.errmsg],
       };
 
     default:

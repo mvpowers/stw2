@@ -60,6 +60,6 @@ export const register = (name, email, phone, password) => dispatch => {
       dispatch(postRegistration(res.data));
     })
     .catch(err => {
-      dispatch(failedRegistration(err.response.data.errors));
+      dispatch(failedRegistration(err.response.data));
     });
 };

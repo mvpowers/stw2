@@ -17,7 +17,7 @@ const initialState = {
   _id: '',
   question: '',
   pending: false,
-  error: '',
+  error: [],
 };
 
 const voteReducer = (state = initialState, action) => {
@@ -38,7 +38,7 @@ const voteReducer = (state = initialState, action) => {
     case QUESTION_FAIL:
       return {
         ...state,
-        error: action.payload,
+        error: [...state.error, action.payload],
         pending: false,
       };
 
@@ -58,7 +58,7 @@ const voteReducer = (state = initialState, action) => {
     case RESULT_FAIL:
       return {
         ...state,
-        error: action.payload,
+        error: [...state.error, action.payload],
         pending: false,
       };
 
@@ -71,7 +71,7 @@ const voteReducer = (state = initialState, action) => {
     case RESULT_ERROR_CLEAR:
       return {
         ...state,
-        error: '',
+        error: [],
       };
 
     default:

@@ -19,7 +19,7 @@ class ResultsPage extends Component {
 
   componentDidUpdate() {
     const { user, result, history, clearToken } = this.props;
-    if (user.error || result.error) {
+    if (user.error.length + result.error.length > 0) {
       clearToken();
       history.push('/login');
     }

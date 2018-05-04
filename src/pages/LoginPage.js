@@ -93,7 +93,8 @@ class LoginPage extends Component {
               signinEmail={signinEmail}
               signinPassword={signinPassword}
               pending={user.pending}
-              error={user.error || result.error || voteOptions.error}
+              // error={user.error || result.error || voteOptions.error}
+              error={[...user.error, ...result.error, ...voteOptions.error]}
             />
           )}
           {activeItem === 'signup' && (
@@ -118,14 +119,14 @@ class LoginPage extends Component {
 LoginPage.propTypes = {
   user: PropTypes.shape({
     pending: PropTypes.bool,
-    error: PropTypes.string,
-    signupError: PropTypes.string,
+    error: PropTypes.arrayOf(PropTypes.string),
+    signupError: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   result: PropTypes.shape({
-    error: PropTypes.string,
+    error: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   voteOptions: PropTypes.shape({
-    error: PropTypes.string,
+    error: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   fetchToken: PropTypes.func.isRequired,
   clearVoteOptionErrors: PropTypes.func.isRequired,
