@@ -38,8 +38,8 @@ exports.getToken = (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    return bcrypt.compare(req.body.password, data.password, (err, result) => {
-      if (err) return err;
+    return bcrypt.compare(req.body.password, data.password, (error, result) => {
+      if (error) return error;
       if (!result) return res.status(401).send('Incorrect password');
       const payload = { id: data._id, admin: data.admin };
       const token = jwt.sign(payload, config.SECRET, {
