@@ -1,8 +1,7 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
 import { Switch, Route } from 'react-router';
-import TopNav from './components/TopNav';
-
+import { TopNav } from './components';
 import VotePage from './pages/VotePage';
 import ResultsPage from './pages/ResultsPage';
 import LoginPage from './pages/LoginPage';
@@ -22,7 +21,7 @@ const scrollStyle = {
 
 const App = () => (
   <div style={flexStyle}>
-    <TopNav />
+    <Route path="/" component={TopNav} />
     <Container style={scrollStyle}>
       <Switch>
         <Route path="/vote" component={VotePage} />
