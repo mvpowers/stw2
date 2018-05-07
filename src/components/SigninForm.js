@@ -11,6 +11,7 @@ const SigninForm = ({
   pending,
   error,
   newRegister,
+  forgotPassword,
 }) => (
   <div>
     {error.length > 0 && (
@@ -55,6 +56,16 @@ const SigninForm = ({
       >
         Submit
       </Button>
+      <Button
+        basic
+        compact
+        color="teal"
+        fluid
+        id="forget-pw-btn"
+        onClick={() => forgotPassword()}
+      >
+        Forgot Password
+      </Button>
     </Form>
   </div>
 );
@@ -62,6 +73,7 @@ const SigninForm = ({
 SigninForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
   signinSubmit: PropTypes.func.isRequired,
+  forgotPassword: PropTypes.func.isRequired,
   signinEmail: PropTypes.string.isRequired,
   signinPassword: PropTypes.string.isRequired,
   pending: PropTypes.bool.isRequired,

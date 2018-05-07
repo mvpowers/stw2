@@ -30,11 +30,15 @@ a.ui.fluid.card:hover {
   font-weight: bold;
 }
 
+#forget-pw-btn {
+  margin-top: 14px;
+}
+
 .full-height {
   height: 100%;
 }
 
 .wait {
   display: block!important;
-  margin: 20% auto 0 auto!important;
+  margin: 20% auto 0 auto !important;
 }
