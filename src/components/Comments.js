@@ -2,19 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Icon } from 'semantic-ui-react';
 
-const userData = { id: 10, name: 'Mikey' };
-
-const Comments = ({ comments, toggleLike }) => (
+const Comments = ({ comments, toggleLike, userId }) => (
   <Card.Group itemsPerRow={1}>
     {comments.map(comment => (
       <Card
         fluid
         key={comment._id}
         onClick={() => {
-          toggleLike(userData.id, comment._id);
+          toggleLike(userId, comment._id);
         }}
         liked={comment.likedBy}
-        user={userData.id}
         style={{ color: '#333' }}
       >
         <Card.Content extra>Vote for {comment.voteFor}</Card.Content>
@@ -22,7 +19,7 @@ const Comments = ({ comments, toggleLike }) => (
         <Card.Content extra>
           <Icon
             name="heart"
-            color={comment.likedBy.includes(userData.id) ? 'red' : 'grey'}
+            color={comment.likedBy.includes(userId) ? 'red' : 'grey'}
           />
           {comment.likedBy.length} Likes
         </Card.Content>
@@ -41,6 +38,7 @@ Comments.propTypes = {
     }),
   ).isRequired,
   toggleLike: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 export default Comments;

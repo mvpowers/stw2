@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Dropdown, Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 class TopNav extends Component {
   render() {
+    const { location } = this.props;
     return (
       <Menu>
         <Menu.Item>
           <img src="/img/logo.png" alt="logo" />
         </Menu.Item>
-        {this.props.location.pathname !== '/login' && (
+        {location.pathname !== '/login' && (
           <Menu.Menu position="right">
             <Dropdown item icon="bars">
               <Dropdown.Menu>
@@ -29,5 +31,11 @@ class TopNav extends Component {
     );
   }
 }
+
+TopNav.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }).isRequired,
+};
 
 export default TopNav;

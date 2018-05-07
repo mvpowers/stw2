@@ -101,7 +101,7 @@ SigninForm.propTypes = {
   signupPhone: PropTypes.string.isRequired,
   signupPassword: PropTypes.string.isRequired,
   signupVerifyPassword: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
+  error: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default SigninForm;

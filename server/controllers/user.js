@@ -12,7 +12,7 @@ exports.addUser = (req, res) => {
   const user = new User(matchedData(req));
   user.save((err, data) => {
     if (err) {
-      return res.status(423).json(err);
+      return res.status(422).json(err);
     }
     return res.json(data);
   });
@@ -42,9 +42,9 @@ exports.getToken = (req, res) => {
     if (!validUser) {
       return res.status(401).send('Incorrect password');
     }
-    const payload = { admin: data.admin };
+    const payload = { id: data._id, admin: data.admin };
     const token = jwt.sign(payload, config.SECRET, {
-      expiresIn: 5,
+      expiresIn: 20,
     });
     return res.json({ token });
   });

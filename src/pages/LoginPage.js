@@ -7,6 +7,7 @@ import { SigninForm, SignupForm } from '../components';
 import { fetchToken, register } from '../store/user/actions';
 import { clearVoteOptionErrors } from '../store/voteOption/actions';
 import { clearResultErrors } from '../store/result/actions';
+import { uniqueArr } from '../utils';
 
 class LoginPage extends Component {
   constructor() {
@@ -101,7 +102,11 @@ class LoginPage extends Component {
               signinPassword={signinPassword}
               newRegister={user.newRegister}
               pending={user.pending}
-              error={[...user.error, ...result.error, ...voteOptions.error]}
+              error={[
+                ...user.error,
+                ...result.error,
+                ...voteOptions.error,
+              ].filter(uniqueArr)}
             />
           )}
           {activeItem === 'signup' && (

@@ -31,7 +31,7 @@ class ResultsPage extends Component {
   };
 
   render() {
-    const { result } = this.props;
+    const { result, user } = this.props;
     return (
       <div>
         {result.pending && <Wait />}
@@ -41,7 +41,11 @@ class ResultsPage extends Component {
             <Segment>
               <ResultsGraph votes={result.votes} />
             </Segment>
-            <Comments comments={result.comments} toggleLike={this.handleLike} />
+            <Comments
+              comments={result.comments}
+              userId={user.id}
+              toggleLike={this.handleLike}
+            />
           </Segment>
         )}
       </div>
@@ -56,6 +60,7 @@ ResultsPage.propTypes = {
   fetchResult: PropTypes.func.isRequired,
   toggleLike: PropTypes.func.isRequired,
   user: PropTypes.shape({
+    id: PropTypes.string,
     token: PropTypes.string,
   }).isRequired,
   history: PropTypes.shape({

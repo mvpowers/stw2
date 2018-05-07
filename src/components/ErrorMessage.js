@@ -6,7 +6,7 @@ const ErrorMessage = ({ header, errorArr }) => (
   <Message error>
     <Message.Header>{header}</Message.Header>
     <Message.List>
-      {errorArr.map(err => <Message.Item>{err}</Message.Item>)}
+      {errorArr.map(err => <Message.Item key={err}>{err}</Message.Item>)}
     </Message.List>
   </Message>
 );

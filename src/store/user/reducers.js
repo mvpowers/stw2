@@ -8,8 +8,11 @@ import {
   SIGNUP_FAIL,
 } from '../constants';
 
+const jwtDecode = require('jwt-decode');
+
 const initialState = {
   pending: false,
+  id: '',
   name: '',
   email: '',
   phone: '',
@@ -27,12 +30,14 @@ const userReducer = (state = initialState, action) => {
         ...state,
         error: [],
         pending: true,
+        newRegister: false,
       };
 
     case TOKEN_SUCCESS:
       return {
         ...state,
-        ...action.payload,
+        token: action.payload.token,
+        id: jwtDecode(action.payload.token).id,
         pending: false,
       };
 
@@ -40,7 +45,6 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         error: [...state.error, action.payload.response.data],
-        newRegister: false,
         pending: false,
       };
 
