@@ -69,6 +69,7 @@ const userReducer = (state = initialState, action) => {
       };
 
     case SIGNUP_FAIL:
+      console.log(action);
       Object.keys(action.payload.errors).forEach(key =>
         state.signupError.push(
           action.payload.errors[key].msg || action.payload.errors[key].message,

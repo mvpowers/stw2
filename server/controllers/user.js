@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
 const config = require('../config');
@@ -37,15 +38,14 @@ exports.getToken = (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    const validUser = data.password === req.body.password;
-
-    if (!validUser) {
-      return res.status(401).send('Incorrect password');
-    }
-    const payload = { id: data._id, admin: data.admin };
-    const token = jwt.sign(payload, config.SECRET, {
-      expiresIn: 20,
+    return bcrypt.compare(req.body.password, data.password, (err, result) => {
+      if (err) return err;
+      if (!result) return res.status(401).send('Incorrect password');
+      const payload = { id: data._id, admin: data.admin };
+      const token = jwt.sign(payload, config.SECRET, {
+        expiresIn: 20,
+      });
+      return res.json({ token });
     });
-    return res.json({ token });
   });
 };

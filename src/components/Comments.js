@@ -21,7 +21,9 @@ const Comments = ({ comments, toggleLike, userId }) => (
             name="heart"
             color={comment.likedBy.includes(userId) ? 'red' : 'grey'}
           />
-          {comment.likedBy.length} Likes
+          {comment.likedBy.length === 1
+            ? `${comment.likedBy.length} Like`
+            : `${comment.likedBy.length} Likes`}
         </Card.Content>
       </Card>
     ))}
