@@ -30,8 +30,8 @@ a.ui.fluid.card:hover {
   font-weight: bold;
 }
 
-#forget-pw-btn {
-  margin-top: 14px;
+.additional-btn {
+  margin-top: 14px !important;
 }
 
 .full-height {

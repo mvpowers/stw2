@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Segment, Menu } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { SigninForm, SignupForm, ForgotPassword } from '../components';
+import { SigninForm, SignupForm } from '../components';
 import { fetchToken, register } from '../store/user/actions';
 import { clearVoteOptionErrors } from '../store/voteOption/actions';
 import { clearResultErrors } from '../store/result/actions';
@@ -21,7 +21,6 @@ class LoginPage extends Component {
       signupPhone: '',
       signupPassword: '',
       signupVerifyPassword: '',
-      recoveryAccount: '',
     };
   }
 
@@ -74,7 +73,7 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { user, result, voteOptions } = this.props;
+    const { user, result, voteOptions, history } = this.props;
     const {
       activeItem,
       signinEmail,
@@ -84,7 +83,6 @@ class LoginPage extends Component {
       signupPhone,
       signupPassword,
       signupVerifyPassword,
-      recoveryAccount,
     } = this.state;
 
     return (
@@ -111,6 +109,7 @@ class LoginPage extends Component {
               signinPassword={signinPassword}
               newRegister={user.newRegister}
               pending={user.pending}
+              history={history}
               error={[
                 ...user.error,
                 ...result.error,
@@ -128,13 +127,6 @@ class LoginPage extends Component {
               signupPassword={signupPassword}
               signupVerifyPassword={signupVerifyPassword}
               pending={user.pending}
-              error={user.signupError}
-            />
-          )}
-          {activeItem === 'forgotPassword' && (
-            <ForgotPassword
-              handleChange={this.handleChange}
-              recoveryAccount={recoveryAccount}
               error={user.signupError}
             />
           )}

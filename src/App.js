@@ -1,10 +1,11 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
-import { Switch, Route } from 'react-router';
+import { Switch, Route, Redirect } from 'react-router';
 import { TopNav } from './components';
 import VotePage from './pages/VotePage';
 import ResultsPage from './pages/ResultsPage';
 import LoginPage from './pages/LoginPage';
+import ResetPage from './pages/ResetPage';
 
 const flexStyle = {
   display: 'flex',
@@ -24,9 +25,11 @@ const App = () => (
     <Route path="/" component={TopNav} />
     <Container style={scrollStyle}>
       <Switch>
+        <Route path="/" exact render={() => <Redirect to="/login" />} />
         <Route path="/vote" component={VotePage} />
         <Route path="/results" component={ResultsPage} />
         <Route path="/login" component={LoginPage} />
+        <Route path="/reset" component={ResetPage} />
       </Switch>
     </Container>
   </div>

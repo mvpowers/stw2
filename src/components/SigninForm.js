@@ -11,7 +11,7 @@ const SigninForm = ({
   pending,
   error,
   newRegister,
-  forgotPassword,
+  history,
 }) => (
   <div>
     {error.length > 0 && (
@@ -58,11 +58,10 @@ const SigninForm = ({
       </Button>
       <Button
         basic
-        compact
+        className="additional-btn"
         color="teal"
         fluid
-        id="forget-pw-btn"
-        onClick={() => forgotPassword()}
+        onClick={() => history.push('/reset')}
       >
         Forgot Password
       </Button>
@@ -73,7 +72,9 @@ const SigninForm = ({
 SigninForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
   signinSubmit: PropTypes.func.isRequired,
-  forgotPassword: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   signinEmail: PropTypes.string.isRequired,
   signinPassword: PropTypes.string.isRequired,
   pending: PropTypes.bool.isRequired,

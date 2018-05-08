@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import { Button, Form } from 'semantic-ui-react';
 import { ErrorMessage } from './';
 
-const ForgotPassword = ({ handleChange, error, recoveryAccount }) => (
+const ForgotPasswordForm = ({
+  handleChange,
+  error,
+  recoveryAccount,
+  history,
+}) => (
   <div>
     {error.length > 0 && (
       <ErrorMessage header="Login Failed" errorArr={error} />
@@ -21,21 +26,33 @@ const ForgotPassword = ({ handleChange, error, recoveryAccount }) => (
         </label>
       </Form.Field>
       <Button
-        // loading={pending}
-        type="submit"
         fluid
-        onClick={() => console.log('submitted')}
+        // loading={pending}
+        // onClick={() => console.log('submitted')}
+        type="submit"
       >
         Submit
+      </Button>
+      <Button
+        basic
+        className="additional-btn"
+        color="red"
+        fluid
+        onClick={() => history.push('/login')}
+      >
+        Cancel
       </Button>
     </Form>
   </div>
 );
 
-ForgotPassword.propTypes = {
+ForgotPasswordForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
   error: PropTypes.arrayOf(PropTypes.string).isRequired,
   recoveryAccount: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
-export default ForgotPassword;
+export default ForgotPasswordForm;
