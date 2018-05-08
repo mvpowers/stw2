@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
+const uuidv4 = require('uuid/v4');
 const config = require('../config');
 const User = require('../models/user');
 
@@ -51,10 +52,11 @@ exports.getToken = (req, res) => {
 };
 
 exports.setRecoveryToken = (req, res) => {
-  const updateThroughEmail = (email, response) => {
+  const token = uuidv4();
+  const updateThroughEmail = (email, response, resetToken) => {
     User.findOneAndUpdate(
       { email },
-      { resetToken: '555', resetExpire: Date.now() },
+      { resetToken, resetExpire: Date.now() },
       (err, data) => {
         if (err) {
           return response.status(500);
@@ -65,10 +67,10 @@ exports.setRecoveryToken = (req, res) => {
     );
   };
 
-  const updateThroughPhone = (phone, response) => {
+  const updateThroughPhone = (phone, response, resetToken) => {
     User.findOneAndUpdate(
       { phone },
-      { resetToken: '555', resetExpire: Date.now() },
+      { resetToken, resetExpire: Date.now() + 10 * 60 * 1000 },
       (err, data) => {
         if (err) {
           return response.status(500);
@@ -85,9 +87,9 @@ exports.setRecoveryToken = (req, res) => {
       req.body.recoveryAccount.includes('@') &&
       req.body.recoveryAccount.includes('.')
     ) {
-      updateThroughEmail(req.body.recoveryAccount, res);
+      updateThroughEmail(req.body.recoveryAccount, res, token);
     } else if (/\d{10}/.test(sanitizedPhone)) {
-      updateThroughPhone(sanitizedPhone, res);
+      updateThroughPhone(sanitizedPhone, res, token);
     } else {
       res.send('Not a valid email or phone');
     }
