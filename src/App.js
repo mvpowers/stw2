@@ -25,11 +25,11 @@ const App = () => (
     <Route path="/" component={TopNav} />
     <Container style={scrollStyle}>
       <Switch>
-        <Route path="/" exact render={() => <Redirect to="/login" />} />
         <Route path="/vote" component={VotePage} />
         <Route path="/results" component={ResultsPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/reset" component={ResetPage} />
+        <Redirect from="/" to="/login" />
       </Switch>
     </Container>
   </div>

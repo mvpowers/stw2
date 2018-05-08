@@ -17,6 +17,8 @@ const userSchema = new mongoose.Schema({
   },
   password: { type: String, required: true },
   admin: { type: Boolean, default: false },
+  resetToken: { type: String },
+  resetExpire: { type: Date },
 });
 
 userSchema.pre('save', function(next) {

@@ -28,5 +28,6 @@ router.post(
 );
 router.get('/', verifyToken, user.getAllUsers);
 router.post('/signin', user.getToken);
+router.post('/recover', user.setRecoveryToken);
 
 module.exports = router;

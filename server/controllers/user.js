@@ -49,3 +49,49 @@ exports.getToken = (req, res) => {
     });
   });
 };
+
+exports.setRecoveryToken = (req, res) => {
+  const updateThroughEmail = (email, response) => {
+    User.findOneAndUpdate(
+      { email },
+      { resetToken: '555', resetExpire: Date.now() },
+      (err, data) => {
+        if (err) {
+          return response.status(500);
+        }
+        if (!data) return response.send('Email not found');
+        return response.send('Confirmation email has been sent');
+      },
+    );
+  };
+
+  const updateThroughPhone = (phone, response) => {
+    User.findOneAndUpdate(
+      { phone },
+      { resetToken: '555', resetExpire: Date.now() },
+      (err, data) => {
+        if (err) {
+          return response.status(500);
+        }
+        if (!data) return response.send('Phone not found');
+        return response.send('Confirmation text has been sent');
+      },
+    );
+  };
+
+  try {
+    const sanitizedPhone = req.body.recoveryAccount.replace(/\D+/g, '');
+    if (
+      req.body.recoveryAccount.includes('@') &&
+      req.body.recoveryAccount.includes('.')
+    ) {
+      updateThroughEmail(req.body.recoveryAccount, res);
+    } else if (/\d{10}/.test(sanitizedPhone)) {
+      updateThroughPhone(sanitizedPhone, res);
+    } else {
+      res.send('Not a valid email or phone');
+    }
+  } catch (e) {
+    res.send('Unable to reset password');
+  }
+};
