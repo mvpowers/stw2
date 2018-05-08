@@ -28,7 +28,8 @@ const App = () => (
         <Route path="/vote" component={VotePage} />
         <Route path="/results" component={ResultsPage} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/reset" component={ResetPage} />
+        <Route path="/reset" exact component={ResetPage} />
+        <Route path="/reset/:token" component={ResetPage} />
         <Redirect from="/" to="/login" />
       </Switch>
     </Container>

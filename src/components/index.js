@@ -10,3 +10,4 @@ export { default as VoteModal } from './VoteModal';
 export { default as VoteOptions } from './VoteOptions';
 export { default as Wait } from './Wait';
 export { default as ForgotPasswordForm } from './ForgotPasswordForm';
+export { default as NewPasswordForm } from './NewPasswordForm';

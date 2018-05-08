@@ -34,6 +34,19 @@ userSchema.pre('save', function(next) {
   });
 });
 
+userSchema.pre('update', function(next) {
+  const pass = this.getUpdate().$set.password;
+  if (pass) {
+    bcrypt.hash(pass, config.SALT_ROUNDS, (err, hash) => {
+      if (err) {
+        return next(err);
+      }
+      this.update({}, { $set: { password: hash } });
+      return next();
+    });
+  }
+});
+
 userSchema.plugin(uniqueValidator, {
   message: '{PATH} is already registered',
 });

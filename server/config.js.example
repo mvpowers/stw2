@@ -4,4 +4,6 @@ module.exports = {
   SERVER_PORT: '9000',
   SECRET: 'secret',
   SALT_ROUNDS: 10,
+  CLIENT_HOST: 'localhost',
+  CLIENT_PORT: '3000',
 };

@@ -62,7 +62,11 @@ exports.setRecoveryToken = (req, res) => {
           return response.status(500);
         }
         if (!data) return response.send('Email not found');
-        return response.send('Confirmation email has been sent');
+        return response.send(
+          `Confirmation email has been sent. Checkout http://${
+            config.CLIENT_HOST
+          }:${config.CLIENT_PORT}/reset/${resetToken}`,
+        );
       },
     );
   };
@@ -76,7 +80,11 @@ exports.setRecoveryToken = (req, res) => {
           return response.status(500);
         }
         if (!data) return response.send('Phone not found');
-        return response.send('Confirmation text has been sent');
+        return response.send(
+          `Confirmation text has been sent. Checkout http://${
+            config.CLIENT_HOST
+          }:${config.CLIENT_PORT}/reset/${resetToken}`,
+        );
       },
     );
   };
@@ -91,9 +99,33 @@ exports.setRecoveryToken = (req, res) => {
     } else if (/\d{10}/.test(sanitizedPhone)) {
       updateThroughPhone(sanitizedPhone, res, token);
     } else {
-      res.send('Not a valid email or phone');
+      res.status(404).send('Not a valid email or phone');
     }
   } catch (e) {
-    res.send('Unable to reset password');
+    res.status(500).send('Unable to reset password');
   }
+};
+
+exports.updatePassword = (req, res) => {
+  User.findOne({ resetToken: req.body.resetToken }, (err, data) => {
+    if (err) {
+      return res.status(500);
+    }
+    if (!data) {
+      return res.status(404).send('Reset token not found');
+    }
+    if (data.resetExpire > Date.now()) {
+      return res.status(403).send('Reset token expired');
+    }
+    User.update(
+      { resetToken: req.body.resetToken },
+      { $set: { password: req.body.newPassword } },
+      (error, savedData) => {
+        if (error) {
+          return res.status(500);
+        }
+        return res.send(savedData);
+      },
+    );
+  });
 };
