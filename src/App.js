@@ -6,6 +6,7 @@ import VotePage from './pages/VotePage';
 import ResultsPage from './pages/ResultsPage';
 import LoginPage from './pages/LoginPage';
 import ResetPage from './pages/ResetPage';
+import AccountPage from './pages/AccountPage';
 
 const flexStyle = {
   display: 'flex',
@@ -25,6 +26,7 @@ const App = () => (
     <Route path="/" component={TopNav} />
     <Container style={scrollStyle}>
       <Switch>
+        <Route path="/account" component={AccountPage} />
         <Route path="/vote" component={VotePage} />
         <Route path="/results" component={ResultsPage} />
         <Route path="/login" component={LoginPage} />
