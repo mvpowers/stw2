@@ -11,6 +11,7 @@ const NewPasswordForm = ({
   history,
   token,
   submitNewPassword,
+  pending,
 }) => (
   <div>
     {error.length > 0 && (
@@ -42,8 +43,13 @@ const NewPasswordForm = ({
         </label>
       </Form.Field>
       <Button
+        disabled={
+          newPassword === '' ||
+          newPasswordConfirmation === '' ||
+          newPassword !== newPasswordConfirmation
+        }
         fluid
-        // loading={pending}
+        loading={pending}
         onClick={() => submitNewPassword(token, newPassword)}
         type="submit"
       >
@@ -68,6 +74,7 @@ NewPasswordForm.propTypes = {
   error: PropTypes.arrayOf(PropTypes.string).isRequired,
   newPassword: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
+  pending: PropTypes.bool.isRequired,
   newPasswordConfirmation: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,

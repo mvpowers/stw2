@@ -10,6 +10,7 @@ const ForgotPasswordForm = ({
   submitRecoveryAccount,
   history,
   tokenResetMessage,
+  pending,
 }) => (
   <div>
     {tokenResetMessage && (
@@ -31,8 +32,9 @@ const ForgotPasswordForm = ({
         </label>
       </Form.Field>
       <Button
+        disabled={recoveryAccount === ''}
         fluid
-        // loading={pending}
+        loading={pending}
         onClick={() => submitRecoveryAccount(recoveryAccount)}
         type="submit"
       >
@@ -57,6 +59,7 @@ ForgotPasswordForm.propTypes = {
   error: PropTypes.arrayOf(PropTypes.string).isRequired,
   recoveryAccount: PropTypes.string.isRequired,
   tokenResetMessage: PropTypes.string.isRequired,
+  pending: PropTypes.bool.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,

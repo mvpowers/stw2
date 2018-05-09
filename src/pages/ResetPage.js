@@ -61,6 +61,7 @@ class ResetPage extends Component {
             history={history}
             submitRecoveryAccount={this.submitRecoveryAccount}
             tokenResetMessage={user.tokenResetMessage}
+            pending={user.pending}
           />
         )}
         {match.params.token && (
@@ -72,6 +73,7 @@ class ResetPage extends Component {
             history={history}
             token={match.params.token}
             submitNewPassword={this.submitNewPassword}
+            pending={user.pending}
           />
         )}
       </Segment>

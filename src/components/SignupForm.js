@@ -12,6 +12,7 @@ const SigninForm = ({
   signupVerifyPassword,
   signupSubmit,
   error,
+  pending,
 }) => (
   <div>
     {error.length > 0 && (
@@ -81,8 +82,13 @@ const SigninForm = ({
         type="submit"
         fluid
         disabled={
-          signupPassword !== signupVerifyPassword || signupPassword === ''
+          signupName === '' ||
+          signupEmail === '' ||
+          signupPhone === '' ||
+          signupPassword === '' ||
+          signupPassword !== signupVerifyPassword
         }
+        loading={pending}
         onClick={() => {
           signupSubmit(signupName, signupEmail, signupPhone, signupPassword);
         }}
@@ -101,6 +107,7 @@ SigninForm.propTypes = {
   signupPhone: PropTypes.string.isRequired,
   signupPassword: PropTypes.string.isRequired,
   signupVerifyPassword: PropTypes.string.isRequired,
+  pending: PropTypes.bool.isRequired,
   error: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
