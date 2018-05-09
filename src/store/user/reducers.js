@@ -42,11 +42,15 @@ const userReducer = (state = initialState, action) => {
       };
 
     case TOKEN_SUCCESS:
+      const { id, name, email, phone } = jwtDecode(action.payload.token);
       return {
         ...state,
-        token: action.payload.token,
-        id: jwtDecode(action.payload.token).id,
         pending: false,
+        token: action.payload.token,
+        id,
+        name,
+        email,
+        phone,
       };
 
     case TOKEN_FAIL:
