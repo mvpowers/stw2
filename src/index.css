@@ -39,6 +39,11 @@ a.ui.fluid.card:hover {
 }
 
 .wait {
-  display: block!important;
+  display: block !important;
   margin: 20% auto 0 auto !important;
+}
+
+.altered-input {
+  background-color: rgb(255, 250, 243) !important;
+  border-color: rgb(87, 58, 8) !important;
 }
