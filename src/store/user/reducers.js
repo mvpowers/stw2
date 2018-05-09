@@ -12,6 +12,10 @@ import {
   UPDATE_PASSWORD_PENDING,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAIL,
+  UPDATE_USER_PENDING,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
+  USER_ERROR_CLEAR,
 } from '../constants';
 
 const jwtDecode = require('jwt-decode');
@@ -29,10 +33,21 @@ const initialState = {
   signupError: [],
   tokenResetMessage: '',
   resetError: [],
+  userUpdateMessage: '',
+  userUpdateError: [],
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
+    case USER_ERROR_CLEAR:
+      return {
+        ...state,
+        error: [],
+        signupError: [],
+        userUpdateError: [],
+        userUpdateMessage: '',
+      };
+
     case TOKEN_PENDING:
       return {
         ...state,
@@ -64,6 +79,10 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         token: '',
+        id: '',
+        name: '',
+        email: '',
+        phone: '',
       };
 
     case SIGNUP_PENDING:
@@ -139,6 +158,31 @@ const userReducer = (state = initialState, action) => {
         ...state,
         pending: false,
         resetError: [...state.resetError, action.payload],
+      };
+
+    case UPDATE_USER_PENDING:
+      return {
+        ...state,
+        pending: true,
+        userUpdateMessage: '',
+        userUpdateError: [],
+      };
+
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        userUpdateMessage: action.payload.message,
+        name: action.payload.name,
+        phone: action.payload.phone,
+        email: action.payload.email,
+      };
+
+    case UPDATE_USER_FAIL:
+      return {
+        ...state,
+        pending: false,
+        userUpdateError: [...state.userUpdateError, action.payload],
       };
 
     default:

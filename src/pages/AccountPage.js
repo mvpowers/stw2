@@ -1,10 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Segment, Tab } from 'semantic-ui-react';
 import { AccountDetailsForm } from '../components';
+import { updateUser, clearUserErrors } from '../store/user/actions';
 
 class AccountPage extends Component {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (
+      prevState.accountName !== nextProps.user.name ||
+      prevState.accountPhone !== nextProps.user.phone ||
+      prevState.accountEmail !== nextProps.user.email
+    ) {
+      return {
+        accountName: nextProps.user.name,
+        accountPhone: nextProps.user.phone,
+        accountEmail: nextProps.user.email,
+        nameAltered: false,
+        phoneAltered: false,
+        emailAltered: false,
+      };
+    }
+    return null;
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +35,10 @@ class AccountPage extends Component {
       phoneAltered: false,
       emailAltered: false,
     };
+  }
+
+  componentDidMount() {
+    this.props.clearUserErrors();
   }
 
   handleChange = e => {
@@ -36,6 +60,7 @@ class AccountPage extends Component {
   };
 
   render() {
+    const { updateUser, user } = this.props;
     const {
       accountName,
       accountPhone,
@@ -50,7 +75,8 @@ class AccountPage extends Component {
         render: () => (
           <Tab.Pane>
             <AccountDetailsForm
-              error={[]}
+              error={user.userUpdateError}
+              token={user.token}
               accountName={accountName}
               accountPhone={accountPhone}
               accountEmail={accountEmail}
@@ -58,6 +84,8 @@ class AccountPage extends Component {
               nameAltered={nameAltered}
               phoneAltered={phoneAltered}
               emailAltered={emailAltered}
+              updateUser={updateUser}
+              updateMessage={user.userUpdateMessage}
             />
           </Tab.Pane>
         ),
@@ -82,10 +110,21 @@ AccountPage.propTypes = {
     phone: PropTypes.string,
     email: PropTypes.string,
   }).isRequired,
+  updateUser: PropTypes.func.isRequired,
+  clearUserErrors: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(AccountPage);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      updateUser,
+      clearUserErrors,
+    },
+    dispatch,
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountPage);

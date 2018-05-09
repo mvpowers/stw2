@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input } from 'semantic-ui-react';
+import { Button, Form, Message } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { ErrorMessage } from './';
 
@@ -11,10 +11,16 @@ const SigninForm = ({
   accountName,
   accountPhone,
   accountEmail,
+  updateUser,
+  token,
   error,
   pending,
+  updateMessage,
 }) => (
   <div>
+    {updateMessage && (
+      <Message success header="User Updated" content={updateMessage} />
+    )}
     {error.length > 0 && (
       <ErrorMessage header="Account Update Failed" errorArr={error} />
     )}
@@ -60,11 +66,11 @@ const SigninForm = ({
       <Button
         type="submit"
         fluid
-        disabled={
-          accountName === '' || accountEmail === '' || accountPhone === ''
-        }
+        disabled={!nameAltered && !phoneAltered && !emailAltered}
         loading={pending}
-        onClick={() => {}}
+        onClick={() => {
+          updateUser(token, accountName, accountPhone, accountEmail);
+        }}
       >
         Submit
       </Button>
@@ -74,9 +80,12 @@ const SigninForm = ({
 
 SigninForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
+  updateUser: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
   accountName: PropTypes.string.isRequired,
   accountEmail: PropTypes.string.isRequired,
   accountPhone: PropTypes.string.isRequired,
+  updateMessage: PropTypes.string.isRequired,
   pending: PropTypes.bool.isRequired,
   nameAltered: PropTypes.bool.isRequired,
   phoneAltered: PropTypes.bool.isRequired,

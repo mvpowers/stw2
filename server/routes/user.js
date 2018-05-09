@@ -26,6 +26,7 @@ router.post(
   ],
   user.addUser,
 );
+router.patch('/', verifyToken, user.updateUser);
 router.get('/', verifyToken, user.getAllUsers);
 router.post('/signin', user.getToken);
 router.post('/recover', user.setRecoveryToken);

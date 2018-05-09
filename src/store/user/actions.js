@@ -14,6 +14,10 @@ import {
   UPDATE_PASSWORD_PENDING,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAIL,
+  UPDATE_USER_PENDING,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAIL,
+  USER_ERROR_CLEAR,
 } from '../constants';
 
 const getToken = data => ({
@@ -53,6 +57,16 @@ const patchPassword = data => ({
 
 const failedPassword = data => ({
   type: UPDATE_PASSWORD_FAIL,
+  payload: data,
+});
+
+const patchUser = data => ({
+  type: UPDATE_USER_SUCCESS,
+  payload: data,
+});
+
+const failedPatchUser = data => ({
+  type: UPDATE_USER_FAIL,
   payload: data,
 });
 
@@ -124,3 +138,25 @@ export const updatePassword = (resetToken, newPassword) => dispatch => {
       dispatch(failedPassword(err.response.data));
     });
 };
+
+export const updateUser = (token, name, phone, email) => dispatch => {
+  dispatch({ type: UPDATE_USER_PENDING });
+  axios
+    .patch(
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/user`,
+      {
+        name,
+        phone,
+        email,
+      },
+      { headers: { 'X-Access-Token': token } },
+    )
+    .then(res => {
+      dispatch(patchUser(res.data));
+    })
+    .catch(err => {
+      dispatch(failedPatchUser(err.response.data));
+    });
+};
+
+export const clearUserErrors = () => ({ type: USER_ERROR_CLEAR });

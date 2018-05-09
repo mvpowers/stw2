@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
+const jwtDecode = require('jwt-decode');
 const uuidv4 = require('uuid/v4');
 const config = require('../config');
 const User = require('../models/user');
@@ -33,7 +34,7 @@ exports.getAllUsers = (req, res) => {
 exports.getToken = (req, res) => {
   User.findOne({ email: req.body.email }, (err, data) => {
     if (err) {
-      return res.status(500);
+      return res.status(500).send('Unable to get token');
     }
     if (!data) {
       return res.status(404).send('User not found');
@@ -50,7 +51,7 @@ exports.getToken = (req, res) => {
         email: data.email,
       };
       const token = jwt.sign(payload, config.SECRET, {
-        expiresIn: 20,
+        expiresIn: 6000,
       });
       return res.json({ token });
     });
@@ -115,7 +116,7 @@ exports.setRecoveryToken = (req, res) => {
 exports.updatePassword = (req, res) => {
   User.findOne({ resetToken: req.body.resetToken }, (err, data) => {
     if (err) {
-      return res.status(500);
+      return res.status(500).send('Unable to update password');
     }
     if (!data) {
       return res.status(404).send('Reset token not found');
@@ -134,4 +135,25 @@ exports.updatePassword = (req, res) => {
       },
     );
   });
+};
+
+exports.updateUser = (req, res) => {
+  const { id } = jwtDecode(req.headers['x-access-token']);
+  const { name, phone, email } = req.body;
+  User.findOneAndUpdate(
+    id,
+    { $set: { name, phone, email } },
+    { new: true },
+    (err, data) => {
+      if (err) {
+        return res.status(500).send('Unable to update account information');
+      }
+      return res.json({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        message: 'User information updated successfully',
+      });
+    },
+  );
 };
