@@ -56,12 +56,12 @@ exports.setRecoveryToken = (req, res) => {
   const updateThroughEmail = (email, response, resetToken) => {
     User.findOneAndUpdate(
       { email },
-      { resetToken, resetExpire: Date.now() },
+      { resetToken, resetExpire: Date.now() + 10 * 60 * 1000 },
       (err, data) => {
         if (err) {
           return response.status(500);
         }
-        if (!data) return response.send('Email not found');
+        if (!data) return response.status(404).send('Email not found');
         return response.send(
           `Confirmation email has been sent. Checkout http://${
             config.CLIENT_HOST
@@ -79,7 +79,7 @@ exports.setRecoveryToken = (req, res) => {
         if (err) {
           return response.status(500);
         }
-        if (!data) return response.send('Phone not found');
+        if (!data) return response.status(404).send('Phone not found');
         return response.send(
           `Confirmation text has been sent. Checkout http://${
             config.CLIENT_HOST
@@ -114,7 +114,7 @@ exports.updatePassword = (req, res) => {
     if (!data) {
       return res.status(404).send('Reset token not found');
     }
-    if (data.resetExpire > Date.now()) {
+    if (data.resetExpire < Date.now()) {
       return res.status(403).send('Reset token expired');
     }
     User.update(

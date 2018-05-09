@@ -1,15 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Message } from 'semantic-ui-react';
 import { ErrorMessage } from './';
 
 const ForgotPasswordForm = ({
   handleChange,
   error,
   recoveryAccount,
+  submitRecoveryAccount,
   history,
+  tokenResetMessage,
 }) => (
   <div>
+    {tokenResetMessage && (
+      <Message success header="Password Found" content={tokenResetMessage} />
+    )}
     {error.length > 0 && (
       <ErrorMessage header="Login Failed" errorArr={error} />
     )}
@@ -28,7 +33,7 @@ const ForgotPasswordForm = ({
       <Button
         fluid
         // loading={pending}
-        // onClick={() => console.log('submitted')}
+        onClick={() => submitRecoveryAccount(recoveryAccount)}
         type="submit"
       >
         Submit
@@ -48,8 +53,10 @@ const ForgotPasswordForm = ({
 
 ForgotPasswordForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
+  submitRecoveryAccount: PropTypes.func.isRequired,
   error: PropTypes.arrayOf(PropTypes.string).isRequired,
   recoveryAccount: PropTypes.string.isRequired,
+  tokenResetMessage: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,

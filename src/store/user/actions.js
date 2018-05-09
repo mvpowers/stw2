@@ -8,6 +8,9 @@ import {
   SIGNUP_PENDING,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
+  RESET_TOKEN_PENDING,
+  RESET_TOKEN_SUCCESS,
+  RESET_TOKEN_FAIL,
 } from '../constants';
 
 const getToken = data => ({
@@ -27,6 +30,16 @@ const postRegistration = data => ({
 
 const failedRegistration = data => ({
   type: SIGNUP_FAIL,
+  payload: data,
+});
+
+const getResetToken = data => ({
+  type: RESET_TOKEN_SUCCESS,
+  payload: data,
+});
+
+const failedResetToken = data => ({
+  type: RESET_TOKEN_FAIL,
   payload: data,
 });
 
@@ -61,5 +74,22 @@ export const register = (name, email, phone, password) => dispatch => {
     })
     .catch(err => {
       dispatch(failedRegistration(err.response.data));
+    });
+};
+
+export const createPasswordResetToken = recoveryAccount => dispatch => {
+  dispatch({ type: RESET_TOKEN_PENDING });
+  axios
+    .post(
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/user/recover`,
+      {
+        recoveryAccount,
+      },
+    )
+    .then(res => {
+      dispatch(getResetToken(res.data));
+    })
+    .catch(err => {
+      dispatch(failedResetToken(err.response.data));
     });
 };

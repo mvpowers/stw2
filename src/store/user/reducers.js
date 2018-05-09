@@ -6,6 +6,9 @@ import {
   SIGNUP_PENDING,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
+  RESET_TOKEN_PENDING,
+  RESET_TOKEN_SUCCESS,
+  RESET_TOKEN_FAIL,
 } from '../constants';
 
 const jwtDecode = require('jwt-decode');
@@ -21,6 +24,8 @@ const initialState = {
   error: [],
   newRegister: false,
   signupError: [],
+  tokenResetMessage: '',
+  resetError: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -66,6 +71,8 @@ const userReducer = (state = initialState, action) => {
         ...state,
         pending: false,
         newRegister: true,
+        error: [],
+        signupError: [],
       };
 
     case SIGNUP_FAIL:
@@ -79,6 +86,30 @@ const userReducer = (state = initialState, action) => {
         pending: false,
         signupError: state.signupError,
       };
+
+    case RESET_TOKEN_PENDING:
+      return {
+        ...state,
+        pending: true,
+        resetError: [],
+        tokenResetMessage: '',
+      };
+
+    case RESET_TOKEN_SUCCESS:
+      return {
+        ...state,
+        tokenResetMessage: action.payload,
+        resetError: [],
+      };
+
+    case RESET_TOKEN_FAIL:
+      return {
+        ...state,
+        pending: false,
+        resetError: [...state.resetError, action.payload],
+        tokenResetMessage: '',
+      };
+
     default:
       return state;
   }

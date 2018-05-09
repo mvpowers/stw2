@@ -29,6 +29,12 @@ router.post(
 router.get('/', verifyToken, user.getAllUsers);
 router.post('/signin', user.getToken);
 router.post('/recover', user.setRecoveryToken);
-router.patch('/password', user.updatePassword);
+router.patch(
+  '/password',
+  check('newPassword')
+    .isLength({ min: 5 })
+    .withMessage('New password must be at least 5 characters'),
+  user.updatePassword,
+);
 
 module.exports = router;
