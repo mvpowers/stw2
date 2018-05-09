@@ -9,6 +9,9 @@ import {
   RESET_TOKEN_PENDING,
   RESET_TOKEN_SUCCESS,
   RESET_TOKEN_FAIL,
+  UPDATE_PASSWORD_PENDING,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAIL,
 } from '../constants';
 
 const jwtDecode = require('jwt-decode');
@@ -98,6 +101,7 @@ const userReducer = (state = initialState, action) => {
     case RESET_TOKEN_SUCCESS:
       return {
         ...state,
+        pending: false,
         tokenResetMessage: action.payload,
         resetError: [],
       };
@@ -108,6 +112,29 @@ const userReducer = (state = initialState, action) => {
         pending: false,
         resetError: [...state.resetError, action.payload],
         tokenResetMessage: '',
+      };
+
+    case UPDATE_PASSWORD_PENDING:
+      return {
+        ...state,
+        pending: true,
+        resetError: [],
+        tokenResetMessage: '',
+      };
+
+    case UPDATE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        resetError: [],
+        newRegister: true,
+      };
+
+    case UPDATE_PASSWORD_FAIL:
+      return {
+        ...state,
+        pending: false,
+        resetError: [...state.resetError, action.payload],
       };
 
     default:

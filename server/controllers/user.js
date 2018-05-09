@@ -117,7 +117,7 @@ exports.updatePassword = (req, res) => {
     if (data.resetExpire < Date.now()) {
       return res.status(403).send('Reset token expired');
     }
-    User.update(
+    return User.update(
       { resetToken: req.body.resetToken },
       { $set: { password: req.body.newPassword } },
       (error, savedData) => {

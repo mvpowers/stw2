@@ -9,6 +9,8 @@ const NewPasswordForm = ({
   newPassword,
   newPasswordConfirmation,
   history,
+  token,
+  submitNewPassword,
 }) => (
   <div>
     {error.length > 0 && (
@@ -20,6 +22,7 @@ const NewPasswordForm = ({
           New Password
           <input
             id="newPassword"
+            type="password"
             placeholder="New Password"
             value={newPassword}
             onChange={handleChange}
@@ -31,6 +34,7 @@ const NewPasswordForm = ({
           New Password Confirmation
           <input
             id="newPasswordConfirmation"
+            type="password"
             placeholder="New Password Confirmation"
             value={newPasswordConfirmation}
             onChange={handleChange}
@@ -40,7 +44,7 @@ const NewPasswordForm = ({
       <Button
         fluid
         // loading={pending}
-        // onClick={() => console.log('submitted')}
+        onClick={() => submitNewPassword(token, newPassword)}
         type="submit"
       >
         Submit
@@ -60,8 +64,10 @@ const NewPasswordForm = ({
 
 NewPasswordForm.propTypes = {
   handleChange: PropTypes.func.isRequired,
+  submitNewPassword: PropTypes.func.isRequired,
   error: PropTypes.arrayOf(PropTypes.string).isRequired,
   newPassword: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
   newPasswordConfirmation: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,

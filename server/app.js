@@ -11,11 +11,12 @@ const app = express();
 
 app.set('secret', config.SECRET);
 app.use((req, res, next) => {
-  res.header('access-control-allow-origin', '*');
+  res.header('Access-Control-Allow-Origin', '*');
   res.header(
-    'access-control-allow-headers',
-    'origin, x-requested-with, content-type, accept, x-access-token',
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, X-Access-Token',
   );
+  res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PATCH');
   next();
 });
 app.use(bodyParser.json());

@@ -4,7 +4,10 @@ import { Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { ForgotPasswordForm, NewPasswordForm } from '../components';
-import { createPasswordResetToken } from '../store/user/actions';
+import {
+  createPasswordResetToken,
+  updatePassword,
+} from '../store/user/actions';
 
 class ResetPage extends Component {
   constructor() {
@@ -16,8 +19,11 @@ class ResetPage extends Component {
     };
   }
 
-  componentDidMount() {
-    const { token } = this.props.match.params;
+  componentDidUpdate() {
+    const { user, history } = this.props;
+    if (user.newRegister) {
+      history.push('/login');
+    }
   }
 
   handleChange = e => {
@@ -32,16 +38,22 @@ class ResetPage extends Component {
     this.setState({ recoveryAccount: '' });
   };
 
+  submitNewPassword = (resetToken, newPassword) => {
+    const { updatePassword } = this.props;
+    updatePassword(resetToken, newPassword);
+    this.setState({ newPassword: '', newPasswordConfirmation: '' });
+  };
+
   render() {
     const {
       recoveryAccount,
       newPassword,
       newPasswordConfirmation,
     } = this.state;
-    const { history, user } = this.props;
+    const { history, user, match } = this.props;
     return (
       <Segment>
-        {!this.props.match.params.token && (
+        {!match.params.token && (
           <ForgotPasswordForm
             handleChange={this.handleChange}
             error={user.resetError}
@@ -51,13 +63,15 @@ class ResetPage extends Component {
             tokenResetMessage={user.tokenResetMessage}
           />
         )}
-        {this.props.match.params.token && (
+        {match.params.token && (
           <NewPasswordForm
             handleChange={this.handleChange}
-            error={[]}
+            error={user.resetError}
             newPassword={newPassword}
             newPasswordConfirmation={newPasswordConfirmation}
             history={history}
+            token={match.params.token}
+            submitNewPassword={this.submitNewPassword}
           />
         )}
       </Segment>
@@ -75,6 +89,7 @@ ResetPage.propTypes = {
     }),
   }).isRequired,
   createPasswordResetToken: PropTypes.func.isRequired,
+  updatePassword: PropTypes.func.isRequired,
   user: PropTypes.shape({
     resetError: PropTypes.arrayOf(PropTypes.string),
     tokenResetMessage: PropTypes.string.isRequired,
@@ -89,6 +104,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       createPasswordResetToken,
+      updatePassword,
     },
     dispatch,
   );

@@ -11,6 +11,9 @@ import {
   RESET_TOKEN_PENDING,
   RESET_TOKEN_SUCCESS,
   RESET_TOKEN_FAIL,
+  UPDATE_PASSWORD_PENDING,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_PASSWORD_FAIL,
 } from '../constants';
 
 const getToken = data => ({
@@ -40,6 +43,16 @@ const getResetToken = data => ({
 
 const failedResetToken = data => ({
   type: RESET_TOKEN_FAIL,
+  payload: data,
+});
+
+const patchPassword = data => ({
+  type: UPDATE_PASSWORD_SUCCESS,
+  payload: data,
+});
+
+const failedPassword = data => ({
+  type: UPDATE_PASSWORD_FAIL,
   payload: data,
 });
 
@@ -91,5 +104,23 @@ export const createPasswordResetToken = recoveryAccount => dispatch => {
     })
     .catch(err => {
       dispatch(failedResetToken(err.response.data));
+    });
+};
+
+export const updatePassword = (resetToken, newPassword) => dispatch => {
+  dispatch({ type: UPDATE_PASSWORD_PENDING });
+  axios
+    .patch(
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/user/password`,
+      {
+        resetToken,
+        newPassword,
+      },
+    )
+    .then(res => {
+      dispatch(patchPassword(res.data));
+    })
+    .catch(err => {
+      dispatch(failedPassword(err.response.data));
     });
 };
