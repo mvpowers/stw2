@@ -6,13 +6,7 @@ import {
 } from '../constants';
 
 const initialState = {
-  options: [
-    {
-      _id: '',
-      name: '',
-      description: '',
-    },
-  ],
+  data: [],
   error: [],
 };
 
@@ -27,8 +21,8 @@ const groupReducer = (state = initialState, action) => {
     case GROUPS_SUCCESS:
       return {
         ...state,
+        data: action.payload,
         pending: false,
-        options: action.payload,
       };
 
     case GROUPS_FAIL:

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Divider } from 'semantic-ui-react';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { VoteOptions, Question, Wait } from '../components';
@@ -83,17 +84,24 @@ class VotePage extends Component {
         {!result.pending && (
           <div>
             <Question question={result.question} />
-            <VoteOptions
-              data={groups.options}
-              modalStatus={modalStatus}
-              modalOpen={this.modalOpen}
-              modalClose={this.modalClose}
-              handleSubmit={this.handleSubmit}
-              handleChange={this.handleChange}
-              currentVoteId={currentVoteId}
-              currentVoteName={currentVoteName}
-              currentComment={currentComment}
-            />
+            {groups.data.map(group => (
+              <div key={group._id}>
+                <Divider horizontal section>
+                  {group.name}
+                </Divider>
+                <VoteOptions
+                  data={group.options}
+                  modalStatus={modalStatus}
+                  modalOpen={this.modalOpen}
+                  modalClose={this.modalClose}
+                  handleSubmit={this.handleSubmit}
+                  handleChange={this.handleChange}
+                  currentVoteId={currentVoteId}
+                  currentVoteName={currentVoteName}
+                  currentComment={currentComment}
+                />
+              </div>
+            ))}
           </div>
         )}
       </div>
@@ -109,7 +117,7 @@ VotePage.propTypes = {
     question: PropTypes.string.isRequired,
   }).isRequired,
   groups: PropTypes.shape({
-    options: PropTypes.arrayOf(String).isRequired,
+    data: PropTypes.arrayOf(String).isRequired,
   }).isRequired,
   user: PropTypes.shape({
     token: PropTypes.string,
