@@ -1,8 +1,8 @@
 import {
-  VOTE_OPTIONS_PENDING,
-  VOTE_OPTIONS_SUCCESS,
-  VOTE_OPTIONS_FAIL,
-  VOTE_OPTIONS_ERROR_CLEAR,
+  GROUPS_PENDING,
+  GROUPS_SUCCESS,
+  GROUPS_FAIL,
+  GROUPS_ERROR_CLEAR,
 } from '../constants';
 
 const initialState = {
@@ -16,28 +16,28 @@ const initialState = {
   error: [],
 };
 
-const voteOptionReducer = (state = initialState, action) => {
+const groupReducer = (state = initialState, action) => {
   switch (action.type) {
-    case VOTE_OPTIONS_PENDING:
+    case GROUPS_PENDING:
       return {
         ...state,
         pending: true,
       };
 
-    case VOTE_OPTIONS_SUCCESS:
+    case GROUPS_SUCCESS:
       return {
         ...state,
         pending: false,
         options: action.payload,
       };
 
-    case VOTE_OPTIONS_FAIL:
+    case GROUPS_FAIL:
       return {
         ...state,
         pending: false,
         error: [...state.error, action.payload],
       };
-    case VOTE_OPTIONS_ERROR_CLEAR:
+    case GROUPS_ERROR_CLEAR:
       return {
         ...state,
         error: [],
@@ -48,4 +48,4 @@ const voteOptionReducer = (state = initialState, action) => {
   }
 };
 
-export default voteOptionReducer;
+export default groupReducer;

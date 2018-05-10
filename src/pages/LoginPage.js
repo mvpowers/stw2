@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { SigninForm, SignupForm } from '../components';
 import { fetchToken, register } from '../store/user/actions';
-import { clearVoteOptionErrors } from '../store/voteOption/actions';
+import { clearGroupErrors } from '../store/group/actions';
 import { clearResultErrors } from '../store/result/actions';
 import { uniqueArr } from '../utils';
 
@@ -54,14 +54,14 @@ class LoginPage extends Component {
   signinSubmit = (email, password) => {
     const {
       result,
-      voteOptions,
+      groups,
       fetchToken,
-      clearVoteOptionErrors,
+      clearGroupErrors,
       clearResultErrors,
     } = this.props;
-    if (result.error || voteOptions.error) {
+    if (result.error || groups.error) {
       clearResultErrors();
-      clearVoteOptionErrors();
+      clearGroupErrors();
     }
     fetchToken(email, password);
   };
@@ -73,7 +73,7 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { user, result, voteOptions, history } = this.props;
+    const { user, result, groups, history } = this.props;
     const {
       activeItem,
       signinEmail,
@@ -113,7 +113,7 @@ class LoginPage extends Component {
               error={[
                 ...user.error,
                 ...result.error,
-                ...voteOptions.error,
+                ...groups.error,
               ].filter(uniqueArr)}
             />
           )}
@@ -146,11 +146,11 @@ LoginPage.propTypes = {
   result: PropTypes.shape({
     error: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
-  voteOptions: PropTypes.shape({
+  groups: PropTypes.shape({
     error: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   fetchToken: PropTypes.func.isRequired,
-  clearVoteOptionErrors: PropTypes.func.isRequired,
+  clearGroupErrors: PropTypes.func.isRequired,
   clearResultErrors: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   history: PropTypes.shape({
@@ -161,14 +161,14 @@ LoginPage.propTypes = {
 const mapStateToProps = state => ({
   user: state.user,
   result: state.result,
-  voteOptions: state.voteOptions,
+  groups: state.groups,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       fetchToken,
-      clearVoteOptionErrors,
+      clearGroupErrors,
       clearResultErrors,
       register,
     },

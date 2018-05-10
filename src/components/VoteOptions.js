@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card } from 'semantic-ui-react';
 import { VoteModal } from '../components';
 
-const VoteOptions = ({
+const Groups = ({
   data,
   modalStatus,
   modalOpen,
@@ -37,7 +37,7 @@ const VoteOptions = ({
   </Card.Group>
 );
 
-VoteOptions.propTypes = {
+Groups.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string,
@@ -53,4 +53,4 @@ VoteOptions.propTypes = {
   handleChange: PropTypes.func.isRequired,
 };
 
-export default VoteOptions;
+export default Groups;

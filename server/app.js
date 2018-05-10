@@ -1,5 +1,5 @@
 const result = require('./routes/result');
-const voteOption = require('./routes/voteOption');
+const group = require('./routes/group');
 const user = require('./routes/user');
 const config = require('./config');
 const express = require('express');
@@ -27,7 +27,7 @@ app.use(
 );
 app.use(morgan('dev'));
 app.use('/result', result);
-app.use('/voteOption', voteOption);
+app.use('/group', group);
 app.use('/user', user);
 
 module.exports = {

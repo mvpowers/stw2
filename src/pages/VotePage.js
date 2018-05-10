@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { VoteOptions, Question, Wait } from '../components';
-import { fetchVoteOptions } from '../store/voteOption/actions';
+import { fetchGroups } from '../store/group/actions';
 import { clearToken } from '../store/user/actions';
 import {
   fetchQuestion,
@@ -23,17 +23,17 @@ class VotePage extends Component {
   }
 
   componentDidMount() {
-    const { user, history, fetchQuestion, fetchVoteOptions } = this.props;
+    const { user, history, fetchQuestion, fetchGroups } = this.props;
     if (!user.token) {
       history.push('/login');
     }
     fetchQuestion(user.token);
-    fetchVoteOptions(user.token);
+    fetchGroups(user.token);
   }
 
   componentDidUpdate() {
-    const { user, voteOptions, history, clearToken } = this.props;
-    if (user.error.length + voteOptions.error.length > 0) {
+    const { user, groups, history, clearToken } = this.props;
+    if (user.error.length + groups.error.length > 0) {
       clearToken();
       history.push('/login');
     }
@@ -70,7 +70,7 @@ class VotePage extends Component {
   };
 
   render() {
-    const { result, voteOptions } = this.props;
+    const { result, groups } = this.props;
     const {
       modalStatus,
       currentVoteName,
@@ -84,7 +84,7 @@ class VotePage extends Component {
           <div>
             <Question question={result.question} />
             <VoteOptions
-              data={voteOptions.options}
+              data={groups.options}
               modalStatus={modalStatus}
               modalOpen={this.modalOpen}
               modalClose={this.modalClose}
@@ -103,12 +103,12 @@ class VotePage extends Component {
 
 VotePage.propTypes = {
   fetchQuestion: PropTypes.func.isRequired,
-  fetchVoteOptions: PropTypes.func.isRequired,
+  fetchGroups: PropTypes.func.isRequired,
   result: PropTypes.shape({
     pending: PropTypes.bool.isRequired,
     question: PropTypes.string.isRequired,
   }).isRequired,
-  voteOptions: PropTypes.shape({
+  groups: PropTypes.shape({
     options: PropTypes.arrayOf(String).isRequired,
   }).isRequired,
   user: PropTypes.shape({
@@ -124,7 +124,7 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     result: state.result,
-    voteOptions: state.voteOptions,
+    groups: state.groups,
   };
 }
 
@@ -132,7 +132,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       fetchQuestion,
-      fetchVoteOptions,
+      fetchGroups,
       clearToken,
     },
     dispatch,
