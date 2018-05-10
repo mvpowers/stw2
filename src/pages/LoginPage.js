@@ -110,11 +110,9 @@ class LoginPage extends Component {
               newRegister={user.newRegister}
               pending={user.pending}
               history={history}
-              error={[
-                ...user.error,
-                ...result.error,
-                ...groups.error,
-              ].filter(uniqueArr)}
+              error={[...user.error, ...result.error, ...groups.error].filter(
+                uniqueArr,
+              )}
             />
           )}
           {activeItem === 'signup' && (

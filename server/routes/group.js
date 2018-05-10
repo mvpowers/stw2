@@ -4,7 +4,7 @@ const verifyToken = require('../middleware/verifyToken');
 
 const router = express.Router();
 
-router.post('/', group.addOption);
+router.post('/option', group.addOption);
 router.get('/', verifyToken, group.retrieveGroups);
 router.post('/new', group.newGroup);
 
