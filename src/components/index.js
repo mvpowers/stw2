@@ -14,3 +14,4 @@ export { default as NewPasswordForm } from './NewPasswordForm';
 export { default as AccountDetailsForm } from './AccountDetailsForm';
 export { default as GroupManage } from './GroupManage';
 export { default as RemoveGroupModal } from './RemoveGroupModal';
+export { default as CreateGroupModal } from './CreateGroupModal';

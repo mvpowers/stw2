@@ -1,22 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Card } from 'semantic-ui-react';
-import { RemoveGroupModal } from './';
+import { RemoveGroupModal, CreateGroupModal } from './';
 
 const GroupManage = ({
   groups,
-  removeModalStatus,
-  removeModalOpen,
-  removeModalClose,
+  leaveModalStatus,
+  modalOpen,
+  modalClose,
+  handleChange,
   currentLeaveName,
+  createModalStatus,
+  currentCreateName,
 }) => (
   <div>
-    <Button basic color="green" fluid className="additional-btn">
+    <Button basic color="purple" fluid className="additional-btn">
       Join Group
     </Button>
-    <Button basic color="pink" fluid className="additional-btn">
-      Create Group
-    </Button>
+    <div className="additional-btn">
+      <CreateGroupModal
+        createModalStatus={createModalStatus}
+        modalOpen={modalOpen}
+        modalClose={modalClose}
+        currentCreateName={currentCreateName}
+        handleChange={handleChange}
+      />
+    </div>
     {groups.map(group => (
       <Card fluid key={group._id}>
         <Card.Content>
@@ -24,9 +33,10 @@ const GroupManage = ({
         </Card.Content>
         <Card.Content>
           <RemoveGroupModal
-            removeModalClose={removeModalClose}
-            removeModalOpen={removeModalOpen}
-            removeModalStatus={removeModalStatus}
+            modalClose={modalClose}
+            modalOpen={modalOpen}
+            handleChange={handleChange}
+            leaveModalStatus={leaveModalStatus}
             groupId={group._id}
             groupName={group.name}
             currentLeaveName={currentLeaveName}
@@ -44,9 +54,13 @@ GroupManage.propTypes = {
       name: PropTypes.string,
     }),
   ).isRequired,
-  removeModalStatus: PropTypes.bool.isRequired,
-  removeModalOpen: PropTypes.func.isRequired,
-  removeModalClose: PropTypes.func.isRequired,
+  leaveModalStatus: PropTypes.bool.isRequired,
+  createModalStatus: PropTypes.bool.isRequired,
+  modalOpen: PropTypes.func.isRequired,
+  modalClose: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  currentLeaveName: PropTypes.string.isRequired,
+  currentCreateName: PropTypes.string.isRequired,
 };
 
 export default GroupManage;

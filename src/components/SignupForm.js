@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Input } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { ErrorMessage } from './';
 
@@ -69,12 +69,17 @@ const SigninForm = ({
       <Form.Field>
         <label htmlFor="signupVerifyPassword">
           Verify Password
-          <input
+          <Input
             id="signupVerifyPassword"
             type="password"
             placeholder="Verify Password"
             value={signupVerifyPassword}
             onChange={handleChange}
+            icon={
+              signupPassword === signupVerifyPassword && signupPassword !== ''
+                ? 'checkmark'
+                : 'remove'
+            }
           />
         </label>
       </Form.Field>

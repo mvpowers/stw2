@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Button, Modal } from 'semantic-ui-react';
 
 const RemoveGroupModal = ({
-  removeModalStatus,
-  removeModalOpen,
-  removeModalClose,
+  leaveModalStatus,
+  modalOpen,
+  modalClose,
   groupId,
   groupName,
   currentLeaveName,
@@ -16,16 +16,17 @@ const RemoveGroupModal = ({
         basic
         fluid
         color="red"
-        onClick={removeModalOpen}
+        onClick={modalOpen}
         id={groupId}
         name={groupName}
+        action="leave"
       >
         Leave Group
       </Button>
     }
     dimmer="blurring"
-    open={removeModalStatus}
-    onClose={removeModalClose}
+    open={leaveModalStatus}
+    onClose={modalClose}
     size="mini"
   >
     <Modal.Header>Leave Group</Modal.Header>
@@ -38,7 +39,7 @@ const RemoveGroupModal = ({
         icon="remove"
         labelPosition="right"
         content="No"
-        onClick={removeModalClose}
+        onClick={modalClose}
       />
       <Button positive icon="checkmark" labelPosition="right" content="Yes" />
     </Modal.Actions>
@@ -46,9 +47,9 @@ const RemoveGroupModal = ({
 );
 
 RemoveGroupModal.propTypes = {
-  removeModalStatus: PropTypes.bool.isRequired,
-  removeModalOpen: PropTypes.func.isRequired,
-  removeModalClose: PropTypes.func.isRequired,
+  leaveModalStatus: PropTypes.bool.isRequired,
+  modalOpen: PropTypes.func.isRequired,
+  modalClose: PropTypes.func.isRequired,
   groupId: PropTypes.string.isRequired,
   groupName: PropTypes.string.isRequired,
   currentLeaveName: PropTypes.string.isRequired,

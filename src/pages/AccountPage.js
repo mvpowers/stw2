@@ -36,8 +36,10 @@ class AccountPage extends Component {
       nameAltered: false,
       phoneAltered: false,
       emailAltered: false,
-      removeModalStatus: false,
+      leaveModalStatus: false,
       currentLeaveName: '',
+      createModalStatus: false,
+      currentCreateName: '',
     };
   }
 
@@ -63,16 +65,29 @@ class AccountPage extends Component {
     }
   };
 
-  removeModalOpen = e => {
-    this.setState({
-      removeModalStatus: true,
-      currentLeaveName: e.target.name,
-      currentLeaveId: e.target.id,
-    });
+  modalOpen = e => {
+    switch (e.target.getAttribute('action')) {
+      case 'leave': {
+        return this.setState({
+          leaveModalStatus: true,
+          currentLeaveName: e.target.name,
+          currentLeaveId: e.target.id,
+        });
+      }
+
+      case 'create': {
+        return this.setState({
+          createModalStatus: true,
+        });
+      }
+
+      default:
+        return null;
+    }
   };
 
-  removeModalClose = () => {
-    this.setState({ removeModalStatus: false });
+  modalClose = () => {
+    this.setState({ leaveModalStatus: false, createModalStatus: false });
   };
 
   render() {
@@ -84,9 +99,11 @@ class AccountPage extends Component {
       nameAltered,
       phoneAltered,
       emailAltered,
-      removeModalStatus,
+      leaveModalStatus,
       currentLeaveName,
       currentLeaveId,
+      createModalStatus,
+      currentCreateName,
     } = this.state;
     const panes = [
       {
@@ -117,11 +134,13 @@ class AccountPage extends Component {
               { _id: 'asdf', name: 'group one' },
               { _id: 'asdfg', name: 'group two' },
             ]}
-            removeModalStatus={removeModalStatus}
-            removeModalOpen={this.removeModalOpen}
-            removeModalClose={this.removeModalClose}
+            modalOpen={this.modalOpen}
+            modalClose={this.modalClose}
+            handleChange={this.handleChange}
+            leaveModalStatus={leaveModalStatus}
             currentLeaveName={currentLeaveName}
-            currentLeaveId={currentLeaveId}
+            createModalStatus={createModalStatus}
+            currentCreateName={currentCreateName}
           />
         ),
       },

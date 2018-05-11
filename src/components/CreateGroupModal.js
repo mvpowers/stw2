@@ -1,57 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal } from 'semantic-ui-react';
+import { Button, Modal, Form } from 'semantic-ui-react';
 
 const CreateGroupModal = ({
-  modalStatus,
+  createModalStatus,
   modalOpen,
   modalClose,
-  groupId,
-  groupName,
-  currentLeaveName,
+  handleChange,
+  currentCreateName,
 }) => (
   <Modal
     trigger={
-      <Button
-        basic
-        fluid
-        color="red"
-        onClick={modalOpen}
-        id={groupId}
-        name={groupName}
-      >
-        Leave Group
+      <Button basic fluid color="pink" onClick={modalOpen} action="create">
+        Create Group
       </Button>
     }
     dimmer="blurring"
-    open={modalStatus}
+    open={createModalStatus}
     onClose={modalClose}
     size="mini"
   >
-    <Modal.Header>Leave Group</Modal.Header>
+    <Modal.Header>Create Group</Modal.Header>
     <Modal.Content>
-      <p>Are you sure you want to leave {`"${currentLeaveName}"`}?</p>
+      <Form>
+        <Form.Input
+          label="New Group Name"
+          id="currentCreateName"
+          value={currentCreateName}
+          placeholder="Group Name"
+          onChange={handleChange}
+        />
+        <Form.Button
+          disabled={currentCreateName === ''}
+          basic
+          fluid
+          color="green"
+          onClick={modalClose}
+        >
+          Submit
+        </Form.Button>
+      </Form>
     </Modal.Content>
-    <Modal.Actions>
-      <Button
-        negative
-        icon="remove"
-        labelPosition="right"
-        content="No"
-        onClick={modalClose}
-      />
-      <Button positive icon="checkmark" labelPosition="right" content="Yes" />
-    </Modal.Actions>
   </Modal>
 );
 
 CreateGroupModal.propTypes = {
-  modalStatus: PropTypes.bool.isRequired,
+  createModalStatus: PropTypes.bool.isRequired,
   modalOpen: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
-  groupId: PropTypes.string.isRequired,
-  groupName: PropTypes.string.isRequired,
-  currentLeaveName: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  currentCreateName: PropTypes.string.isRequired,
 };
 
 export default CreateGroupModal;
