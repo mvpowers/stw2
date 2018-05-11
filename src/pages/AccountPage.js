@@ -40,6 +40,8 @@ class AccountPage extends Component {
       currentLeaveName: '',
       createModalStatus: false,
       currentCreateName: '',
+      joinModalStatus: false,
+      currentJoinId: '',
     };
   }
 
@@ -71,7 +73,6 @@ class AccountPage extends Component {
         return this.setState({
           leaveModalStatus: true,
           currentLeaveName: e.target.name,
-          currentLeaveId: e.target.id,
         });
       }
 
@@ -81,13 +82,23 @@ class AccountPage extends Component {
         });
       }
 
+      case 'join': {
+        return this.setState({
+          joinModalStatus: true,
+        });
+      }
+
       default:
         return null;
     }
   };
 
   modalClose = () => {
-    this.setState({ leaveModalStatus: false, createModalStatus: false });
+    this.setState({
+      leaveModalStatus: false,
+      createModalStatus: false,
+      joinModalStatus: false,
+    });
   };
 
   render() {
@@ -101,9 +112,10 @@ class AccountPage extends Component {
       emailAltered,
       leaveModalStatus,
       currentLeaveName,
-      currentLeaveId,
       createModalStatus,
       currentCreateName,
+      joinModalStatus,
+      currentJoinId,
     } = this.state;
     const panes = [
       {
@@ -141,6 +153,8 @@ class AccountPage extends Component {
             currentLeaveName={currentLeaveName}
             createModalStatus={createModalStatus}
             currentCreateName={currentCreateName}
+            joinModalStatus={joinModalStatus}
+            currentJoinId={currentJoinId}
           />
         ),
       },

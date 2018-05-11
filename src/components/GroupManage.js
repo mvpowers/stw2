@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Card } from 'semantic-ui-react';
-import { RemoveGroupModal, CreateGroupModal } from './';
+import { Card } from 'semantic-ui-react';
+import { RemoveGroupModal, CreateGroupModal, JoinGroupModal } from './';
 
 const GroupManage = ({
   groups,
@@ -12,11 +12,19 @@ const GroupManage = ({
   currentLeaveName,
   createModalStatus,
   currentCreateName,
+  joinModalStatus,
+  currentJoinId,
 }) => (
   <div>
-    <Button basic color="purple" fluid className="additional-btn">
-      Join Group
-    </Button>
+    <div className="additional-btn">
+      <JoinGroupModal
+        joinModalStatus={joinModalStatus}
+        currentJoinId={currentJoinId}
+        modalOpen={modalOpen}
+        modalClose={modalClose}
+        handleChange={handleChange}
+      />
+    </div>
     <div className="additional-btn">
       <CreateGroupModal
         createModalStatus={createModalStatus}
@@ -56,11 +64,13 @@ GroupManage.propTypes = {
   ).isRequired,
   leaveModalStatus: PropTypes.bool.isRequired,
   createModalStatus: PropTypes.bool.isRequired,
+  joinModalStatus: PropTypes.bool.isRequired,
   modalOpen: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   currentLeaveName: PropTypes.string.isRequired,
   currentCreateName: PropTypes.string.isRequired,
+  currentJoinId: PropTypes.string.isRequired,
 };
 
 export default GroupManage;

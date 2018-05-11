@@ -15,3 +15,4 @@ export { default as AccountDetailsForm } from './AccountDetailsForm';
 export { default as GroupManage } from './GroupManage';
 export { default as RemoveGroupModal } from './RemoveGroupModal';
 export { default as CreateGroupModal } from './CreateGroupModal';
+export { default as JoinGroupModal } from './JoinGroupModal';
