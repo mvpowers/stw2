@@ -36,7 +36,7 @@ class AccountPage extends Component {
       nameAltered: false,
       phoneAltered: false,
       emailAltered: false,
-      modalStatus: false,
+      removeModalStatus: false,
       currentLeaveName: '',
     };
   }
@@ -63,16 +63,16 @@ class AccountPage extends Component {
     }
   };
 
-  modalOpen = e => {
+  removeModalOpen = e => {
     this.setState({
-      modalStatus: true,
+      removeModalStatus: true,
       currentLeaveName: e.target.name,
       currentLeaveId: e.target.id,
     });
   };
 
-  modalClose = () => {
-    this.setState({ modalStatus: false });
+  removeModalClose = () => {
+    this.setState({ removeModalStatus: false });
   };
 
   render() {
@@ -84,7 +84,7 @@ class AccountPage extends Component {
       nameAltered,
       phoneAltered,
       emailAltered,
-      modalStatus,
+      removeModalStatus,
       currentLeaveName,
       currentLeaveId,
     } = this.state;
@@ -117,9 +117,9 @@ class AccountPage extends Component {
               { _id: 'asdf', name: 'group one' },
               { _id: 'asdfg', name: 'group two' },
             ]}
-            modalStatus={modalStatus}
-            modalOpen={this.modalOpen}
-            modalClose={this.modalClose}
+            removeModalStatus={removeModalStatus}
+            removeModalOpen={this.removeModalOpen}
+            removeModalClose={this.removeModalClose}
             currentLeaveName={currentLeaveName}
             currentLeaveId={currentLeaveId}
           />

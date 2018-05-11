@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import { Button, Card } from 'semantic-ui-react';
 import { RemoveGroupModal } from './';
 
-const GroupManage = ({ groups, modalStatus, modalOpen, modalClose, currentLeaveName }) => (
+const GroupManage = ({
+  groups,
+  removeModalStatus,
+  removeModalOpen,
+  removeModalClose,
+  currentLeaveName,
+}) => (
   <div>
     <Button basic color="green" fluid className="additional-btn">
       Join Group
@@ -18,9 +24,9 @@ const GroupManage = ({ groups, modalStatus, modalOpen, modalClose, currentLeaveN
         </Card.Content>
         <Card.Content>
           <RemoveGroupModal
-            modalClose={modalClose}
-            modalOpen={modalOpen}
-            modalStatus={modalStatus}
+            removeModalClose={removeModalClose}
+            removeModalOpen={removeModalOpen}
+            removeModalStatus={removeModalStatus}
             groupId={group._id}
             groupName={group.name}
             currentLeaveName={currentLeaveName}
@@ -38,9 +44,9 @@ GroupManage.propTypes = {
       name: PropTypes.string,
     }),
   ).isRequired,
-  modalStatus: PropTypes.bool.isRequired,
-  modalOpen: PropTypes.func.isRequired,
-  modalClose: PropTypes.func.isRequired,
+  removeModalStatus: PropTypes.bool.isRequired,
+  removeModalOpen: PropTypes.func.isRequired,
+  removeModalClose: PropTypes.func.isRequired,
 };
 
 export default GroupManage;
