@@ -46,6 +46,7 @@ const userReducer = (state = initialState, action) => {
         signupError: [],
         userUpdateError: [],
         userUpdateMessage: '',
+        newRegister: false,
       };
 
     case TOKEN_PENDING:

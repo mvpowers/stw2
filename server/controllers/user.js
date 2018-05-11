@@ -129,7 +129,8 @@ exports.updatePassword = (req, res) => {
       { $set: { password: req.body.newPassword } },
       (error, savedData) => {
         if (error) {
-          return res.status(500);
+          console.log(error);
+          return res.status(500).send(error);
         }
         return res.send(savedData);
       },

@@ -7,6 +7,7 @@ import { ForgotPasswordForm, NewPasswordForm } from '../components';
 import {
   createPasswordResetToken,
   updatePassword,
+  clearUserErrors,
 } from '../store/user/actions';
 
 class ResetPage extends Component {
@@ -19,6 +20,12 @@ class ResetPage extends Component {
     };
   }
 
+  componentDidMount() {
+    const { user, clearUserErrors } = this.props;
+    if (user.newRegister) {
+      clearUserErrors();
+    }
+  }
   componentDidUpdate() {
     const { user, history } = this.props;
     if (user.newRegister) {
@@ -91,6 +98,7 @@ ResetPage.propTypes = {
     }),
   }).isRequired,
   createPasswordResetToken: PropTypes.func.isRequired,
+  clearUserErrors: PropTypes.func.isRequired,
   updatePassword: PropTypes.func.isRequired,
   user: PropTypes.shape({
     resetError: PropTypes.arrayOf(PropTypes.string),
@@ -107,6 +115,7 @@ const mapDispatchToProps = dispatch =>
     {
       createPasswordResetToken,
       updatePassword,
+      clearUserErrors,
     },
     dispatch,
   );
