@@ -12,3 +12,5 @@ export { default as Wait } from './Wait';
 export { default as ForgotPasswordForm } from './ForgotPasswordForm';
 export { default as NewPasswordForm } from './NewPasswordForm';
 export { default as AccountDetailsForm } from './AccountDetailsForm';
+export { default as GroupManage } from './GroupManage';
+export { default as RemoveGroupModal } from './RemoveGroupModal';

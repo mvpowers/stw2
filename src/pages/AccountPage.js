@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Segment, Tab } from 'semantic-ui-react';
-import { AccountDetailsForm } from '../components';
+import { AccountDetailsForm, GroupManage } from '../components';
 import { updateUser, clearUserErrors } from '../store/user/actions';
 
 class AccountPage extends Component {
@@ -20,6 +20,8 @@ class AccountPage extends Component {
         nameAltered: false,
         phoneAltered: false,
         emailAltered: false,
+        currentLeaveName: '',
+        currentLeaveId: '',
       };
     }
     return null;
@@ -34,6 +36,8 @@ class AccountPage extends Component {
       nameAltered: false,
       phoneAltered: false,
       emailAltered: false,
+      modalStatus: false,
+      currentLeaveName: '',
     };
   }
 
@@ -59,6 +63,18 @@ class AccountPage extends Component {
     }
   };
 
+  modalOpen = e => {
+    this.setState({
+      modalStatus: true,
+      currentLeaveName: e.target.name,
+      currentLeaveId: e.target.id,
+    });
+  };
+
+  modalClose = () => {
+    this.setState({ modalStatus: false });
+  };
+
   render() {
     const { updateUser, user } = this.props;
     const {
@@ -68,6 +84,9 @@ class AccountPage extends Component {
       nameAltered,
       phoneAltered,
       emailAltered,
+      modalStatus,
+      currentLeaveName,
+      currentLeaveId,
     } = this.state;
     const panes = [
       {
@@ -92,7 +111,19 @@ class AccountPage extends Component {
       },
       {
         menuItem: { key: 'group', icon: 'users', content: 'Groups' },
-        render: () => <Tab.Pane>Tab 2 Content</Tab.Pane>,
+        render: () => (
+          <GroupManage
+            groups={[
+              { _id: 'asdf', name: 'group one' },
+              { _id: 'asdfg', name: 'group two' },
+            ]}
+            modalStatus={modalStatus}
+            modalOpen={this.modalOpen}
+            modalClose={this.modalClose}
+            currentLeaveName={currentLeaveName}
+            currentLeaveId={currentLeaveId}
+          />
+        ),
       },
     ];
 
