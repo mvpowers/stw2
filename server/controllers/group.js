@@ -47,10 +47,14 @@ exports.removeUserFromGroup = (req, res) => {
   return Group.findByIdAndUpdate(
     groupId,
     { $pull: { members: id } },
-    { new: true },
     (err, data) => {
       if (err) return res.status(500).send('Unable to remove user from group');
-      return res.json(data);
+      if (!data) return res.status(500).send('Unable to find group');
+      Group.find({ members: id }, (error, groups) => {
+        if (error) return res.status(500).send('Unable to retrieve groups');
+        // TODO remove unnecessary data from response
+        return res.send({ groups, deleted: data.name });
+      });
     },
   );
 };

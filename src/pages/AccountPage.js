@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Segment, Tab } from 'semantic-ui-react';
 import { AccountDetailsForm, GroupManage } from '../components';
 import { updateUser, clearUserErrors } from '../store/user/actions';
-import { createGroup } from '../store/group/actions';
+import { createGroup, leaveGroup } from '../store/group/actions';
 
 class AccountPage extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -39,6 +39,7 @@ class AccountPage extends Component {
       emailAltered: false,
       leaveModalStatus: false,
       currentLeaveName: '',
+      currentLeaveId: '',
       createModalStatus: false,
       currentCreateName: '',
       joinModalStatus: false,
@@ -74,6 +75,7 @@ class AccountPage extends Component {
         return this.setState({
           leaveModalStatus: true,
           currentLeaveName: e.target.name,
+          currentLeaveId: e.target.id,
         });
       }
 
@@ -104,7 +106,12 @@ class AccountPage extends Component {
 
   submitNewGroup = (token, name) => {
     this.props.createGroup(token, name);
-    this.setState({ currentCreateName: '' });
+    this.setState({ currentCreateName: '', createModalStatus: false });
+  };
+
+  submitLeaveGroup = (token, name) => {
+    this.props.leaveGroup(token, name);
+    this.setState({ leaveModalStatus: false });
   };
 
   render() {
@@ -118,6 +125,7 @@ class AccountPage extends Component {
       emailAltered,
       leaveModalStatus,
       currentLeaveName,
+      currentLeaveId,
       createModalStatus,
       currentCreateName,
       joinModalStatus,
@@ -153,8 +161,10 @@ class AccountPage extends Component {
             modalClose={this.modalClose}
             handleChange={this.handleChange}
             submitNewGroup={this.submitNewGroup}
+            submitLeaveGroup={this.submitLeaveGroup}
             leaveModalStatus={leaveModalStatus}
             currentLeaveName={currentLeaveName}
+            currentLeaveId={currentLeaveId}
             createModalStatus={createModalStatus}
             currentCreateName={currentCreateName}
             joinModalStatus={joinModalStatus}
@@ -189,6 +199,7 @@ AccountPage.propTypes = {
   updateUser: PropTypes.func.isRequired,
   clearUserErrors: PropTypes.func.isRequired,
   createGroup: PropTypes.func.isRequired,
+  leaveGroup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -202,6 +213,7 @@ const mapDispatchToProps = dispatch =>
       updateUser,
       clearUserErrors,
       createGroup,
+      leaveGroup,
     },
     dispatch,
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Message, Label } from 'semantic-ui-react';
+import { Card, Message } from 'semantic-ui-react';
 import {
   RemoveGroupModal,
   CreateGroupModal,
@@ -15,11 +15,13 @@ const GroupManage = ({
   modalClose,
   handleChange,
   currentLeaveName,
+  currentLeaveId,
   createModalStatus,
   currentCreateName,
   joinModalStatus,
   currentJoinId,
   submitNewGroup,
+  submitLeaveGroup,
   token,
   error,
   successMessage,
@@ -83,6 +85,9 @@ const GroupManage = ({
             groupId={group._id}
             groupName={group.name}
             currentLeaveName={currentLeaveName}
+            currentLeaveId={currentLeaveId}
+            submitLeaveGroup={submitLeaveGroup}
+            token={token}
           />
         </Card.Content>
       </Card>
@@ -104,7 +109,9 @@ GroupManage.propTypes = {
   modalClose: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   submitNewGroup: PropTypes.func.isRequired,
+  submitLeaveGroup: PropTypes.func.isRequired,
   currentLeaveName: PropTypes.string.isRequired,
+  currentLeaveId: PropTypes.string.isRequired,
   currentCreateName: PropTypes.string.isRequired,
   currentJoinId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,

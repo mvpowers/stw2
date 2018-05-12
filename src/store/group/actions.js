@@ -8,6 +8,9 @@ import {
   NEW_GROUP_PENDING,
   NEW_GROUP_SUCCESS,
   NEW_GROUP_FAIL,
+  LEAVE_GROUP_PENDING,
+  LEAVE_GROUP_SUCCESS,
+  LEAVE_GROUP_FAIL,
 } from '../constants';
 
 const getGroups = data => ({
@@ -27,6 +30,16 @@ const newGroup = data => ({
 
 const failedNewGroup = data => ({
   type: NEW_GROUP_FAIL,
+  payload: data,
+});
+
+const removeUserFromGroup = data => ({
+  type: LEAVE_GROUP_SUCCESS,
+  payload: data,
+});
+
+const failedRemoveUserFromGroup = data => ({
+  type: LEAVE_GROUP_FAIL,
   payload: data,
 });
 
@@ -61,5 +74,21 @@ export const createGroup = (token, name) => dispatch => {
     })
     .catch(err => {
       dispatch(failedNewGroup(err.response.data));
+    });
+};
+
+export const leaveGroup = (token, groupId) => dispatch => {
+  dispatch({ type: LEAVE_GROUP_PENDING });
+  return axios
+    .patch(
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/leave`,
+      { groupId },
+      { headers: { 'x-access-token': token } },
+    )
+    .then(res => {
+      dispatch(removeUserFromGroup(res.data));
+    })
+    .catch(err => {
+      dispatch(failedRemoveUserFromGroup(err.response.data));
     });
 };

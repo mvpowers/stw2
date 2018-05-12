@@ -6,6 +6,9 @@ import {
   NEW_GROUP_PENDING,
   NEW_GROUP_SUCCESS,
   NEW_GROUP_FAIL,
+  LEAVE_GROUP_PENDING,
+  LEAVE_GROUP_SUCCESS,
+  LEAVE_GROUP_FAIL,
 } from '../constants';
 
 const initialState = {
@@ -64,6 +67,32 @@ const groupReducer = (state = initialState, action) => {
       };
 
     case NEW_GROUP_FAIL:
+      return {
+        ...state,
+        pending: false,
+        error: [...state.error, action.payload],
+        successMessage: '',
+      };
+
+    case LEAVE_GROUP_PENDING:
+      return {
+        ...state,
+        pending: true,
+        error: [],
+        successMessage: '',
+      };
+
+    case LEAVE_GROUP_SUCCESS:
+      return {
+        ...state,
+        data: action.payload.groups,
+        pending: false,
+        successMessage: `Successfully removed from group "${
+          action.payload.deleted
+        }". I hope your friends don't mind. That's messed up.`,
+      };
+
+    case LEAVE_GROUP_FAIL:
       return {
         ...state,
         pending: false,

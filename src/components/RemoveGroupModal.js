@@ -9,6 +9,9 @@ const RemoveGroupModal = ({
   groupId,
   groupName,
   currentLeaveName,
+  currentLeaveId,
+  submitLeaveGroup,
+  token,
 }) => (
   <Modal
     trigger={
@@ -31,7 +34,7 @@ const RemoveGroupModal = ({
   >
     <Modal.Header>Leave Group</Modal.Header>
     <Modal.Content>
-      <p>Are you sure you want to leave {`"${currentLeaveName}"`}?</p>
+      <p>{`Are you sure you want to leave "${currentLeaveName}"?`}</p>
     </Modal.Content>
     <Modal.Actions>
       <Button
@@ -41,7 +44,13 @@ const RemoveGroupModal = ({
         content="No"
         onClick={modalClose}
       />
-      <Button positive icon="checkmark" labelPosition="right" content="Yes" />
+      <Button
+        positive
+        icon="checkmark"
+        labelPosition="right"
+        content="Yes"
+        onClick={() => submitLeaveGroup(token, currentLeaveId)}
+      />
     </Modal.Actions>
   </Modal>
 );
@@ -50,9 +59,12 @@ RemoveGroupModal.propTypes = {
   leaveModalStatus: PropTypes.bool.isRequired,
   modalOpen: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
+  submitLeaveGroup: PropTypes.func.isRequired,
   groupId: PropTypes.string.isRequired,
   groupName: PropTypes.string.isRequired,
   currentLeaveName: PropTypes.string.isRequired,
+  currentLeaveId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 export default RemoveGroupModal;
