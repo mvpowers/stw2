@@ -39,3 +39,18 @@ exports.newGroup = (req, res) => {
     return res.json(data);
   });
 };
+
+exports.removeUserFromGroup = (req, res) => {
+  const { id } = jwtDecode(req.headers['x-access-token']);
+  const { groupId } = req.body;
+  if (!groupId) return res.status(403).send('Group ID is required');
+  return Group.findByIdAndUpdate(
+    groupId,
+    { $pull: { members: id } },
+    { new: true },
+    (err, data) => {
+      if (err) return res.status(500).send('Unable to remove user from group');
+      return res.json(data);
+    },
+  );
+};
