@@ -8,6 +8,8 @@ const CreateGroupModal = ({
   modalClose,
   handleChange,
   currentCreateName,
+  submitNewGroup,
+  token,
 }) => (
   <Modal
     trigger={
@@ -35,7 +37,7 @@ const CreateGroupModal = ({
           basic
           fluid
           color="green"
-          onClick={modalClose}
+          onClick={() => submitNewGroup(token, currentCreateName)}
         >
           Submit
         </Form.Button>
@@ -49,7 +51,9 @@ CreateGroupModal.propTypes = {
   modalOpen: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
+  submitNewGroup: PropTypes.func.isRequired,
   currentCreateName: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 export default CreateGroupModal;

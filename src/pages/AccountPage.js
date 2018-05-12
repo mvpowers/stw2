@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Segment, Tab } from 'semantic-ui-react';
 import { AccountDetailsForm, GroupManage } from '../components';
 import { updateUser, clearUserErrors } from '../store/user/actions';
+import { createGroup } from '../store/group/actions';
 
 class AccountPage extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -101,8 +102,13 @@ class AccountPage extends Component {
     });
   };
 
+  submitNewGroup = (token, name) => {
+    this.props.createGroup(token, name);
+    this.setState({ currentCreateName: '' });
+  };
+
   render() {
-    const { updateUser, user } = this.props;
+    const { user, updateUser } = this.props;
     const {
       accountName,
       accountPhone,
@@ -149,12 +155,14 @@ class AccountPage extends Component {
             modalOpen={this.modalOpen}
             modalClose={this.modalClose}
             handleChange={this.handleChange}
+            submitNewGroup={this.submitNewGroup}
             leaveModalStatus={leaveModalStatus}
             currentLeaveName={currentLeaveName}
             createModalStatus={createModalStatus}
             currentCreateName={currentCreateName}
             joinModalStatus={joinModalStatus}
             currentJoinId={currentJoinId}
+            token={user.token}
           />
         ),
       },
@@ -173,9 +181,11 @@ AccountPage.propTypes = {
     name: PropTypes.string,
     phone: PropTypes.string,
     email: PropTypes.string,
+    token: PropTypes.string,
   }).isRequired,
   updateUser: PropTypes.func.isRequired,
   clearUserErrors: PropTypes.func.isRequired,
+  createGroup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -187,6 +197,7 @@ const mapDispatchToProps = dispatch =>
     {
       updateUser,
       clearUserErrors,
+      createGroup,
     },
     dispatch,
   );

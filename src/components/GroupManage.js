@@ -14,6 +14,8 @@ const GroupManage = ({
   currentCreateName,
   joinModalStatus,
   currentJoinId,
+  submitNewGroup,
+  token,
 }) => (
   <div>
     <div className="additional-btn">
@@ -32,6 +34,8 @@ const GroupManage = ({
         modalClose={modalClose}
         currentCreateName={currentCreateName}
         handleChange={handleChange}
+        submitNewGroup={submitNewGroup}
+        token={token}
       />
     </div>
     {groups.map(group => (
@@ -68,9 +72,11 @@ GroupManage.propTypes = {
   modalOpen: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
+  submitNewGroup: PropTypes.func.isRequired,
   currentLeaveName: PropTypes.string.isRequired,
   currentCreateName: PropTypes.string.isRequired,
   currentJoinId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 export default GroupManage;
