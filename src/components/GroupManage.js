@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Message } from 'semantic-ui-react';
+import { Card, Message, Label } from 'semantic-ui-react';
 import {
   RemoveGroupModal,
   CreateGroupModal,
@@ -59,10 +59,20 @@ const GroupManage = ({
         token={token}
       />
     </div>
+    {groups.length === 0 && (
+      <Message
+        warning
+        floating
+        icon="remove"
+        header="No Groups"
+        content="Please join or create a group to get this party started"
+      />
+    )}
     {groups.map(group => (
       <Card fluid key={group._id}>
         <Card.Content>
           <Card.Header>{group.name}</Card.Header>
+          <Card.Meta>{`Group ID: ${group.groupId}`}</Card.Meta>
         </Card.Content>
         <Card.Content>
           <RemoveGroupModal

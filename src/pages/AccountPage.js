@@ -148,10 +148,7 @@ class AccountPage extends Component {
         menuItem: { key: 'group', icon: 'users', content: 'Groups' },
         render: () => (
           <GroupManage
-            groups={[
-              { _id: 'asdf', name: 'group one' },
-              { _id: 'asdfg', name: 'group two' },
-            ]}
+            groups={groups.data}
             modalOpen={this.modalOpen}
             modalClose={this.modalClose}
             handleChange={this.handleChange}

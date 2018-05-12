@@ -19,7 +19,7 @@ exports.addOption = (req, res) => {
 exports.retrieveGroups = (req, res) => {
   const { id } = jwtDecode(req.headers['x-access-token']);
   Group.find({ members: id }, (err, data) => {
-    if (err) return res.send(err);
+    if (err) return res.status(500).send('Unable to retrieve groups');
     // TODO remove unnecessary data from response
     return res.json(data);
   });
