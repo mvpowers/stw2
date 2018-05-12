@@ -108,7 +108,7 @@ class AccountPage extends Component {
   };
 
   render() {
-    const { user, updateUser } = this.props;
+    const { user, groups, updateUser } = this.props;
     const {
       accountName,
       accountPhone,
@@ -163,6 +163,8 @@ class AccountPage extends Component {
             joinModalStatus={joinModalStatus}
             currentJoinId={currentJoinId}
             token={user.token}
+            error={groups.error}
+            successMessage={groups.successMessage}
           />
         ),
       },
@@ -183,6 +185,10 @@ AccountPage.propTypes = {
     email: PropTypes.string,
     token: PropTypes.string,
   }).isRequired,
+  groups: PropTypes.shape({
+    error: PropTypes.arrayOf(PropTypes.string),
+    successMessage: PropTypes.string,
+  }).isRequired,
   updateUser: PropTypes.func.isRequired,
   clearUserErrors: PropTypes.func.isRequired,
   createGroup: PropTypes.func.isRequired,
@@ -190,6 +196,7 @@ AccountPage.propTypes = {
 
 const mapStateToProps = state => ({
   user: state.user,
+  groups: state.groups,
 });
 
 const mapDispatchToProps = dispatch =>

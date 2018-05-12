@@ -45,5 +45,6 @@ a.ui.fluid.card:hover {
 
 .altered-input {
   background-color: rgb(255, 250, 243) !important;
-  border-color: rgb(87, 58, 8) !important;
+  border-color: rgb(112, 87, 44) !important;
+  transition: all 0.5s ease !important;
 }

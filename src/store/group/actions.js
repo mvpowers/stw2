@@ -60,6 +60,6 @@ export const createGroup = (token, name) => dispatch => {
       dispatch(newGroup(res.data));
     })
     .catch(err => {
-      dispatch(failedNewGroup(err));
+      dispatch(failedNewGroup(err.response.data));
     });
 };

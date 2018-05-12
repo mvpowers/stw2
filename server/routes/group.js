@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post('/option', group.addOption);
 router.get('/', verifyToken, group.retrieveGroups);
-router.post('/new', group.newGroup);
+router.post('/new', verifyToken, group.newGroup);
 
 module.exports = router;

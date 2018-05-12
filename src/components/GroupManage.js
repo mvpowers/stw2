@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'semantic-ui-react';
-import { RemoveGroupModal, CreateGroupModal, JoinGroupModal } from './';
+import { Card, Message } from 'semantic-ui-react';
+import {
+  RemoveGroupModal,
+  CreateGroupModal,
+  JoinGroupModal,
+  ErrorMessage,
+} from './';
 
 const GroupManage = ({
   groups,
@@ -16,8 +21,24 @@ const GroupManage = ({
   currentJoinId,
   submitNewGroup,
   token,
+  error,
+  successMessage,
 }) => (
   <div>
+    {error.length > 0 && (
+      <div className="additional-btn">
+        <ErrorMessage header="Group Update Failed" errorArr={error} />
+      </div>
+    )}
+    {successMessage && (
+      <div className="additional-btn">
+        <Message
+          success
+          header="Group Update Successful"
+          content={successMessage}
+        />
+      </div>
+    )}
     <div className="additional-btn">
       <JoinGroupModal
         joinModalStatus={joinModalStatus}
@@ -77,6 +98,8 @@ GroupManage.propTypes = {
   currentCreateName: PropTypes.string.isRequired,
   currentJoinId: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
+  successMessage: PropTypes.string.isRequired,
+  error: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default GroupManage;

@@ -11,6 +11,7 @@ import {
 const initialState = {
   data: [],
   error: [],
+  successMessage: '',
 };
 
 const groupReducer = (state = initialState, action) => {
@@ -39,12 +40,15 @@ const groupReducer = (state = initialState, action) => {
       return {
         ...state,
         error: [],
+        successMessage: '',
       };
 
     case NEW_GROUP_PENDING:
       return {
         ...state,
         pending: true,
+        error: [],
+        successMessage: '',
       };
 
     case NEW_GROUP_SUCCESS:
@@ -52,6 +56,11 @@ const groupReducer = (state = initialState, action) => {
         ...state,
         data: [...state.data, action.payload],
         pending: false,
+        successMessage: `Group "${
+          action.payload.name
+        }" created successfully. Send Group ID ${
+          action.payload.groupId
+        } to your friends to join.`,
       };
 
     case NEW_GROUP_FAIL:
@@ -59,6 +68,7 @@ const groupReducer = (state = initialState, action) => {
         ...state,
         pending: false,
         error: [...state.error, action.payload],
+        successMessage: '',
       };
 
     default:

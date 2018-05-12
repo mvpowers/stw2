@@ -35,7 +35,7 @@ exports.newGroup = (req, res) => {
     groupId: Math.floor(Math.random() * 900000) + 100000,
   });
   group.save((err, data) => {
-    if (err) return res.status(500).send(err);
+    if (err) return res.status(500).send('Unable to create new group');
     return res.json(data);
   });
 };
