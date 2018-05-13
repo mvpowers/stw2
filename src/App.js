@@ -7,6 +7,7 @@ import ResultsPage from './pages/ResultsPage';
 import LoginPage from './pages/LoginPage';
 import ResetPage from './pages/ResetPage';
 import AccountPage from './pages/AccountPage';
+import AdminPage from './pages/AdminPage';
 
 const flexStyle = {
   display: 'flex',
@@ -26,6 +27,8 @@ const App = () => (
     <Route path="/" component={TopNav} />
     <Container style={scrollStyle}>
       <Switch>
+        <Route path="/admin" exact component={AdminPage} />
+        <Route path="/admin/:groupId" component={AdminPage} />
         <Route path="/account" component={AccountPage} />
         <Route path="/vote" component={VotePage} />
         <Route path="/results" component={ResultsPage} />

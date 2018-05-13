@@ -27,6 +27,9 @@ class TopNav extends Component {
                   <Dropdown.Item as={Link} to="/account">
                     Account
                   </Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/admin">
+                    Admin
+                  </Dropdown.Item>
                   <Dropdown.Item as={Link} to="/vote">
                     Vote
                   </Dropdown.Item>
