@@ -12,12 +12,16 @@ import {
   ADMIN_GROUPS_PENDING,
   ADMIN_GROUPS_SUCCESS,
   ADMIN_GROUPS_FAIL,
+  SINGLE_GROUP_PENDING,
+  SINGLE_GROUP_SUCCESS,
+  SINGLE_GROUP_FAIL,
 } from '../constants';
 
 const initialState = {
   data: [],
   error: [],
   adminGroups: [],
+  editAdminGroup: {},
   successMessage: '',
 };
 
@@ -121,6 +125,29 @@ const groupReducer = (state = initialState, action) => {
       };
 
     case ADMIN_GROUPS_FAIL:
+      return {
+        ...state,
+        pending: false,
+        error: [...state.error, action.payload],
+      };
+
+    case SINGLE_GROUP_PENDING:
+      return {
+        ...state,
+        pending: true,
+        error: [],
+        successMessage: '',
+        editAdminGroup: {},
+      };
+
+    case SINGLE_GROUP_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        editAdminGroup: action.payload,
+      };
+
+    case SINGLE_GROUP_FAIL:
       return {
         ...state,
         pending: false,

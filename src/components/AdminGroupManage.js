@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
-import { Segment, Tab, Header, Icon } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { Tab, Header, Icon } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { AdminVoteOptions } from './';
+import { fetchSingleAdminGroup } from '../store/group/actions';
 
 class AdminGroupManage extends Component {
+  componentDidMount() {
+    const { groupId, user, history, fetchSingleAdminGroup } = this.props;
+    if (!user.token) {
+      history.push('/login');
+    }
+    fetchSingleAdminGroup(user.token, groupId);
+  }
   render() {
+    const { editAdminGroup } = this.props.groups;
     const panes = [
       {
         menuItem: {
@@ -10,25 +23,55 @@ class AdminGroupManage extends Component {
           icon: 'street view',
           content: 'Vote Options',
         },
-        render: () => <div>pane one</div>,
+        render: () => <AdminVoteOptions options={editAdminGroup.options} />,
       },
       {
         menuItem: { key: 'users', icon: 'users', content: 'Users' },
         render: () => <div>pane two</div>,
       },
     ];
-
     return (
-      <Segment>
+      <div>
         <Header as="h2" icon textAlign="center">
           <Icon name="cubes" size="mini" circular />
-          <Header.Content>Group Hello World</Header.Content>
-          <Header.Subheader>Group ID: 45</Header.Subheader>
+          <Header.Content>{editAdminGroup.name}</Header.Content>
+          <Header.Subheader>Group ID: {editAdminGroup.groupId}</Header.Subheader>
         </Header>
         <Tab panes={panes} />
-      </Segment>
+      </div>
     );
   }
 }
 
-export default AdminGroupManage;
+AdminGroupManage.propTypes = {
+  fetchSingleAdminGroup: PropTypes.func.isRequired,
+  groupId: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    token: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  groups: PropTypes.shape({
+    editAdminGroup: {
+      user: PropTypes.shape({
+        token: PropTypes.string.isRequired,
+      }).isRequired,
+    },
+  }).isRequired,
+};
+
+const mapStateToProps = state => ({
+  user: state.user,
+  groups: state.groups,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchSingleAdminGroup,
+    },
+    dispatch,
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminGroupManage);

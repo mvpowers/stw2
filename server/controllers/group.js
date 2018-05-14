@@ -47,6 +47,18 @@ exports.retrieveAdminGroups = (req, res) => {
   });
 };
 
+exports.retrieveSingleAdminGroup = (req, res) => {
+  const { id } = jwtDecode(req.headers['x-access-token']);
+  const { groupId } = req.params;
+
+  if (!groupId) return res.status(403).send('Group ID is required');
+  return Group.findOne({ admin: id, groupId }, (err, data) => {
+    if (err) return res.status(500).send('Unable to retrieve group');
+    if (data.length === 0) return res.status(404).send('Group not found');
+    return res.json(data);
+  });
+};
+
 exports.newGroup = (req, res) => {
   const { id } = jwtDecode(req.headers['x-access-token']);
   const { name } = req.body;

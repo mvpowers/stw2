@@ -14,6 +14,9 @@ import {
   ADMIN_GROUPS_PENDING,
   ADMIN_GROUPS_SUCCESS,
   ADMIN_GROUPS_FAIL,
+  SINGLE_GROUP_PENDING,
+  SINGLE_GROUP_SUCCESS,
+  SINGLE_GROUP_FAIL,
 } from '../constants';
 
 const getGroups = data => ({
@@ -53,6 +56,16 @@ const getAdminGroups = data => ({
 
 const failedAdminGroups = data => ({
   type: ADMIN_GROUPS_FAIL,
+  payload: data,
+});
+
+const getSingleAdminGroup = data => ({
+  type: SINGLE_GROUP_SUCCESS,
+  payload: data,
+});
+
+const failedSingleAdminGroup = data => ({
+  type: SINGLE_GROUP_FAIL,
   payload: data,
 });
 
@@ -109,9 +122,22 @@ export const leaveGroup = (token, groupId) => dispatch => {
 export const fetchAdminGroups = token => dispatch => {
   dispatch({ type: ADMIN_GROUPS_PENDING });
   return axios
-    .get(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/admin`, {
-      headers: { 'x-access-token': token },
-    })
+    .get(
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/admin`,
+      {
+        headers: { 'x-access-token': token },
+      },
+    )
     .then(res => dispatch(getAdminGroups(res.data)))
     .catch(err => dispatch(failedAdminGroups(err.response.data)));
+};
+
+export const fetchSingleAdminGroup = (token, groupId) => dispatch => {
+  dispatch({ type: SINGLE_GROUP_PENDING });
+  return axios
+    .get(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/admin/edit/${groupId}`, {
+      headers: { 'x-access-token': token },
+    })
+    .then(res => dispatch(getSingleAdminGroup(res.data)))
+    .catch(err => dispatch(failedSingleAdminGroup(err.response.data)));
 };
