@@ -9,11 +9,15 @@ import {
   LEAVE_GROUP_PENDING,
   LEAVE_GROUP_SUCCESS,
   LEAVE_GROUP_FAIL,
+  ADMIN_GROUPS_PENDING,
+  ADMIN_GROUPS_SUCCESS,
+  ADMIN_GROUPS_FAIL,
 } from '../constants';
 
 const initialState = {
   data: [],
   error: [],
+  adminGroups: [],
   successMessage: '',
 };
 
@@ -98,6 +102,29 @@ const groupReducer = (state = initialState, action) => {
         pending: false,
         error: [...state.error, action.payload],
         successMessage: '',
+      };
+
+    case ADMIN_GROUPS_PENDING:
+      return {
+        ...state,
+        pending: true,
+        error: [],
+        successMessage: '',
+        adminGroups: [],
+      };
+
+    case ADMIN_GROUPS_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        adminGroups: action.payload,
+      };
+
+    case ADMIN_GROUPS_FAIL:
+      return {
+        ...state,
+        pending: false,
+        error: [...state.error, action.payload],
       };
 
     default:

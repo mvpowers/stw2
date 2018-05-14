@@ -80,8 +80,9 @@ class VotePage extends Component {
     } = this.state;
     return (
       <div>
-        {result.pending && <Wait />}
-        {!result.pending && (
+        {result.pending ? (
+          <Wait />
+        ) : (
           <div>
             <Question question={result.question} />
             {groups.data.map(group => (

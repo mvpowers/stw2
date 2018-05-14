@@ -11,6 +11,9 @@ import {
   LEAVE_GROUP_PENDING,
   LEAVE_GROUP_SUCCESS,
   LEAVE_GROUP_FAIL,
+  ADMIN_GROUPS_PENDING,
+  ADMIN_GROUPS_SUCCESS,
+  ADMIN_GROUPS_FAIL,
 } from '../constants';
 
 const getGroups = data => ({
@@ -40,6 +43,16 @@ const removeUserFromGroup = data => ({
 
 const failedRemoveUserFromGroup = data => ({
   type: LEAVE_GROUP_FAIL,
+  payload: data,
+});
+
+const getAdminGroups = data => ({
+  type: ADMIN_GROUPS_SUCCESS,
+  payload: data,
+});
+
+const failedAdminGroups = data => ({
+  type: ADMIN_GROUPS_FAIL,
   payload: data,
 });
 
@@ -91,4 +104,14 @@ export const leaveGroup = (token, groupId) => dispatch => {
     .catch(err => {
       dispatch(failedRemoveUserFromGroup(err.response.data));
     });
+};
+
+export const fetchAdminGroups = token => dispatch => {
+  dispatch({ type: ADMIN_GROUPS_PENDING });
+  return axios
+    .get(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/admin`, {
+      headers: { 'x-access-token': token },
+    })
+    .then(res => dispatch(getAdminGroups(res.data)))
+    .catch(err => dispatch(failedAdminGroups(err.response.data)));
 };

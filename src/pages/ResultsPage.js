@@ -34,8 +34,9 @@ class ResultsPage extends Component {
     const { result, user } = this.props;
     return (
       <div>
-        {result.pending && <Wait />}
-        {!result.pending && (
+        {result.pending ? (
+          <Wait />
+        ) : (
           <Segment basic>
             <Question question={result.question} />
             <Segment>

@@ -5,6 +5,7 @@ const verifyToken = require('../middleware/verifyToken');
 const router = express.Router();
 
 router.get('/', verifyToken, group.retrieveGroups);
+router.get('/admin', verifyToken, group.retrieveAdminGroups);
 router.post('/new', verifyToken, group.newGroup);
 router.patch('/leave', verifyToken, group.removeUserFromGroup);
 router.post('/option', group.addOption);

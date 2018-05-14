@@ -20,8 +20,30 @@ exports.retrieveGroups = (req, res) => {
   const { id } = jwtDecode(req.headers['x-access-token']);
   Group.find({ members: id }, (err, data) => {
     if (err) return res.status(500).send('Unable to retrieve groups');
+    if (!data) return res.status(404).send('No groups found');
     // TODO remove unnecessary data from response
     return res.json(data);
+  });
+};
+
+exports.retrieveAdminGroups = (req, res) => {
+  const { id } = jwtDecode(req.headers['x-access-token']);
+  Group.find({ admin: id }, (err, data) => {
+    if (err)
+      return res.status(500).send('Unable to retrieve administered groups');
+    const cleanData = data.map(group =>
+      Object.assign(
+        {},
+        {
+          _id: group._id,
+          groupId: group.groupId,
+          name: group.name,
+          members: group.members.length,
+          options: group.options.length,
+        },
+      ),
+    );
+    return res.json(cleanData);
   });
 };
 
@@ -50,7 +72,7 @@ exports.removeUserFromGroup = (req, res) => {
     (err, data) => {
       if (err) return res.status(500).send('Unable to remove user from group');
       if (!data) return res.status(500).send('Unable to find group');
-      Group.find({ members: id }, (error, groups) => {
+      return Group.find({ members: id }, (error, groups) => {
         if (error) return res.status(500).send('Unable to retrieve groups');
         // TODO remove unnecessary data from response
         return res.send({ groups, deleted: data.name });
