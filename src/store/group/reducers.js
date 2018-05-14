@@ -21,7 +21,9 @@ const initialState = {
   data: [],
   error: [],
   adminGroups: [],
-  editAdminGroup: {},
+  editAdminGroup: {
+    options: [],
+  },
   successMessage: '',
 };
 
@@ -137,7 +139,9 @@ const groupReducer = (state = initialState, action) => {
         pending: true,
         error: [],
         successMessage: '',
-        editAdminGroup: {},
+        editAdminGroup: {
+          options: [],
+        },
       };
 
     case SINGLE_GROUP_SUCCESS:

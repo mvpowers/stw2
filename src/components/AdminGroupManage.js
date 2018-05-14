@@ -35,7 +35,9 @@ class AdminGroupManage extends Component {
         <Header as="h2" icon textAlign="center">
           <Icon name="cubes" size="mini" circular />
           <Header.Content>{editAdminGroup.name}</Header.Content>
-          <Header.Subheader>Group ID: {editAdminGroup.groupId}</Header.Subheader>
+          <Header.Subheader>
+            Group ID: {editAdminGroup.groupId}
+          </Header.Subheader>
         </Header>
         <Tab panes={panes} />
       </div>
@@ -53,11 +55,7 @@ AdminGroupManage.propTypes = {
     push: PropTypes.func,
   }).isRequired,
   groups: PropTypes.shape({
-    editAdminGroup: {
-      user: PropTypes.shape({
-        token: PropTypes.string.isRequired,
-      }).isRequired,
-    },
+    editAdminGroup: PropTypes.object,
   }).isRequired,
 };
 

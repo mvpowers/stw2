@@ -14,8 +14,8 @@ class LoginPage extends Component {
     super();
     this.state = {
       activeItem: 'signin',
-      signinEmail: '',
-      signinPassword: '',
+      signinEmail: 'fake@fake.com',
+      signinPassword: 'new',
       signupName: '',
       signupEmail: '',
       signupPhone: '',

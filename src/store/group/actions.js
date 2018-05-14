@@ -122,12 +122,9 @@ export const leaveGroup = (token, groupId) => dispatch => {
 export const fetchAdminGroups = token => dispatch => {
   dispatch({ type: ADMIN_GROUPS_PENDING });
   return axios
-    .get(
-      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/admin`,
-      {
-        headers: { 'x-access-token': token },
-      },
-    )
+    .get(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/admin`, {
+      headers: { 'x-access-token': token },
+    })
     .then(res => dispatch(getAdminGroups(res.data)))
     .catch(err => dispatch(failedAdminGroups(err.response.data)));
 };
@@ -135,9 +132,14 @@ export const fetchAdminGroups = token => dispatch => {
 export const fetchSingleAdminGroup = (token, groupId) => dispatch => {
   dispatch({ type: SINGLE_GROUP_PENDING });
   return axios
-    .get(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/admin/edit/${groupId}`, {
-      headers: { 'x-access-token': token },
-    })
+    .get(
+      `http://${config.SERVER_ADDRESS}:${
+        config.SERVER_PORT
+      }/group/admin/edit/${groupId}`,
+      {
+        headers: { 'x-access-token': token },
+      },
+    )
     .then(res => dispatch(getSingleAdminGroup(res.data)))
     .catch(err => dispatch(failedSingleAdminGroup(err.response.data)));
 };
