@@ -19,3 +19,4 @@ export { default as JoinGroupModal } from './JoinGroupModal';
 export { default as AdminGroupManage } from './AdminGroupManage';
 export { default as AdminGroups } from './AdminGroups';
 export { default as AdminVoteOptions } from './AdminVoteOptions';
+export { default as AddOptionModal } from './AddOptionModal';

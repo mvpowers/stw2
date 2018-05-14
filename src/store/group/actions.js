@@ -17,6 +17,9 @@ import {
   SINGLE_GROUP_PENDING,
   SINGLE_GROUP_SUCCESS,
   SINGLE_GROUP_FAIL,
+  ADD_OPTION_PENDING,
+  ADD_OPTION_SUCCESS,
+  ADD_OPTION_FAIL,
 } from '../constants';
 
 const getGroups = data => ({
@@ -66,6 +69,16 @@ const getSingleAdminGroup = data => ({
 
 const failedSingleAdminGroup = data => ({
   type: SINGLE_GROUP_FAIL,
+  payload: data,
+});
+
+const postNewOption = data => ({
+  type: ADD_OPTION_SUCCESS,
+  payload: data,
+});
+
+const failedNewOption = data => ({
+  type: ADD_OPTION_FAIL,
   payload: data,
 });
 
@@ -142,4 +155,23 @@ export const fetchSingleAdminGroup = (token, groupId) => dispatch => {
     )
     .then(res => dispatch(getSingleAdminGroup(res.data)))
     .catch(err => dispatch(failedSingleAdminGroup(err.response.data)));
+};
+
+export const addOption = (token, groupId, name) => dispatch => {
+  dispatch({ type: ADD_OPTION_PENDING });
+  return axios
+    .post(
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/new`,
+      {
+        groupId,
+        name,
+      },
+      { headers: { 'x-access-token': token } },
+    )
+    .then(res => {
+      dispatch(postNewOption(res.data));
+    })
+    .catch(err => {
+      dispatch(failedNewOption(err.response.data));
+    });
 };

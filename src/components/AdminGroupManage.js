@@ -4,9 +4,17 @@ import { Tab, Header, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AdminVoteOptions } from './';
-import { fetchSingleAdminGroup } from '../store/group/actions';
+import { fetchSingleAdminGroup, addOption } from '../store/group/actions';
 
 class AdminGroupManage extends Component {
+  constructor() {
+    super();
+    this.state = {
+      currentOptionName: '',
+      addOptionModalStatus: false,
+    };
+  }
+
   componentDidMount() {
     const { groupId, user, history, fetchSingleAdminGroup } = this.props;
     if (!user.token) {
@@ -14,8 +22,28 @@ class AdminGroupManage extends Component {
     }
     fetchSingleAdminGroup(user.token, groupId);
   }
+
+  submitNewOption = (token, groupId, name) => {
+    const { addOption } = this.props;
+    addOption(token, groupId, name);
+    this.setState({ addOptionModalStatus: false });
+  }
+
+  handleChange = e => {
+    this.setState({ [e.target.id]: e.target.value });
+  };
+
+  modalOpen = () => {
+    this.setState({ addOptionModalStatus: true });
+  };
+
+  modalClose = () => {
+    this.setState({ addOptionModalStatus: false });
+  };
+
   render() {
-    const { editAdminGroup } = this.props.groups;
+    const { groups, user } = this.props;
+    const { currentOptionName, addOptionModalStatus } = this.state;
     const panes = [
       {
         menuItem: {
@@ -23,7 +51,18 @@ class AdminGroupManage extends Component {
           icon: 'street view',
           content: 'Vote Options',
         },
-        render: () => <AdminVoteOptions options={editAdminGroup.options} />,
+        render: () => (
+          <AdminVoteOptions
+            options={groups.editAdminGroup.options}
+            currentOptionName={currentOptionName}
+            token={user.token}
+            addOptionModalStatus={addOptionModalStatus}
+            submitNewOption={this.submitNewOption}
+            modalOpen={this.modalOpen}
+            modalClose={this.modalClose}
+            handleChange={this.handleChange}
+          />
+        ),
       },
       {
         menuItem: { key: 'users', icon: 'users', content: 'Users' },
@@ -34,9 +73,9 @@ class AdminGroupManage extends Component {
       <div>
         <Header as="h2" icon textAlign="center">
           <Icon name="cubes" size="mini" circular />
-          <Header.Content>{editAdminGroup.name}</Header.Content>
+          <Header.Content>{groups.editAdminGroup.name}</Header.Content>
           <Header.Subheader>
-            Group ID: {editAdminGroup.groupId}
+            Group ID: {groups.editAdminGroup.groupId}
           </Header.Subheader>
         </Header>
         <Tab panes={panes} />
@@ -47,6 +86,7 @@ class AdminGroupManage extends Component {
 
 AdminGroupManage.propTypes = {
   fetchSingleAdminGroup: PropTypes.func.isRequired,
+  addOption: PropTypes.func.isRequired,
   groupId: PropTypes.string.isRequired,
   user: PropTypes.shape({
     token: PropTypes.string,
@@ -68,6 +108,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       fetchSingleAdminGroup,
+      addOption,
     },
     dispatch,
   );

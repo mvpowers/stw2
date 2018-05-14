@@ -2,10 +2,14 @@ const Group = require('../models/group');
 const jwtDecode = require('jwt-decode');
 
 exports.addOption = (req, res) => {
-  const { id, name } = req.body;
+  const { groupId, name } = req.body;
+  const { id } = jwtDecode(req.headers['x-access-token']);
+
   if (!name) return res.status(403).send("Option's name is required");
-  return Group.findByIdAndUpdate(
-    id,
+  if (!groupId) return res.status(403).send('Group ID is required');
+
+  return Group.findOneAndUpdate(
+    { _id: groupId, admin: id },
     { $push: { options: { name } } },
     { new: true },
     (err, data) => {
@@ -18,6 +22,7 @@ exports.addOption = (req, res) => {
 
 exports.retrieveGroups = (req, res) => {
   const { id } = jwtDecode(req.headers['x-access-token']);
+
   Group.find({ members: id }, (err, data) => {
     if (err) return res.status(500).send('Unable to retrieve groups');
     if (!data) return res.status(404).send('No groups found');
@@ -28,6 +33,7 @@ exports.retrieveGroups = (req, res) => {
 
 exports.retrieveAdminGroups = (req, res) => {
   const { id } = jwtDecode(req.headers['x-access-token']);
+
   Group.find({ admin: id }, (err, data) => {
     if (err)
       return res.status(500).send('Unable to retrieve administered groups');
@@ -52,6 +58,7 @@ exports.retrieveSingleAdminGroup = (req, res) => {
   const { groupId } = req.params;
 
   if (!groupId) return res.status(403).send('Group ID is required');
+
   return Group.findOne({ admin: id, groupId }, (err, data) => {
     if (err) return res.status(500).send('Unable to retrieve group');
     if (data.length === 0) return res.status(404).send('Group not found');
@@ -77,7 +84,9 @@ exports.newGroup = (req, res) => {
 exports.removeUserFromGroup = (req, res) => {
   const { id } = jwtDecode(req.headers['x-access-token']);
   const { groupId } = req.body;
+
   if (!groupId) return res.status(403).send('Group ID is required');
+
   return Group.findByIdAndUpdate(
     groupId,
     { $pull: { members: id } },

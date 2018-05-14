@@ -1,12 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment, Button, Message, Card } from 'semantic-ui-react';
+import { AddOptionModal } from './';
 
-const AdminVoteOptions = ({ options }) => (
+const AdminVoteOptions = ({
+  options,
+  submitNewOption,
+  addOptionModalStatus,
+  modalOpen,
+  modalClose,
+  handleChange,
+  token,
+  currentOptionName,
+}) => (
   <Segment basic>
-    <Button fluid basic color="teal">
-      Add Option
-    </Button>
+    <AddOptionModal
+      addOptionModalStatus={addOptionModalStatus}
+      modalOpen={modalOpen}
+      modalClose={modalClose}
+      handleChange={handleChange}
+      submitNewOption={submitNewOption}
+      currentOptionName={currentOptionName}
+      token={token}
+    />
     {options.length > 0 ? (
       <div className="additional-btn">
         {options.map(option => (
@@ -37,6 +53,8 @@ AdminVoteOptions.propTypes = {
       name: PropTypes.string,
     }),
   ).isRequired,
+  modalOpen: PropTypes.func.isRequired,
+  modalClose: PropTypes.func.isRequired,
 };
 
 export default AdminVoteOptions;

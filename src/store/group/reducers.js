@@ -15,6 +15,9 @@ import {
   SINGLE_GROUP_PENDING,
   SINGLE_GROUP_SUCCESS,
   SINGLE_GROUP_FAIL,
+  ADD_OPTION_PENDING,
+  ADD_OPTION_SUCCESS,
+  ADD_OPTION_FAIL,
 } from '../constants';
 
 const initialState = {
@@ -152,6 +155,33 @@ const groupReducer = (state = initialState, action) => {
       };
 
     case SINGLE_GROUP_FAIL:
+      return {
+        ...state,
+        pending: false,
+        error: [...state.error, action.payload],
+      };
+
+    case ADD_OPTION_PENDING:
+      return {
+        ...state,
+        pending: true,
+        error: [],
+        successMessage: '',
+        editAdminGroup: {
+          options: [],
+        },
+      };
+
+    case ADD_OPTION_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        editAdminGroup: {
+          options: [...state.editAdminGroup.options, action.payload],
+        },
+      };
+
+    case ADD_OPTION_FAIL:
       return {
         ...state,
         pending: false,
