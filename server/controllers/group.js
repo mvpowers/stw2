@@ -13,7 +13,7 @@ exports.addOption = (req, res) => {
     { $push: { options: { name } } },
     { new: true },
     (err, data) => {
-      if (err) return res.status(500).send(err);
+      if (err) return res.status(500).send('Unable to add option to group');
       if (!data) return res.status(404).send('Group not found');
       return res.json(data);
     },

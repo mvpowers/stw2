@@ -9,6 +9,7 @@ const AddOptionModal = ({
   handleChange,
   submitNewOption,
   currentOptionName,
+  currentGroup,
   token,
 }) => (
   <Modal
@@ -22,7 +23,7 @@ const AddOptionModal = ({
     onClose={modalClose}
     size="mini"
   >
-    <Modal.Header>Create Group</Modal.Header>
+    <Modal.Header>Add Option</Modal.Header>
     <Modal.Content>
       <Form>
         <Form.Input
@@ -37,7 +38,9 @@ const AddOptionModal = ({
           basic
           fluid
           color="green"
-          onClick={() => submitNewOption(token, 45, currentOptionName)}
+          onClick={() =>
+            submitNewOption(token, currentGroup, currentOptionName)
+          }
         >
           Submit
         </Form.Button>
@@ -53,7 +56,12 @@ AddOptionModal.propTypes = {
   handleChange: PropTypes.func.isRequired,
   submitNewOption: PropTypes.func.isRequired,
   currentOptionName: PropTypes.string.isRequired,
+  currentGroup: PropTypes.string,
   token: PropTypes.string.isRequired,
+};
+
+AddOptionModal.defaultProps = {
+  currentGroup: PropTypes.string,
 };
 
 export default AddOptionModal;

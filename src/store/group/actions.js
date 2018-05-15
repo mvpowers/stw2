@@ -161,7 +161,7 @@ export const addOption = (token, groupId, name) => dispatch => {
   dispatch({ type: ADD_OPTION_PENDING });
   return axios
     .post(
-      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/new`,
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/option`,
       {
         groupId,
         name,

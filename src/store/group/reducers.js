@@ -167,9 +167,6 @@ const groupReducer = (state = initialState, action) => {
         pending: true,
         error: [],
         successMessage: '',
-        editAdminGroup: {
-          options: [],
-        },
       };
 
     case ADD_OPTION_SUCCESS:
@@ -177,7 +174,7 @@ const groupReducer = (state = initialState, action) => {
         ...state,
         pending: false,
         editAdminGroup: {
-          options: [...state.editAdminGroup.options, action.payload],
+          options: action.payload.options,
         },
       };
 

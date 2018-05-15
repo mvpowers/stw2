@@ -27,7 +27,7 @@ class AdminGroupManage extends Component {
     const { addOption } = this.props;
     addOption(token, groupId, name);
     this.setState({ addOptionModalStatus: false });
-  }
+  };
 
   handleChange = e => {
     this.setState({ [e.target.id]: e.target.value });
@@ -54,8 +54,10 @@ class AdminGroupManage extends Component {
         render: () => (
           <AdminVoteOptions
             options={groups.editAdminGroup.options}
+            currentGroup={groups.editAdminGroup._id}
             currentOptionName={currentOptionName}
             token={user.token}
+            error={groups.error}
             addOptionModalStatus={addOptionModalStatus}
             submitNewOption={this.submitNewOption}
             modalOpen={this.modalOpen}

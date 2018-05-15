@@ -129,8 +129,7 @@ exports.updatePassword = (req, res) => {
       { $set: { password: req.body.newPassword } },
       (error, savedData) => {
         if (error) {
-          console.log(error);
-          return res.status(500).send(error);
+          return res.status(500).send('Unable to reset password');
         }
         return res.send(savedData);
       },
