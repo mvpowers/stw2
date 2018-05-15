@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Tab, Header, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { AdminVoteOptions, Wait } from './';
+import { AdminVoteOptions, Wait, GroupMemberOptions } from './';
 import {
   fetchSingleAdminGroup,
   addOption,
@@ -107,8 +107,8 @@ class AdminGroupManage extends Component {
         ),
       },
       {
-        menuItem: { key: 'users', icon: 'users', content: 'Users' },
-        render: () => <div>pane two</div>,
+        menuItem: { key: 'members', icon: 'users', content: 'Group Members' },
+        render: () => <GroupMemberOptions members={groups.editAdminGroup.members} />,
       },
     ];
     return (
