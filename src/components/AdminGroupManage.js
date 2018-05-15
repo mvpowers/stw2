@@ -108,7 +108,9 @@ class AdminGroupManage extends Component {
       },
       {
         menuItem: { key: 'members', icon: 'users', content: 'Group Members' },
-        render: () => <GroupMemberOptions members={groups.editAdminGroup.members} />,
+        render: () => (
+          <GroupMemberOptions members={groups.editAdminGroup.members} />
+        ),
       },
     ];
     return (

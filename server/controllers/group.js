@@ -41,7 +41,7 @@ exports.removeOption = (req, res) => {
 exports.retrieveGroups = (req, res) => {
   const { id } = jwtDecode(req.headers['x-access-token']);
 
-  Group.find({ members: id }, (err, data) => {
+  Group.find({ 'members.id': id }, (err, data) => {
     if (err) return res.status(500).send('Unable to retrieve groups');
     if (!data) return res.status(404).send('No groups found');
     // TODO remove unnecessary data from response
@@ -85,12 +85,12 @@ exports.retrieveSingleAdminGroup = (req, res) => {
 };
 
 exports.newGroup = (req, res) => {
-  const { id } = jwtDecode(req.headers['x-access-token']);
-  const { name } = req.body;
+  const { id, name } = jwtDecode(req.headers['x-access-token']);
+  const groupName = req.body.name;
   const group = new Group({
-    name,
+    name: groupName,
     admin: id,
-    members: [id],
+    members: [{ id, name, pending: false }],
     groupId: Math.floor(Math.random() * 900000) + 100000,
   });
   group.save((err, data) => {
