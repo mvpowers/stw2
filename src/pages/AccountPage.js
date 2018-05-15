@@ -48,6 +48,10 @@ class AccountPage extends Component {
   }
 
   componentDidMount() {
+    const { user, history } = this.props;
+    if (!user.token) {
+      history.push('/login');
+    }
     this.props.clearUserErrors();
   }
 
@@ -195,6 +199,9 @@ AccountPage.propTypes = {
   groups: PropTypes.shape({
     error: PropTypes.arrayOf(PropTypes.string),
     successMessage: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
   }).isRequired,
   updateUser: PropTypes.func.isRequired,
   clearUserErrors: PropTypes.func.isRequired,

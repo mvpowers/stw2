@@ -20,6 +20,24 @@ exports.addOption = (req, res) => {
   );
 };
 
+exports.removeOption = (req, res) => {
+  const { optionId } = req.body;
+  const { id } = jwtDecode(req.headers['x-access-token']);
+
+  if (!optionId) return res.status(403).send("Option's ID is required");
+
+  Group.findOneAndUpdate(
+    { admin: id, 'options._id': optionId },
+    { $pull: { options: { _id: optionId } } },
+    { new: true },
+    (err, data) => {
+      if (err) return res.status(500).send('Unable to remove option');
+      if (!data) return res.status(404).send('Unable to find option');
+      return res.json(data);
+    },
+  );
+};
+
 exports.retrieveGroups = (req, res) => {
   const { id } = jwtDecode(req.headers['x-access-token']);
 

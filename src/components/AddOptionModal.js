@@ -14,7 +14,7 @@ const AddOptionModal = ({
 }) => (
   <Modal
     trigger={
-      <Button basic fluid color="teal" onClick={modalOpen}>
+      <Button basic fluid color="teal" onClick={modalOpen} action="addOption">
         Add Option
       </Button>
     }

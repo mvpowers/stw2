@@ -1,21 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Button, Message, Card } from 'semantic-ui-react';
-import { AddOptionModal, ErrorMessage } from './';
+import { Segment, Message, Card } from 'semantic-ui-react';
+import { AddOptionModal, ErrorMessage, RemoveOptionModal } from './';
 
 const AdminVoteOptions = ({
   options,
   submitNewOption,
+  submitDeleteOption,
   addOptionModalStatus,
+  removeOptionModalStatus,
+  removeOptionName,
+  removeOptionId,
   modalOpen,
   modalClose,
   handleChange,
   token,
   currentOptionName,
   currentGroup,
+  successMessage,
   error,
 }) => (
   <Segment basic>
+    {successMessage && (
+      <Message
+        success
+        header="Group Update Successful"
+        content={successMessage}
+      />
+    )}
     {error.length > 0 && (
       <ErrorMessage header="Group Update Failed" errorArr={error} />
     )}
@@ -37,9 +49,17 @@ const AdminVoteOptions = ({
               <Card.Header>{option.name}</Card.Header>
             </Card.Content>
             <Card.Content>
-              <Button basic fluid color="red">
-                Remove Option
-              </Button>
+              <RemoveOptionModal
+                modalClose={modalClose}
+                modalOpen={modalOpen}
+                removeOptionModalStatus={removeOptionModalStatus}
+                removeOptionName={removeOptionName}
+                removeOptionId={removeOptionId}
+                optionName={option.name}
+                optionId={option._id}
+                submitDeleteOption={submitDeleteOption}
+                token={token}
+              />
             </Card.Content>
           </Card>
         ))}
@@ -63,10 +83,15 @@ AdminVoteOptions.propTypes = {
   modalClose: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   addOptionModalStatus: PropTypes.bool.isRequired,
+  removeOptionModalStatus: PropTypes.bool.isRequired,
   submitNewOption: PropTypes.func.isRequired,
+  submitDeleteOption: PropTypes.func.isRequired,
   token: PropTypes.string.isRequired,
+  removeOptionName: PropTypes.string.isRequired,
+  removeOptionId: PropTypes.string.isRequired,
   currentOptionName: PropTypes.string.isRequired,
   currentGroup: PropTypes.string.isRequired,
+  successMessage: PropTypes.string.isRequired,
   error: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

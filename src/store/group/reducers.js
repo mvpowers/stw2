@@ -18,6 +18,9 @@ import {
   ADD_OPTION_PENDING,
   ADD_OPTION_SUCCESS,
   ADD_OPTION_FAIL,
+  REMOVE_OPTION_PENDING,
+  REMOVE_OPTION_SUCCESS,
+  REMOVE_OPTION_FAIL,
 } from '../constants';
 
 const initialState = {
@@ -173,7 +176,9 @@ const groupReducer = (state = initialState, action) => {
       return {
         ...state,
         pending: false,
+        successMessage: 'Option successfully added',
         editAdminGroup: {
+          ...state.editAdminGroup,
           options: action.payload.options,
         },
       };
@@ -182,6 +187,34 @@ const groupReducer = (state = initialState, action) => {
       return {
         ...state,
         pending: false,
+        successMessage: '',
+        error: [...state.error, action.payload],
+      };
+
+    case REMOVE_OPTION_PENDING:
+      return {
+        ...state,
+        pending: true,
+        error: [],
+        successMessage: '',
+      };
+
+    case REMOVE_OPTION_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        successMessage: 'Option successfully removed',
+        editAdminGroup: {
+          ...state.editAdminGroup,
+          options: action.payload.options,
+        },
+      };
+
+    case REMOVE_OPTION_FAIL:
+      return {
+        ...state,
+        pending: false,
+        successMessage: '',
         error: [...state.error, action.payload],
       };
 

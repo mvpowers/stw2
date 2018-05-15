@@ -48,3 +48,8 @@ a.ui.fluid.card:hover {
   border-color: rgb(112, 87, 44) !important;
   transition: all 0.5s ease !important;
 }
+
+.emphasize {
+  font-weight: bold;
+  font-style: italic;
+}

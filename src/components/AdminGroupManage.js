@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 import { Tab, Header, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { AdminVoteOptions } from './';
-import { fetchSingleAdminGroup, addOption } from '../store/group/actions';
+import { AdminVoteOptions, Wait } from './';
+import {
+  fetchSingleAdminGroup,
+  addOption,
+  removeVoteOption,
+} from '../store/group/actions';
 
 class AdminGroupManage extends Component {
   constructor() {
@@ -12,6 +16,9 @@ class AdminGroupManage extends Component {
     this.state = {
       currentOptionName: '',
       addOptionModalStatus: false,
+      removeOptionModalStatus: false,
+      removeOptionName: '',
+      removeOptionId: '',
     };
   }
 
@@ -29,21 +36,49 @@ class AdminGroupManage extends Component {
     this.setState({ addOptionModalStatus: false });
   };
 
+  submitDeleteOption = (token, optionId) => {
+    const { removeVoteOption } = this.props;
+    removeVoteOption(token, optionId);
+    this.setState({ removeOptionModalStatus: false });
+  };
+
   handleChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  modalOpen = () => {
-    this.setState({ addOptionModalStatus: true });
+  modalOpen = e => {
+    switch (e.target.getAttribute('action')) {
+      case 'addOption':
+        return this.setState({ addOptionModalStatus: true });
+
+      case 'removeOption':
+        return this.setState({
+          removeOptionModalStatus: true,
+          removeOptionName: e.target.name,
+          removeOptionId: e.target.id,
+        });
+
+      default:
+        return null;
+    }
   };
 
   modalClose = () => {
-    this.setState({ addOptionModalStatus: false });
+    this.setState({
+      addOptionModalStatus: false,
+      removeOptionModalStatus: false,
+    });
   };
 
   render() {
     const { groups, user } = this.props;
-    const { currentOptionName, addOptionModalStatus } = this.state;
+    const {
+      currentOptionName,
+      removeOptionName,
+      removeOptionId,
+      addOptionModalStatus,
+      removeOptionModalStatus,
+    } = this.state;
     const panes = [
       {
         menuItem: {
@@ -56,10 +91,15 @@ class AdminGroupManage extends Component {
             options={groups.editAdminGroup.options}
             currentGroup={groups.editAdminGroup._id}
             currentOptionName={currentOptionName}
+            removeOptionName={removeOptionName}
+            removeOptionId={removeOptionId}
             token={user.token}
             error={groups.error}
+            successMessage={groups.successMessage}
             addOptionModalStatus={addOptionModalStatus}
+            removeOptionModalStatus={removeOptionModalStatus}
             submitNewOption={this.submitNewOption}
+            submitDeleteOption={this.submitDeleteOption}
             modalOpen={this.modalOpen}
             modalClose={this.modalClose}
             handleChange={this.handleChange}
@@ -73,14 +113,20 @@ class AdminGroupManage extends Component {
     ];
     return (
       <div>
-        <Header as="h2" icon textAlign="center">
-          <Icon name="cubes" size="mini" circular />
-          <Header.Content>{groups.editAdminGroup.name}</Header.Content>
-          <Header.Subheader>
-            Group ID: {groups.editAdminGroup.groupId}
-          </Header.Subheader>
-        </Header>
-        <Tab panes={panes} />
+        {groups.pending ? (
+          <Wait />
+        ) : (
+          <div>
+            <Header as="h2" icon textAlign="center">
+              <Icon name="cubes" size="mini" circular />
+              <Header.Content>{groups.editAdminGroup.name}</Header.Content>
+              <Header.Subheader>
+                Group ID: {groups.editAdminGroup.groupId}
+              </Header.Subheader>
+            </Header>
+            <Tab panes={panes} />
+          </div>
+        )}
       </div>
     );
   }
@@ -89,6 +135,7 @@ class AdminGroupManage extends Component {
 AdminGroupManage.propTypes = {
   fetchSingleAdminGroup: PropTypes.func.isRequired,
   addOption: PropTypes.func.isRequired,
+  removeVoteOption: PropTypes.func.isRequired,
   groupId: PropTypes.string.isRequired,
   user: PropTypes.shape({
     token: PropTypes.string,
@@ -111,6 +158,7 @@ const mapDispatchToProps = dispatch =>
     {
       fetchSingleAdminGroup,
       addOption,
+      removeVoteOption,
     },
     dispatch,
   );
