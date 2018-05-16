@@ -21,6 +21,9 @@ import {
   REMOVE_OPTION_PENDING,
   REMOVE_OPTION_SUCCESS,
   REMOVE_OPTION_FAIL,
+  REMOVE_MEMBER_PENDING,
+  REMOVE_MEMBER_SUCCESS,
+  REMOVE_MEMBER_FAIL,
 } from '../constants';
 
 const initialState = {
@@ -211,6 +214,33 @@ const groupReducer = (state = initialState, action) => {
       };
 
     case REMOVE_OPTION_FAIL:
+      return {
+        ...state,
+        pending: false,
+        successMessage: '',
+        error: [...state.error, action.payload],
+      };
+
+    case REMOVE_MEMBER_PENDING:
+      return {
+        ...state,
+        pending: true,
+        error: [],
+        successMessage: '',
+      };
+
+    case REMOVE_MEMBER_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        successMessage: 'Member successfully removed',
+        editAdminGroup: {
+          ...state.editAdminGroup,
+          members: action.payload.members,
+        },
+      };
+
+    case REMOVE_MEMBER_FAIL:
       return {
         ...state,
         pending: false,

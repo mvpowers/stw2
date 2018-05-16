@@ -12,6 +12,7 @@ const RemoveMemberModal = ({
   submitDeleteMember,
   removeMemberName,
   removeMemberId,
+  currentGroup,
 }) => (
   <Modal
     trigger={
@@ -52,7 +53,7 @@ const RemoveMemberModal = ({
         icon="checkmark"
         labelPosition="right"
         content="Yes"
-        onClick={() => submitDeleteMember(token, removeMemberId)}
+        onClick={() => submitDeleteMember(token, currentGroup, removeMemberId)}
       />
     </Modal.Actions>
   </Modal>
@@ -68,6 +69,7 @@ RemoveMemberModal.propTypes = {
   removeMemberId: PropTypes.string.isRequired,
   memberName: PropTypes.string.isRequired,
   memberId: PropTypes.string.isRequired,
+  currentGroup: PropTypes.string.isRequired,
 };
 
 export default RemoveMemberModal;

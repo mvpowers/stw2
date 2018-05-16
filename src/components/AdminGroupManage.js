@@ -8,6 +8,7 @@ import {
   fetchSingleAdminGroup,
   addOption,
   removeVoteOption,
+  removeMember,
 } from '../store/group/actions';
 
 class AdminGroupManage extends Component {
@@ -45,8 +46,9 @@ class AdminGroupManage extends Component {
     this.setState({ removeOptionModalStatus: false });
   };
 
-  submitDeleteMember = (token, memberId) => {
-    console.log('delete:', memberId);
+  submitDeleteMember = (token, groupId, memberId) => {
+    const { removeMember } = this.props;
+    removeMember(token, groupId, memberId);
     this.setState({ removeMemberModalStatus: false });
   };
 
@@ -129,6 +131,7 @@ class AdminGroupManage extends Component {
         menuItem: { key: 'members', icon: 'users', content: 'Group Members' },
         render: () => (
           <GroupMemberOptions
+            currentGroup={groups.editAdminGroup._id}
             members={groups.editAdminGroup.members}
             removeMemberModalStatus={removeMemberModalStatus}
             token={user.token}
@@ -150,6 +153,7 @@ class AdminGroupManage extends Component {
             <Header as="h2" icon textAlign="center">
               <Icon name="cubes" size="mini" circular />
               <Header.Content>{groups.editAdminGroup.name}</Header.Content>
+              {console.log('rerender')}
               <Header.Subheader>
                 Group ID: {groups.editAdminGroup.groupId}
               </Header.Subheader>
@@ -166,6 +170,7 @@ AdminGroupManage.propTypes = {
   fetchSingleAdminGroup: PropTypes.func.isRequired,
   addOption: PropTypes.func.isRequired,
   removeVoteOption: PropTypes.func.isRequired,
+  removeMember: PropTypes.func.isRequired,
   groupId: PropTypes.string.isRequired,
   user: PropTypes.shape({
     token: PropTypes.string,
@@ -189,6 +194,7 @@ const mapDispatchToProps = dispatch =>
       fetchSingleAdminGroup,
       addOption,
       removeVoteOption,
+      removeMember,
     },
     dispatch,
   );

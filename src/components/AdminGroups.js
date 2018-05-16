@@ -15,7 +15,10 @@ import { Wait } from './';
 
 class AdminGroups extends Component {
   componentDidMount() {
-    const { user, fetchAdminGroups } = this.props;
+    const { user, history, fetchAdminGroups } = this.props;
+    if (!user.token) {
+      history.push('/login');
+    }
     fetchAdminGroups(user.token);
   }
 

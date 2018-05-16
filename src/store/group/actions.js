@@ -23,6 +23,9 @@ import {
   REMOVE_OPTION_PENDING,
   REMOVE_OPTION_SUCCESS,
   REMOVE_OPTION_FAIL,
+  REMOVE_MEMBER_PENDING,
+  REMOVE_MEMBER_SUCCESS,
+  REMOVE_MEMBER_FAIL,
 } from '../constants';
 
 const getGroups = data => ({
@@ -92,6 +95,16 @@ const removeOptionFromGroup = data => ({
 
 const failedRemoveOptionFromGroup = data => ({
   type: REMOVE_OPTION_FAIL,
+  payload: data,
+});
+
+const removeMemberFromGroup = data => ({
+  type: REMOVE_MEMBER_SUCCESS,
+  payload: data,
+});
+
+const failedRemoveMemberFromGroup = data => ({
+  type: REMOVE_MEMBER_FAIL,
   payload: data,
 });
 
@@ -202,5 +215,21 @@ export const removeVoteOption = (token, optionId) => dispatch => {
     })
     .catch(err => {
       dispatch(failedRemoveOptionFromGroup(err.response.data));
+    });
+};
+
+export const removeMember = (token, groupId, memberId) => dispatch => {
+  dispatch({ type: REMOVE_MEMBER_PENDING });
+  return axios
+    .patch(
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/member`,
+      { groupId, memberId },
+      { headers: { 'x-access-token': token } },
+    )
+    .then(res => {
+      dispatch(removeMemberFromGroup(res.data));
+    })
+    .catch(err => {
+      dispatch(failedRemoveMemberFromGroup(err.response.data));
     });
 };

@@ -99,7 +99,7 @@ exports.newGroup = (req, res) => {
   });
 };
 
-exports.removeUserFromGroup = (req, res) => {
+exports.removeSelfFromGroup = (req, res) => {
   const { id } = jwtDecode(req.headers['x-access-token']);
   const { groupId } = req.body;
 
@@ -116,6 +116,25 @@ exports.removeUserFromGroup = (req, res) => {
         // TODO remove unnecessary data from response
         return res.send({ groups, deleted: data.name });
       });
+    },
+  );
+};
+
+exports.removeMemberFromGroup = (req, res) => {
+  const { id } = jwtDecode(req.headers['x-access-token']);
+  const { groupId, memberId } = req.body;
+
+  if (!groupId) return res.status(403).send('Group ID is required');
+  if (!memberId) return res.status(403).send('Member ID is required');
+
+  return Group.findOneAndUpdate(
+    { _id: groupId, admin: id },
+    { $pull: { members: { id: memberId } } },
+    { new: true },
+    (err, data) => {
+      if (err) return res.status(500).send(err);
+      if (!data) return res.status(500).send('Unable to find member');
+      return res.json(data);
     },
   );
 };

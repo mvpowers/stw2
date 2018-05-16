@@ -12,6 +12,7 @@ const GroupMemberOptions = ({
   submitDeleteMember,
   removeMemberName,
   removeMemberId,
+  currentGroup,
 }) => (
   <Segment basic>
     {members.length > 0 ? (
@@ -32,6 +33,7 @@ const GroupMemberOptions = ({
               submitDeleteMember={submitDeleteMember}
               removeMemberName={removeMemberName}
               removeMemberId={removeMemberId}
+              currentGroup={currentGroup}
             />
           </Card.Content>
         </Card>
@@ -62,6 +64,7 @@ GroupMemberOptions.propTypes = {
   submitDeleteMember: PropTypes.func.isRequired,
   removeMemberName: PropTypes.string.isRequired,
   removeMemberId: PropTypes.string.isRequired,
+  currentGroup: PropTypes.string.isRequired,
 };
 
 export default GroupMemberOptions;
