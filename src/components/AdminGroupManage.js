@@ -17,8 +17,11 @@ class AdminGroupManage extends Component {
       currentOptionName: '',
       addOptionModalStatus: false,
       removeOptionModalStatus: false,
+      removeMemberModalStatus: false,
       removeOptionName: '',
       removeOptionId: '',
+      removeMemberName: '',
+      removeMemberId: '',
     };
   }
 
@@ -42,6 +45,11 @@ class AdminGroupManage extends Component {
     this.setState({ removeOptionModalStatus: false });
   };
 
+  submitDeleteMember = (token, memberId) => {
+    console.log('delete:', memberId);
+    this.setState({ removeMemberModalStatus: false });
+  };
+
   handleChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
@@ -58,6 +66,13 @@ class AdminGroupManage extends Component {
           removeOptionId: e.target.id,
         });
 
+      case 'removeMember':
+        return this.setState({
+          removeMemberModalStatus: true,
+          removeMemberName: e.target.name,
+          removeMemberId: e.target.id,
+        });
+
       default:
         return null;
     }
@@ -67,6 +82,7 @@ class AdminGroupManage extends Component {
     this.setState({
       addOptionModalStatus: false,
       removeOptionModalStatus: false,
+      removeMemberModalStatus: false,
     });
   };
 
@@ -76,8 +92,11 @@ class AdminGroupManage extends Component {
       currentOptionName,
       removeOptionName,
       removeOptionId,
+      removeMemberName,
+      removeMemberId,
       addOptionModalStatus,
       removeOptionModalStatus,
+      removeMemberModalStatus,
     } = this.state;
     const panes = [
       {
@@ -109,7 +128,16 @@ class AdminGroupManage extends Component {
       {
         menuItem: { key: 'members', icon: 'users', content: 'Group Members' },
         render: () => (
-          <GroupMemberOptions members={groups.editAdminGroup.members} />
+          <GroupMemberOptions
+            members={groups.editAdminGroup.members}
+            removeMemberModalStatus={removeMemberModalStatus}
+            token={user.token}
+            modalOpen={this.modalOpen}
+            modalClose={this.modalClose}
+            submitDeleteMember={this.submitDeleteMember}
+            removeMemberName={removeMemberName}
+            removeMemberId={removeMemberId}
+          />
         ),
       },
     ];
