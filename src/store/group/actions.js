@@ -26,6 +26,9 @@ import {
   REMOVE_MEMBER_PENDING,
   REMOVE_MEMBER_SUCCESS,
   REMOVE_MEMBER_FAIL,
+  JOIN_GROUP_PENDING,
+  JOIN_GROUP_SUCCESS,
+  JOIN_GROUP_FAIL,
 } from '../constants';
 
 const getGroups = data => ({
@@ -105,6 +108,16 @@ const removeMemberFromGroup = data => ({
 
 const failedRemoveMemberFromGroup = data => ({
   type: REMOVE_MEMBER_FAIL,
+  payload: data,
+});
+
+const addMemberToGroup = data => ({
+  type: JOIN_GROUP_SUCCESS,
+  payload: data,
+});
+
+const failedAddMemberToGroup = data => ({
+  type: JOIN_GROUP_FAIL,
   payload: data,
 });
 
@@ -231,5 +244,23 @@ export const removeMember = (token, groupId, memberId) => dispatch => {
     })
     .catch(err => {
       dispatch(failedRemoveMemberFromGroup(err.response.data));
+    });
+};
+
+export const joinGroup = (token, groupId) => dispatch => {
+  dispatch({ type: JOIN_GROUP_PENDING });
+  return axios
+    .post(
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/group/member`,
+      {
+        groupId,
+      },
+      { headers: { 'x-access-token': token } },
+    )
+    .then(res => {
+      dispatch(addMemberToGroup(res.data));
+    })
+    .catch(err => {
+      dispatch(failedAddMemberToGroup(err.response.data));
     });
 };

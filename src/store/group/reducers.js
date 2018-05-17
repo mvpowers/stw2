@@ -24,6 +24,9 @@ import {
   REMOVE_MEMBER_PENDING,
   REMOVE_MEMBER_SUCCESS,
   REMOVE_MEMBER_FAIL,
+  JOIN_GROUP_PENDING,
+  JOIN_GROUP_SUCCESS,
+  JOIN_GROUP_FAIL,
 } from '../constants';
 
 const initialState = {
@@ -241,6 +244,30 @@ const groupReducer = (state = initialState, action) => {
       };
 
     case REMOVE_MEMBER_FAIL:
+      return {
+        ...state,
+        pending: false,
+        successMessage: '',
+        error: [...state.error, action.payload],
+      };
+
+    case JOIN_GROUP_PENDING:
+      return {
+        ...state,
+        pending: true,
+        error: [],
+        successMessage: '',
+      };
+
+    case JOIN_GROUP_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        successMessage: 'Request sent successfully and awaiting approval.',
+        data: [...state.data, action.payload],
+      };
+
+    case JOIN_GROUP_FAIL:
       return {
         ...state,
         pending: false,

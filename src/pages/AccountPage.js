@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Segment, Tab } from 'semantic-ui-react';
 import { AccountDetailsForm, GroupManage } from '../components';
 import { updateUser, clearUserErrors } from '../store/user/actions';
-import { createGroup, leaveGroup } from '../store/group/actions';
+import { createGroup, leaveGroup, joinGroup } from '../store/group/actions';
 
 class AccountPage extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -118,6 +118,11 @@ class AccountPage extends Component {
     this.setState({ leaveModalStatus: false });
   };
 
+  submitJoinGroup = (token, groupId) => {
+    this.props.joinGroup(token, groupId);
+    this.setState({ joinModalStatus: false });
+  };
+
   render() {
     const { user, groups, updateUser } = this.props;
     const {
@@ -166,6 +171,7 @@ class AccountPage extends Component {
             handleChange={this.handleChange}
             submitNewGroup={this.submitNewGroup}
             submitLeaveGroup={this.submitLeaveGroup}
+            submitJoinGroup={this.submitJoinGroup}
             leaveModalStatus={leaveModalStatus}
             currentLeaveName={currentLeaveName}
             currentLeaveId={currentLeaveId}
@@ -207,6 +213,7 @@ AccountPage.propTypes = {
   clearUserErrors: PropTypes.func.isRequired,
   createGroup: PropTypes.func.isRequired,
   leaveGroup: PropTypes.func.isRequired,
+  joinGroup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -221,6 +228,7 @@ const mapDispatchToProps = dispatch =>
       clearUserErrors,
       createGroup,
       leaveGroup,
+      joinGroup,
     },
     dispatch,
   );

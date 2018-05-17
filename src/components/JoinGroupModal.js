@@ -8,6 +8,8 @@ const JoinGroupModal = ({
   modalOpen,
   modalClose,
   handleChange,
+  token,
+  submitJoinGroup,
 }) => (
   <Modal
     trigger={
@@ -35,7 +37,7 @@ const JoinGroupModal = ({
           basic
           fluid
           color="green"
-          onClick={modalClose}
+          onClick={() => submitJoinGroup(token, currentJoinId)}
         >
           Submit
         </Form.Button>
@@ -49,7 +51,9 @@ JoinGroupModal.propTypes = {
   modalOpen: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
+  submitJoinGroup: PropTypes.func.isRequired,
   currentJoinId: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
 };
 
 export default JoinGroupModal;

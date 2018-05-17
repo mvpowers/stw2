@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Message } from 'semantic-ui-react';
+import { Card, Message, Label } from 'semantic-ui-react';
+import { isMemberPending } from '../utils';
 import {
   RemoveGroupModal,
   CreateGroupModal,
@@ -22,6 +23,7 @@ const GroupManage = ({
   currentJoinId,
   submitNewGroup,
   submitLeaveGroup,
+  submitJoinGroup,
   token,
   error,
   successMessage,
@@ -48,6 +50,8 @@ const GroupManage = ({
         modalOpen={modalOpen}
         modalClose={modalClose}
         handleChange={handleChange}
+        submitJoinGroup={submitJoinGroup}
+        token={token}
       />
     </div>
     <div className="additional-btn">
@@ -73,7 +77,12 @@ const GroupManage = ({
     {groups.map(group => (
       <Card fluid key={group._id}>
         <Card.Content>
-          <Card.Header>{group.name}</Card.Header>
+          <Card.Header>
+            {group.name}
+            {isMemberPending(token, group.members) && (
+              <Label style={{ margin: '0 5px' }}>Pending</Label>
+            )}
+          </Card.Header>
           <Card.Meta>{`Group ID: ${group.groupId}`}</Card.Meta>
         </Card.Content>
         <Card.Content>
@@ -110,6 +119,7 @@ GroupManage.propTypes = {
   handleChange: PropTypes.func.isRequired,
   submitNewGroup: PropTypes.func.isRequired,
   submitLeaveGroup: PropTypes.func.isRequired,
+  submitJoinGroup: PropTypes.func.isRequired,
   currentLeaveName: PropTypes.string.isRequired,
   currentLeaveId: PropTypes.string.isRequired,
   currentCreateName: PropTypes.string.isRequired,
