@@ -153,7 +153,6 @@ class AdminGroupManage extends Component {
             <Header as="h2" icon textAlign="center">
               <Icon name="cubes" size="mini" circular />
               <Header.Content>{groups.editAdminGroup.name}</Header.Content>
-              {console.log('rerender')}
               <Header.Subheader>
                 Group ID: {groups.editAdminGroup.groupId}
               </Header.Subheader>

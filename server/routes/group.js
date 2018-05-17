@@ -12,5 +12,6 @@ router.patch('/leave', verifyToken, group.removeSelfFromGroup);
 router.post('/option', verifyToken, group.addOption);
 router.patch('/option', verifyToken, group.removeOption);
 router.patch('/member', verifyToken, group.removeMemberFromGroup);
+router.post('/member', verifyToken, group.joinGroup);
 
 module.exports = router;

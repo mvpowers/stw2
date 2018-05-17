@@ -132,9 +132,32 @@ exports.removeMemberFromGroup = (req, res) => {
     { $pull: { members: { id: memberId } } },
     { new: true },
     (err, data) => {
-      if (err) return res.status(500).send(err);
+      if (err) return res.status(500).send('Unable to remove member');
       if (!data) return res.status(500).send('Unable to find member');
       return res.json(data);
     },
   );
+};
+
+exports.joinGroup = (req, res) => {
+  const { id, name } = jwtDecode(req.headers['x-access-token']);
+  const { groupId } = req.body;
+
+  if (!groupId) return res.status(403).send('Group ID is required');
+
+  return Group.findOne({ groupId, 'members.id': id }, (err, found) => {
+    if (err) return res.status(500).send('Unable to join group');
+    if (found) return res.status(403).send('Already a member');
+
+    return Group.findOneAndUpdate(
+      { groupId },
+      { $addToSet: { members: { id, name, pending: true } } },
+      { new: true },
+      (error, data) => {
+        if (error) return res.status(500).send('Unable to join group');
+        if (!data) return res.status(500).send('Unable to find group');
+        return res.json(data);
+      },
+    );
+  });
 };
