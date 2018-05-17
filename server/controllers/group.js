@@ -26,7 +26,7 @@ exports.removeOption = (req, res) => {
 
   if (!optionId) return res.status(403).send("Option's ID is required");
 
-  Group.findOneAndUpdate(
+  return Group.findOneAndUpdate(
     { admin: id, 'options._id': optionId },
     { $pull: { options: { _id: optionId } } },
     { new: true },
@@ -160,4 +160,23 @@ exports.joinGroup = (req, res) => {
       },
     );
   });
+};
+
+exports.confirmMember = (req, res) => {
+  const { groupId, userId } = req.body;
+  const { id } = jwtDecode(req.headers['x-access-token']);
+
+  if (!groupId) return res.status(403).send("Group's ID is required");
+  if (!userId) return res.status(403).send("User's ID is required");
+
+  return Group.findOneAndUpdate(
+    { admin: id, _id: groupId, 'members.id': userId },
+    { $set: { 'members.$.pending': false } },
+    { new: true },
+    (err, data) => {
+      if (err) return res.status(500).send('Unable to confirm member');
+      if (!data) return res.status(404).send('Unable to find member');
+      return res.json(data);
+    },
+  );
 };

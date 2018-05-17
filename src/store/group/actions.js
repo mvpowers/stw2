@@ -29,6 +29,9 @@ import {
   JOIN_GROUP_PENDING,
   JOIN_GROUP_SUCCESS,
   JOIN_GROUP_FAIL,
+  APPROVE_MEMBER_PENDING,
+  APPROVE_MEMBER_SUCCESS,
+  APPROVE_MEMBER_FAIL,
 } from '../constants';
 
 const getGroups = data => ({

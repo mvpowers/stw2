@@ -88,6 +88,10 @@ class AdminGroupManage extends Component {
     });
   };
 
+  filterPending = memberArr => memberArr.filter(member => member.pending);
+
+  filterAccepted = memberArr => memberArr.filter(member => !member.pending);
+
   render() {
     const { groups, user } = this.props;
     const {
@@ -132,7 +136,8 @@ class AdminGroupManage extends Component {
         render: () => (
           <GroupMemberOptions
             currentGroup={groups.editAdminGroup._id}
-            members={groups.editAdminGroup.members}
+            pendingMembers={this.filterPending(groups.editAdminGroup.members)}
+            acceptedMembers={this.filterAccepted(groups.editAdminGroup.members)}
             removeMemberModalStatus={removeMemberModalStatus}
             token={user.token}
             modalOpen={this.modalOpen}
