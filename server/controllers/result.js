@@ -29,42 +29,45 @@ exports.retrieveActiveQuestion = (req, res) => {
 };
 
 exports.submitVote = (req, res) => {
+  const { name, voteId } = req.body;
+  if (!name) return res.status(403).send('Name is required');
+  if (!voteId) return res.status(403).send('Vote ID is required');
   Result.find(
+    // search for active voteId
     {
       active: true,
-      votes: {
-        $elemMatch: { name: req.body.name, voteId: req.body.voteId },
-      },
+      'groupEntry.votes.voteId': voteId,
     },
     (err, data) => {
       if (err) {
         res.send(err);
       }
       if (data.length === 0) {
+        // if active voteId not found, add entry
         Result.update(
           { active: true },
           {
             $push: {
-              votes: { name: req.body.name, voteId: req.body.voteId, value: 1 },
+              'groupEntry.votes': { name, voteId, value: 1 },
             },
           },
           () => {
-            res.sendStatus(200);
+            res.send('Successfully logged vote');
           },
         );
       } else {
         Result.update(
+          // if active voteId found, increment entry value by 1
           {
             active: true,
-            'votes.name': req.body.name,
-            'votes.voteId': req.body.voteId,
+            'groupEntry.votes.voteId': voteId,
           },
-          { $inc: { 'votes.$.value': 1 } },
-          (updateErr, updateData) => {
+          { $inc: { 'groupEntry.votes.$.value': 1 } },
+          updateErr => {
             if (updateErr) {
-              res.json(updateErr);
+              res.status(500).send('Error logging vote');
             }
-            res.json(updateData);
+            res.send('Successfully logged vote');
           },
         );
       }
