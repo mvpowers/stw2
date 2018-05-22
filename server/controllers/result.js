@@ -1,3 +1,4 @@
+const jwtDecode = require('jwt-decode');
 const Result = require('../models/result');
 
 exports.addQuestion = (req, res) => {
@@ -52,7 +53,7 @@ exports.submitVote = (req, res) => {
             },
           },
           () => {
-            res.send('Successfully logged vote');
+            res.json(data);
           },
         );
       } else {
@@ -67,7 +68,7 @@ exports.submitVote = (req, res) => {
             if (updateErr) {
               res.status(500).send('Error logging vote');
             }
-            res.send('Successfully logged vote');
+            res.json(data);
           },
         );
       }
@@ -76,12 +77,17 @@ exports.submitVote = (req, res) => {
 };
 
 exports.addComment = (req, res) => {
+  const { voteFor, text } = req.body;
+
+  if (!voteFor) return res.status(403).send('voteFor is required');
+  if (!text) return res.status(403).send('text is required');
+
   Result.findOneAndUpdate(
     { active: true },
-    { $push: { comments: { voteFor: req.body.voteFor, text: req.body.text } } },
+    { $push: { 'groupEntry.comments': { voteFor, text } } },
     (err, data) => {
       if (err) {
-        res.send(err);
+        res.status(403).send('Unable to add comment');
       }
       res.json(data);
     },
@@ -89,28 +95,33 @@ exports.addComment = (req, res) => {
 };
 
 exports.likeComment = (req, res) => {
+  const { commentId } = req.body;
+  const { id } = jwtDecode(req.headers['x-access-token']);
+
+  if (!commentId) return res.status(403).send('commentId is required');
+
   Result.find(
     {
       active: true,
-      comments: {
-        $elemMatch: { _id: req.body.commentId, likedBy: req.body.userId },
+      'groupEntry.comments': {
+        $elemMatch: { _id: commentId, likedBy: id },
       },
     },
     (err, data) => {
       if (err) {
-        res.send(err);
+        res.status(403).send('Unable to like comment');
       }
       if (data.length === 0) {
         Result.findOneAndUpdate(
           {
             active: true,
-            'comments._id': req.body.commentId,
+            'groupEntry.comments._id': commentId,
           },
-          { $push: { 'comments.$.likedBy': req.body.userId } },
+          { $push: { 'groupEntry.comments.$.likedBy': id } },
           { new: true },
           (updateErr, updateData) => {
             if (updateErr) {
-              res.json(updateErr);
+              res.status(500).send('Unable to like comment');
             }
             res.json(updateData);
           },
@@ -119,13 +130,13 @@ exports.likeComment = (req, res) => {
         Result.findOneAndUpdate(
           {
             active: true,
-            'comments._id': req.body.commentId,
+            'groupEntry.comments._id': commentId,
           },
-          { $pull: { 'comments.$.likedBy': req.body.userId } },
+          { $pull: { 'groupEntry.comments.$.likedBy': id } },
           { new: true },
           (updateErr, updateData) => {
             if (updateErr) {
-              res.json(updateErr);
+              res.status(500).send('Unable to like comment');
             }
             res.json(updateData);
           },
