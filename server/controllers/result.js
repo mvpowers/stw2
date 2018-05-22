@@ -103,44 +103,48 @@ exports.likeComment = (req, res) => {
   Result.find(
     {
       active: true,
-      'groupEntry.comments': {
-        $elemMatch: { _id: commentId, likedBy: id },
-      },
+      // 'groupEntry.comments._id': commentId,
+      // 'groupEntry.comments.likedBy': id,
+      groupEntry: { comments: { $elemMatch: { _id: commentId, likedBy: id } } },
     },
     (err, data) => {
       if (err) {
-        res.status(403).send('Unable to like comment');
+        console.log(err);
+        res.status(403).send('Unable to find comment');
       }
       if (data.length === 0) {
-        Result.findOneAndUpdate(
-          {
-            active: true,
-            'groupEntry.comments._id': commentId,
-          },
-          { $push: { 'groupEntry.comments.$.likedBy': id } },
-          { new: true },
-          (updateErr, updateData) => {
-            if (updateErr) {
-              res.status(500).send('Unable to like comment');
-            }
-            res.json(updateData);
-          },
-        );
+        res.send('comment not found');
+        // Result.findOneAndUpdate(
+        //   {
+        //     active: true,
+        //     'groupEntry.comments._id': commentId,
+        //   },
+        //   { $push: { groupEntry: { comments: { likedBy: id } } } },
+        //   { new: true },
+        //   (updateErr, updateData) => {
+        //     if (updateErr) {
+        //       res.status(500).send(updateErr.message);
+        //     }
+        //     res.json(updateData);
+        //   },
+        // );
       } else {
-        Result.findOneAndUpdate(
-          {
-            active: true,
-            'groupEntry.comments._id': commentId,
-          },
-          { $pull: { 'groupEntry.comments.$.likedBy': id } },
-          { new: true },
-          (updateErr, updateData) => {
-            if (updateErr) {
-              res.status(500).send('Unable to like comment');
-            }
-            res.json(updateData);
-          },
-        );
+        res.send(data);
+        // Result.findOneAndUpdate(
+        //   {
+        //     active: true,
+        //     'groupEntry.comments._id': commentId,
+        //   },
+        //   { $pull: { groupEntry: { comments: { $elemMatch: { likedBy:  id } } } } },
+        //   // { $pull: { groupEntry: { comments: { likedBy: { id } } } } },
+        //   { new: true },
+        //   (updateErr, updateData) => {
+        //     if (updateErr) {
+        //       res.status(500).send(updateErr);
+        //     }
+        //     res.json(updateData);
+        //   },
+        // );
       }
     },
   );
