@@ -100,15 +100,31 @@ exports.likeComment = (req, res) => {
 
   if (!commentId) return res.status(403).send('commentId is required');
 
-  Result.find(
+  Result.findOne(
     {
       active: true,
       groupEntry: {
         $elemMatch: {
-          comments: { $elemMatch: { _id: commentId, likedBy: id } },
+          'comments._id': commentId,
         },
       },
     },
-    (err, data) => res.send(data),
+    (err, data) => {
+      if (err) return res.status(500).send('Unable to find comment');
+
+      return data.groupEntry.forEach((el, i) => {
+        if (el.comments.id(commentId) !== null) {
+          if (data.groupEntry[i].comments.id(commentId).likedBy.includes(id)) {
+            data.groupEntry[i].comments.id(commentId).likedBy.pull(id);
+            data.save();
+            res.send(data);
+          } else {
+            data.groupEntry[i].comments.id(commentId).likedBy.push(id);
+            data.save();
+            res.send(data);
+          }
+        }
+      });
+    },
   );
 };
