@@ -27,6 +27,7 @@ const commentSchema = new mongoose.Schema({
 
 const groupEntrySchema = new mongoose.Schema({
   group: { type: String, required: true },
+  members: { type: Array, default: [] },
   votes: [voteSchema],
   comments: [commentSchema],
 });
