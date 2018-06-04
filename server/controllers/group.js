@@ -180,3 +180,10 @@ exports.confirmMember = (req, res) => {
     },
   );
 };
+
+exports.verifyUserToGroup = (userId, group) => {
+  Group.findOne({ _id: group }, (err, data) => {
+    if (err) return err;
+    return data;
+  });
+};

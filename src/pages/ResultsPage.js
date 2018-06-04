@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Accordion, Icon } from 'semantic-ui-react';
 import ResultsGraph from '../components/ResultsGraph';
 import { Comments, Question, Wait } from '../components';
 import { fetchResult, toggleLike } from '../store/result/actions';
 import { clearToken } from '../store/user/actions';
 
 class ResultsPage extends Component {
+  constructor() {
+    super();
+    this.state = {
+      accordionActiveIndex: 0,
+    };
+  }
+
   componentDidMount() {
     const { user, history, fetchResult } = this.props;
     if (!user.token) {
@@ -25,6 +32,14 @@ class ResultsPage extends Component {
     }
   }
 
+  handleAccordion = (e, titleProps) => {
+    const { index } = titleProps;
+    const { accordionActiveIndex } = this.state;
+    const newIndex = accordionActiveIndex === index ? -1 : index;
+
+    this.setState({ accordionActiveIndex: newIndex });
+  };
+
   handleLike = (userId, commentId) => {
     const { toggleLike } = this.props;
     toggleLike(userId, commentId);
@@ -32,22 +47,39 @@ class ResultsPage extends Component {
 
   render() {
     const { result, user } = this.props;
+    const { accordionActiveIndex } = this.state;
     return (
       <div>
         {result.pending ? (
           <Wait />
         ) : (
-          <Segment basic>
+          <div>
             <Question question={result.question} />
-            <Segment>
-              <ResultsGraph votes={result.votes} />
-            </Segment>
-            <Comments
-              comments={result.comments}
-              userId={user.id}
-              toggleLike={this.handleLike}
-            />
-          </Segment>
+            <Accordion fluid styled>
+              {result.groupEntry.map((entry, i) => (
+                <div>
+                  <Accordion.Title
+                    active={accordionActiveIndex === i}
+                    index={i}
+                    onClick={this.handleAccordion}
+                  >
+                    <Icon name="dropdown" />
+                    {entry.group}
+                  </Accordion.Title>
+                  <Accordion.Content active={accordionActiveIndex === i}>
+                    <Segment basic>
+                      <ResultsGraph votes={entry.votes} />
+                    </Segment>
+                    <Comments
+                      comments={entry.comments}
+                      userId={user.id}
+                      toggleLike={this.handleLike}
+                    />
+                  </Accordion.Content>
+                </div>
+              ))}
+            </Accordion>
+          </div>
         )}
       </div>
     );

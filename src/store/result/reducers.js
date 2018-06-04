@@ -18,6 +18,12 @@ const initialState = {
   question: '',
   pending: false,
   error: [],
+  groupEntry: [
+    {
+      votes: [],
+      comments: [{ _id: '', voteFor: '', commentText: '', likedBy: [] }],
+    },
+  ],
 };
 
 const voteReducer = (state = initialState, action) => {

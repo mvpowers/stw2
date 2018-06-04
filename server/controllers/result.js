@@ -1,5 +1,6 @@
 const jwtDecode = require('jwt-decode');
 const Result = require('../models/result');
+const groupController = require('./group');
 
 exports.addQuestion = (req, res) => {
   const addQuestion = new Result(req.body);
@@ -77,21 +78,31 @@ exports.submitVote = (req, res) => {
 };
 
 exports.addComment = (req, res) => {
-  const { voteFor, text } = req.body;
+  const { group, voteFor, text } = req.body;
 
+  if (!group) return res.status(403).send('group is required');
   if (!voteFor) return res.status(403).send('voteFor is required');
   if (!text) return res.status(403).send('text is required');
 
-  Result.findOneAndUpdate(
-    { active: true },
-    { $push: { 'groupEntry.comments': { voteFor, text } } },
-    (err, data) => {
-      if (err) {
-        res.status(403).send('Unable to add comment');
-      }
-      res.json(data);
-    },
+  return res.send(
+    groupController.verifyUserToGroup(
+      '5ae752494cc98c27bfe70831',
+      '5afc62cb1925b421d0ecf7e7',
+    ),
   );
+
+  // Result.findOneAndUpdate(
+  //   { active: true, 'groupEntry.group': group },
+  //   { $push: { 'groupEntry.$.comments': { voteFor, text } } },
+  //   { new: true },
+  //   (err, data) => {
+  //     if (err) {
+  //       console.log(err.message);
+  //       res.status(403).send('Unable to add comment');
+  //     }
+  //     res.json(data);
+  //   },
+  // );
 };
 
 exports.likeComment = (req, res) => {
