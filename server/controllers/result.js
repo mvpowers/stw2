@@ -1,6 +1,5 @@
 const jwtDecode = require('jwt-decode');
 const Result = require('../models/result');
-// const groupController = require('./group');
 
 exports.addQuestion = (req, res) => {
   const addQuestion = new Result(req.body);
@@ -47,8 +46,7 @@ exports.submitVote = (req, res) => {
   if (!name) return res.status(403).send('name is required');
   if (!voteId) return res.status(403).send('voteId is required');
   if (!groupId) return res.status(403).send('groupId is required');
-  console.log('voteId', voteId);
-  Result.findOne(
+  return Result.findOne(
     // search for active voteId
     {
       active: true,
@@ -58,7 +56,7 @@ exports.submitVote = (req, res) => {
       if (err) return res.status(500).send('Unable to submit vote');
       if (data.length === 0) {
         // if active voteId not found, add entry
-        Result.update(
+        return Result.update(
           { active: true, 'groupEntry.groupId': groupId },
           {
             $push: {
@@ -69,22 +67,21 @@ exports.submitVote = (req, res) => {
             res.send('Vote submitted successfully');
           },
         );
-      } else {
-        try {
-          data.groupEntry.forEach((entry, i) => {
-            if (entry.groupId === groupId) {
-              data.groupEntry[i].votes.forEach((vote, j) => {
-                if (data.groupEntry[i].votes[j].voteId === voteId) {
-                  data.groupEntry[i].votes[j].value += 1;
-                  data.save();
-                  res.send('Vote submitted successfully');
-                }
-              });
-            }
-          });
-        } catch (e) {
-          res.status(500).send('Unable to submit vote');
-        }
+      }
+      try {
+        data.groupEntry.forEach((entry, i) => {
+          if (entry.groupId === groupId) {
+            data.groupEntry[i].votes.forEach((vote, j) => {
+              if (data.groupEntry[i].votes[j].voteId === voteId) {
+                data.groupEntry[i].votes[j].value += 1;
+                data.save();
+                res.send('Vote submitted successfully');
+              }
+            });
+          }
+        });
+      } catch (e) {
+        res.status(500).send('Unable to submit vote');
       }
     },
   );
@@ -96,13 +93,6 @@ exports.addComment = (req, res) => {
   if (!groupId) return res.status(403).send('groupId is required');
   if (!voteFor) return res.status(403).send('voteFor is required');
   if (!text) return res.status(403).send('text is required');
-
-  // return res.send(
-  //   groupController.verifyUserToGroup(
-  //     '5ae752494cc98c27bfe70831',
-  //     '5afc62cb1925b421d0ecf7e7',
-  //   ),
-  // );
 
   return Result.findOneAndUpdate(
     { active: true, 'groupEntry.groupId': groupId },
@@ -122,7 +112,7 @@ exports.likeComment = (req, res) => {
 
   if (!commentId) return res.status(403).send('commentId is required');
 
-  Result.findOne(
+  return Result.findOne(
     {
       active: true,
       groupEntry: {

@@ -59,7 +59,12 @@ class VotePage extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { currentVoteId, currentVoteName, currentComment, currentGroupId } = this.state;
+    const {
+      currentVoteId,
+      currentVoteName,
+      currentComment,
+      currentGroupId,
+    } = this.state;
     submitVote(currentVoteId, currentVoteName, currentGroupId);
     if (currentComment) {
       submitComment(currentVoteId, currentVoteName, currentComment);
