@@ -67,7 +67,12 @@ class VotePage extends Component {
     } = this.state;
     submitVote(currentVoteId, currentVoteName, currentGroupId);
     if (currentComment) {
-      submitComment(currentVoteId, currentVoteName, currentComment);
+      submitComment(
+        currentVoteId,
+        currentVoteName,
+        currentComment,
+        currentGroupId,
+      );
     }
     this.setState({
       modalStatus: false,

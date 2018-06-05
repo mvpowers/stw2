@@ -79,7 +79,7 @@ export const submitVote = (voteId, name, groupId) =>
       console.log(err);
     });
 
-export const submitComment = (voteId, voteFor, text) =>
+export const submitComment = (voteId, voteFor, text, groupId) =>
   axios
     .post(
       `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/comment`,
@@ -87,6 +87,7 @@ export const submitComment = (voteId, voteFor, text) =>
         voteId,
         voteFor,
         text,
+        groupId,
       },
     )
     .catch(err => {
