@@ -68,11 +68,12 @@ export const fetchQuestion = token => dispatch => {
     });
 };
 
-export const submitVote = (voteId, name) =>
+export const submitVote = (voteId, name, groupId) =>
   axios
     .post(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/vote`, {
       voteId,
       name,
+      groupId,
     })
     .catch(err => {
       console.log(err);

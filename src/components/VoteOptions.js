@@ -4,7 +4,7 @@ import { Card } from 'semantic-ui-react';
 import { VoteModal } from '../components';
 
 const Groups = ({
-  data,
+  options,
   modalStatus,
   modalOpen,
   modalClose,
@@ -12,9 +12,10 @@ const Groups = ({
   currentComment,
   handleSubmit,
   handleChange,
+  groupId,
 }) => (
   <Card.Group itemsPerRow={1}>
-    {data.map(option => (
+    {options.map(option => (
       <Card key={option._id}>
         <Card.Content>
           <Card.Header>{option.name}</Card.Header>
@@ -26,6 +27,7 @@ const Groups = ({
             modalClose={modalClose}
             voteId={option._id}
             voteName={option.name}
+            groupId={groupId}
             currentVoteName={currentVoteName}
             handleSubmit={handleSubmit}
             handleChange={handleChange}
@@ -38,7 +40,7 @@ const Groups = ({
 );
 
 Groups.propTypes = {
-  data: PropTypes.arrayOf(
+  options: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string,
       name: PropTypes.string,
@@ -49,6 +51,7 @@ Groups.propTypes = {
   modalClose: PropTypes.func.isRequired,
   currentVoteName: PropTypes.string.isRequired,
   currentComment: PropTypes.string.isRequired,
+  groupId: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
 };

@@ -15,7 +15,7 @@ exports.addQuestion = (req, res) => {
 exports.retrieveActiveResult = (req, res) => {
   const { id } = jwtDecode(req.headers['x-access-token']);
   Result.findOne({ active: true }, (err, data) => {
-    if (err) return res.status(500).send(err);
+    if (err) return res.status(500).send('Error retrieving result');
 
     const validGroups = data.groupEntry.filter(entry =>
       entry.members.includes(id),
@@ -43,56 +43,57 @@ exports.retrieveActiveQuestion = (req, res) => {
 };
 
 exports.submitVote = (req, res) => {
-  const { name, voteId } = req.body;
-  if (!name) return res.status(403).send('Name is required');
-  if (!voteId) return res.status(403).send('Vote ID is required');
-  Result.find(
+  const { name, voteId, groupId } = req.body;
+  if (!name) return res.status(403).send('name is required');
+  if (!voteId) return res.status(403).send('voteId is required');
+  if (!groupId) return res.status(403).send('groupId is required');
+  console.log('voteId', voteId);
+  Result.findOne(
     // search for active voteId
     {
       active: true,
       'groupEntry.votes.voteId': voteId,
     },
     (err, data) => {
-      if (err) {
-        res.send(err);
-      }
+      if (err) return res.status(500).send('Unable to submit vote');
       if (data.length === 0) {
         // if active voteId not found, add entry
         Result.update(
-          { active: true },
+          { active: true, 'groupEntry.groupId': groupId },
           {
             $push: {
-              'groupEntry.votes': { name, voteId, value: 1 },
+              'groupEntry.$.votes': { name, voteId, value: 1 },
             },
           },
           () => {
-            res.json(data);
+            res.send('Vote submitted successfully');
           },
         );
       } else {
-        Result.update(
-          // if active voteId found, increment entry value by 1
-          {
-            active: true,
-            'groupEntry.votes.voteId': voteId,
-          },
-          { $inc: { 'groupEntry.votes.$.value': 1 } },
-          updateErr => {
-            if (updateErr) {
-              res.status(500).send('Error logging vote');
+        try {
+          data.groupEntry.forEach((entry, i) => {
+            if (entry.groupId === groupId) {
+              data.groupEntry[i].votes.forEach((vote, j) => {
+                if (data.groupEntry[i].votes[j].voteId === voteId) {
+                  data.groupEntry[i].votes[j].value += 1;
+                  data.save();
+                  res.send('Vote submitted successfully');
+                }
+              });
             }
-            res.json(data);
-          },
-        );
+          });
+        } catch (e) {
+          res.status(500).send('Unable to submit vote');
+        }
       }
     },
   );
 };
 
 exports.addComment = (req, res) => {
-  const { group, voteFor, text } = req.body;
+  const { groupId, voteFor, text } = req.body;
 
-  if (!group) return res.status(403).send('group is required');
+  if (!groupId) return res.status(403).send('groupId is required');
   if (!voteFor) return res.status(403).send('voteFor is required');
   if (!text) return res.status(403).send('text is required');
 
@@ -104,15 +105,13 @@ exports.addComment = (req, res) => {
   // );
 
   return Result.findOneAndUpdate(
-    { active: true, 'groupEntry.group': group },
+    { active: true, 'groupEntry.groupId': groupId },
     { $push: { 'groupEntry.$.comments': { voteFor, text } } },
     { new: true },
     (err, data) => {
-      if (err) {
-        console.log(err.message);
-        res.status(403).send('Unable to add comment');
-      }
-      res.json(data);
+      if (!data) return res.status(403).send('Unable to find group');
+      if (err) return res.status(500).send('Unable to add comment');
+      return res.json(data);
     },
   );
 };

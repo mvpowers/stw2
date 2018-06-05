@@ -64,7 +64,7 @@ class ResultsPage extends Component {
                     onClick={this.handleAccordion}
                   >
                     <Icon name="dropdown" />
-                    {entry.group}
+                    {entry.groupName}
                   </Accordion.Title>
                   <Accordion.Content active={accordionActiveIndex === i}>
                     <Segment basic>
