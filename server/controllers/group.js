@@ -103,17 +103,17 @@ exports.removeSelfFromGroup = (req, res) => {
   const { id } = jwtDecode(req.headers['x-access-token']);
   const { groupId } = req.body;
 
-  if (!groupId) return res.status(403).send('Group ID is required');
+  if (!groupId) return res.status(403).send('groupId is required');
 
-  return Group.findByIdAndUpdate(
+  return Group.findOneAndUpdate(
     groupId,
-    { $pull: { members: id } },
+    { $pull: { members: { id } } },
+    { new: true },
     (err, data) => {
-      if (err) return res.status(500).send('Unable to remove user from group');
+      if (err) return res.status(500).send(err.message);
       if (!data) return res.status(500).send('Unable to find group');
-      return Group.find({ members: id }, (error, groups) => {
+      return Group.find({ 'members.id': id }, (error, groups) => {
         if (error) return res.status(500).send('Unable to retrieve groups');
-        // TODO remove unnecessary data from response
         return res.send({ groups, deleted: data.name });
       });
     },

@@ -48,11 +48,9 @@ class AccountPage extends Component {
   }
 
   componentDidMount() {
-    const { user, history } = this.props;
-    if (!user.token) {
-      history.push('/login');
-    }
-    this.props.clearUserErrors();
+    const { user, history, clearUserErrors } = this.props;
+    if (!user.token) history.push('/login');
+    clearUserErrors();
   }
 
   handleChange = e => {
@@ -113,8 +111,8 @@ class AccountPage extends Component {
     this.setState({ currentCreateName: '', createModalStatus: false });
   };
 
-  submitLeaveGroup = (token, name) => {
-    this.props.leaveGroup(token, name);
+  submitLeaveGroup = (token, groupId) => {
+    this.props.leaveGroup(token, groupId);
     this.setState({ leaveModalStatus: false });
   };
 
