@@ -41,8 +41,8 @@ class ResultsPage extends Component {
   };
 
   handleLike = (userId, commentId) => {
-    const { toggleLike } = this.props;
-    toggleLike(userId, commentId);
+    const { user, toggleLike } = this.props;
+    toggleLike(user.token, userId, commentId);
   };
 
   render() {
@@ -57,7 +57,7 @@ class ResultsPage extends Component {
             <Question question={result.question} />
             <Accordion fluid styled>
               {result.groupEntry.map((entry, i) => (
-                <div>
+                <div key={entry.groupId}>
                   <Accordion.Title
                     active={accordionActiveIndex === i}
                     index={i}

@@ -94,12 +94,16 @@ export const submitComment = (voteId, voteFor, text, groupId) =>
       console.log(err);
     });
 
-export const toggleLike = (userId, commentId) => dispatch =>
+export const toggleLike = (token, userId, commentId) => dispatch =>
   axios
-    .post(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/like`, {
-      userId,
-      commentId,
-    })
+    .post(
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/like`,
+      {
+        userId,
+        commentId,
+      },
+      { headers: { 'X-Access-Token': token } },
+    )
     .then(res => {
       dispatch(postLike(res.data));
     })

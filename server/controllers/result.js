@@ -124,19 +124,34 @@ exports.likeComment = (req, res) => {
     (err, data) => {
       if (err) return res.status(500).send('Unable to find comment');
 
-      return data.groupEntry.forEach((el, i) => {
-        if (el.comments.id(commentId) !== null) {
-          if (data.groupEntry[i].comments.id(commentId).likedBy.includes(id)) {
-            data.groupEntry[i].comments.id(commentId).likedBy.pull(id);
-            data.save();
-            res.send(data);
-          } else {
-            data.groupEntry[i].comments.id(commentId).likedBy.push(id);
-            data.save();
-            res.send(data);
+      try {
+        return data.groupEntry.forEach((el, i) => {
+          if (el.comments.id(commentId) !== null) {
+            if (
+              data.groupEntry[i].comments.id(commentId).likedBy.includes(id)
+            ) {
+              data.groupEntry[i].comments.id(commentId).likedBy.pull(id);
+              data.save();
+
+              const filtered = data.groupEntry.filter(entry =>
+                entry.members.includes(id),
+              );
+              res.send(filtered);
+            } else {
+              data.groupEntry[i].comments.id(commentId).likedBy.push(id);
+              data.save();
+
+              const filtered = data.groupEntry.filter(entry =>
+                entry.members.includes(id),
+              );
+              res.send(filtered);
+            }
           }
-        }
-      });
+        });
+      } catch (e) {
+        console.log(e);
+        res.status(500).send('Unable to like comment');
+      }
     },
   );
 };
