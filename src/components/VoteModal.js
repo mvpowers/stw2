@@ -12,6 +12,7 @@ const VoteModal = ({
   handleSubmit,
   handleChange,
   currentComment,
+  groupId,
 }) => (
   <Modal
     trigger={
@@ -22,6 +23,7 @@ const VoteModal = ({
         onClick={modalOpen}
         id={voteId}
         name={voteName}
+        group={groupId}
       >
         Select
       </Button>
@@ -60,6 +62,7 @@ VoteModal.propTypes = {
   voteId: PropTypes.string.isRequired,
   voteName: PropTypes.string.isRequired,
   currentVoteName: PropTypes.string.isRequired,
+  groupId: PropTypes.string.isRequired,
   currentComment: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,

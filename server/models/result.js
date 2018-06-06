@@ -25,13 +25,20 @@ const commentSchema = new mongoose.Schema({
   },
 });
 
+const groupEntrySchema = new mongoose.Schema({
+  groupId: { type: String, required: true },
+  groupName: { type: String, required: true },
+  members: { type: Array, default: [] },
+  votes: [voteSchema],
+  comments: [commentSchema],
+});
+
 const resultSchema = new mongoose.Schema({
   question: { type: String, required: true },
   timeAsked: { type: Date },
-  votes: [voteSchema],
-  comments: [commentSchema],
   votesVisible: { type: Boolean, default: false },
   active: { type: Boolean, default: false },
+  groupEntry: [groupEntrySchema],
 });
 
 module.exports = mongoose.model('Result', resultSchema);

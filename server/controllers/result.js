@@ -1,3 +1,4 @@
+const jwtDecode = require('jwt-decode');
 const Result = require('../models/result');
 
 exports.addQuestion = (req, res) => {
@@ -11,11 +12,23 @@ exports.addQuestion = (req, res) => {
 };
 
 exports.retrieveActiveResult = (req, res) => {
+  const { id } = jwtDecode(req.headers['x-access-token']);
   Result.findOne({ active: true }, (err, data) => {
-    if (err) {
-      res.send(err);
-    }
-    res.json(data);
+    if (err) return res.status(500).send('Error retrieving result');
+
+    const validGroups = data.groupEntry.filter(entry =>
+      entry.members.includes(id),
+    );
+
+    const cleanData = {
+      _id: data._id,
+      votesVisible: data.votesVisible,
+      active: data.active,
+      question: data.question,
+      groupEntry: validGroups,
+    };
+
+    return res.json(cleanData);
   });
 };
 
@@ -29,104 +42,115 @@ exports.retrieveActiveQuestion = (req, res) => {
 };
 
 exports.submitVote = (req, res) => {
-  Result.find(
+  const { name, voteId, groupId } = req.body;
+  if (!name) return res.status(403).send('name is required');
+  if (!voteId) return res.status(403).send('voteId is required');
+  if (!groupId) return res.status(403).send('groupId is required');
+  return Result.findOne(
+    // search for active voteId
     {
       active: true,
-      votes: {
-        $elemMatch: { name: req.body.name, voteId: req.body.voteId },
-      },
+      'groupEntry.votes.voteId': voteId,
     },
     (err, data) => {
-      if (err) {
-        res.send(err);
-      }
+      if (err) return res.status(500).send('Unable to submit vote');
       if (data.length === 0) {
-        Result.update(
-          { active: true },
+        // if active voteId not found, add entry
+        return Result.update(
+          { active: true, 'groupEntry.groupId': groupId },
           {
             $push: {
-              votes: { name: req.body.name, voteId: req.body.voteId, value: 1 },
+              'groupEntry.$.votes': { name, voteId, value: 1 },
             },
           },
           () => {
-            res.sendStatus(200);
+            res.send('Vote submitted successfully');
           },
         );
-      } else {
-        Result.update(
-          {
-            active: true,
-            'votes.name': req.body.name,
-            'votes.voteId': req.body.voteId,
-          },
-          { $inc: { 'votes.$.value': 1 } },
-          (updateErr, updateData) => {
-            if (updateErr) {
-              res.json(updateErr);
-            }
-            res.json(updateData);
-          },
-        );
+      }
+      try {
+        data.groupEntry.forEach((entry, i) => {
+          if (entry.groupId === groupId) {
+            data.groupEntry[i].votes.forEach((vote, j) => {
+              if (data.groupEntry[i].votes[j].voteId === voteId) {
+                data.groupEntry[i].votes[j].value += 1;
+                data.save();
+                res.send('Vote submitted successfully');
+              }
+            });
+          }
+        });
+      } catch (e) {
+        res.status(500).send('Unable to submit vote');
       }
     },
   );
 };
 
 exports.addComment = (req, res) => {
-  Result.findOneAndUpdate(
-    { active: true },
-    { $push: { comments: { voteFor: req.body.voteFor, text: req.body.text } } },
+  const { groupId, voteFor, text } = req.body;
+
+  if (!groupId) return res.status(403).send('groupId is required');
+  if (!voteFor) return res.status(403).send('voteFor is required');
+  if (!text) return res.status(403).send('text is required');
+
+  return Result.findOneAndUpdate(
+    { active: true, 'groupEntry.groupId': groupId },
+    { $push: { 'groupEntry.$.comments': { voteFor, text } } },
+    { new: true },
     (err, data) => {
-      if (err) {
-        res.send(err);
-      }
-      res.json(data);
+      if (!data) return res.status(403).send('Unable to find group');
+      if (err) return res.status(500).send('Unable to add comment');
+      return res.json(data);
     },
   );
 };
 
 exports.likeComment = (req, res) => {
-  Result.find(
+  const { commentId } = req.body;
+  const { id } = jwtDecode(req.headers['x-access-token']);
+
+  if (!commentId) return res.status(403).send('commentId is required');
+
+  return Result.findOne(
     {
       active: true,
-      comments: {
-        $elemMatch: { _id: req.body.commentId, likedBy: req.body.userId },
+      groupEntry: {
+        $elemMatch: {
+          'comments._id': commentId,
+        },
       },
     },
     (err, data) => {
-      if (err) {
-        res.send(err);
-      }
-      if (data.length === 0) {
-        Result.findOneAndUpdate(
-          {
-            active: true,
-            'comments._id': req.body.commentId,
-          },
-          { $push: { 'comments.$.likedBy': req.body.userId } },
-          { new: true },
-          (updateErr, updateData) => {
-            if (updateErr) {
-              res.json(updateErr);
+      if (err) return res.status(500).send('Unable to find comment');
+
+      try {
+        return data.groupEntry.forEach((el, i) => {
+          if (el.comments.id(commentId) !== null) {
+            if (
+              data.groupEntry[i].comments.id(commentId).likedBy.includes(id)
+            ) {
+              data.groupEntry[i].comments.id(commentId).likedBy.pull(id);
+              data.save();
+
+              const filtered = data.groupEntry.filter(entry =>
+                entry.members.includes(id),
+              );
+              res.send(filtered);
+            } else {
+              data.groupEntry[i].comments.id(commentId).likedBy.push(id);
+              data.save();
+
+              const filtered = data.groupEntry.filter(entry =>
+                entry.members.includes(id),
+              );
+              res.send(filtered);
             }
-            res.json(updateData);
-          },
-        );
-      } else {
-        Result.findOneAndUpdate(
-          {
-            active: true,
-            'comments._id': req.body.commentId,
-          },
-          { $pull: { 'comments.$.likedBy': req.body.userId } },
-          { new: true },
-          (updateErr, updateData) => {
-            if (updateErr) {
-              res.json(updateErr);
-            }
-            res.json(updateData);
-          },
-        );
+          }
+        });
+      } catch (e) {
+        console.log(e);
+        res.status(500).send('Unable to like comment');
       }
     },
   );

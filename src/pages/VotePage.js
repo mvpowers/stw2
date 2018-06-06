@@ -20,6 +20,7 @@ class VotePage extends Component {
       currentVoteName: '',
       currentVoteId: '',
       currentComment: '',
+      currentGroupId: '',
     };
   }
 
@@ -45,21 +46,33 @@ class VotePage extends Component {
       modalStatus: true,
       currentVoteId: e.target.id,
       currentVoteName: e.target.name,
+      currentGroupId: e.target.getAttribute('group'),
     });
   };
 
   modalClose = () => {
     this.setState({
       modalStatus: false,
+      currentComment: '',
     });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    const { currentVoteId, currentVoteName, currentComment } = this.state;
-    submitVote(currentVoteId, currentVoteName);
+    const {
+      currentVoteId,
+      currentVoteName,
+      currentComment,
+      currentGroupId,
+    } = this.state;
+    submitVote(currentVoteId, currentVoteName, currentGroupId);
     if (currentComment) {
-      submitComment(currentVoteId, currentVoteName, currentComment);
+      submitComment(
+        currentVoteId,
+        currentVoteName,
+        currentComment,
+        currentGroupId,
+      );
     }
     this.setState({
       modalStatus: false,
@@ -91,7 +104,8 @@ class VotePage extends Component {
                   {group.name}
                 </Divider>
                 <VoteOptions
-                  data={group.options}
+                  options={group.options}
+                  groupId={group._id}
                   modalStatus={modalStatus}
                   modalOpen={this.modalOpen}
                   modalClose={this.modalClose}

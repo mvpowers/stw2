@@ -68,17 +68,18 @@ export const fetchQuestion = token => dispatch => {
     });
 };
 
-export const submitVote = (voteId, name) =>
+export const submitVote = (voteId, name, groupId) =>
   axios
     .post(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/vote`, {
       voteId,
       name,
+      groupId,
     })
     .catch(err => {
       console.log(err);
     });
 
-export const submitComment = (voteId, voteFor, text) =>
+export const submitComment = (voteId, voteFor, text, groupId) =>
   axios
     .post(
       `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/comment`,
@@ -86,18 +87,23 @@ export const submitComment = (voteId, voteFor, text) =>
         voteId,
         voteFor,
         text,
+        groupId,
       },
     )
     .catch(err => {
       console.log(err);
     });
 
-export const toggleLike = (userId, commentId) => dispatch =>
+export const toggleLike = (token, userId, commentId) => dispatch =>
   axios
-    .post(`http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/like`, {
-      userId,
-      commentId,
-    })
+    .post(
+      `http://${config.SERVER_ADDRESS}:${config.SERVER_PORT}/result/like`,
+      {
+        userId,
+        commentId,
+      },
+      { headers: { 'X-Access-Token': token } },
+    )
     .then(res => {
       dispatch(postLike(res.data));
     })

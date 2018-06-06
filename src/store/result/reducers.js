@@ -10,14 +10,20 @@ import {
 } from '../constants';
 
 const initialState = {
-  votes: [],
-  comments: [{ _id: '', voteFor: '', commentText: '', likedBy: [] }],
+  // votes: [],
+  // comments: [{ _id: '', voteFor: '', commentText: '', likedBy: [] }],
   votesVisible: null,
   active: null,
   _id: '',
   question: '',
   pending: false,
   error: [],
+  groupEntry: [
+    {
+      votes: [],
+      comments: [{ _id: '', voteFor: '', commentText: '', likedBy: [] }],
+    },
+  ],
 };
 
 const voteReducer = (state = initialState, action) => {
@@ -65,7 +71,7 @@ const voteReducer = (state = initialState, action) => {
     case TOGGLE_LIKE:
       return {
         ...state,
-        comments: [...action.payload.comments],
+        groupEntry: [...action.payload],
       };
 
     case RESULT_ERROR_CLEAR:

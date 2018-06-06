@@ -1,5 +1,5 @@
-const Group = require('../models/group');
 const jwtDecode = require('jwt-decode');
+const Group = require('../models/group');
 
 exports.addOption = (req, res) => {
   const { groupId, name } = req.body;
