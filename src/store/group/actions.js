@@ -284,7 +284,7 @@ export const confirmPendingMember = (token, groupId, memberId) => dispatch => {
     .patch(
       `http://${config.SERVER_ADDRESS}:${
         config.SERVER_PORT
-      }/group/member/approve`,
+      }/group/member/confirm`,
       { groupId, memberId },
       { headers: { 'x-access-token': token } },
     )

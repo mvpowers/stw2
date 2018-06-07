@@ -9,6 +9,7 @@ import {
   addOption,
   removeVoteOption,
   removeMember,
+  confirmPendingMember,
 } from '../store/group/actions';
 
 class AdminGroupManage extends Component {
@@ -51,9 +52,8 @@ class AdminGroupManage extends Component {
   };
 
   approvePendingMember = (token, groupId, memberId) => {
-    console.log('token', token);
-    console.log('groupId', groupId);
-    console.log('memberId', memberId);
+    const { confirmPendingMember } = this.props;
+    confirmPendingMember(token, groupId, memberId);
   };
 
   handleChange = e => {
@@ -179,6 +179,7 @@ AdminGroupManage.propTypes = {
   fetchSingleAdminGroup: PropTypes.func.isRequired,
   addOption: PropTypes.func.isRequired,
   removeVoteOption: PropTypes.func.isRequired,
+  confirmPendingMember: PropTypes.func.isRequired,
   removeMember: PropTypes.func.isRequired,
   groupId: PropTypes.string.isRequired,
   user: PropTypes.shape({
@@ -204,6 +205,7 @@ const mapDispatchToProps = dispatch =>
       addOption,
       removeVoteOption,
       removeMember,
+      confirmPendingMember,
     },
     dispatch,
   );

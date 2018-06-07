@@ -34,7 +34,9 @@ const GroupMemberOptions = ({
               <Button
                 basic
                 color="green"
-                onClick={approvePendingMember(token, currentGroup, member.id)}
+                onClick={() =>
+                  approvePendingMember(token, currentGroup, member.id)
+                }
               >
                 Approve
               </Button>

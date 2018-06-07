@@ -27,6 +27,9 @@ import {
   JOIN_GROUP_PENDING,
   JOIN_GROUP_SUCCESS,
   JOIN_GROUP_FAIL,
+  APPROVE_MEMBER_PENDING,
+  APPROVE_MEMBER_SUCCESS,
+  APPROVE_MEMBER_FAIL,
 } from '../constants';
 
 const initialState = {
@@ -268,6 +271,33 @@ const groupReducer = (state = initialState, action) => {
       };
 
     case JOIN_GROUP_FAIL:
+      return {
+        ...state,
+        pending: false,
+        successMessage: '',
+        error: [...state.error, action.payload],
+      };
+
+    case APPROVE_MEMBER_PENDING:
+      return {
+        ...state,
+        pending: true,
+        error: [],
+        successMessage: '',
+      };
+
+    case APPROVE_MEMBER_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        successMessage: 'Member successfully added',
+        editAdminGroup: {
+          ...state.editAdminGroup,
+          members: action.payload.members,
+        },
+      };
+
+    case APPROVE_MEMBER_FAIL:
       return {
         ...state,
         pending: false,
