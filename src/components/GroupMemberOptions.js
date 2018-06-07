@@ -4,16 +4,17 @@ import PropTypes from 'prop-types';
 import { RemoveMemberModal } from './';
 
 const GroupMemberOptions = ({
-  pendingMembers,
   acceptedMembers,
-  token,
-  removeMemberModalStatus,
-  modalOpen,
-  modalClose,
-  submitDeleteMember,
-  removeMemberName,
-  removeMemberId,
+  approvePendingMember,
   currentGroup,
+  modalClose,
+  modalOpen,
+  pendingMembers,
+  removeMemberId,
+  removeMemberModalStatus,
+  removeMemberName,
+  submitDeleteMember,
+  token,
 }) => (
   <Segment basic>
     {pendingMembers.length > 0 && (
@@ -30,7 +31,11 @@ const GroupMemberOptions = ({
         <Card.Content>
           <Card.Content extra>
             <div className="ui two buttons">
-              <Button basic color="green">
+              <Button
+                basic
+                color="green"
+                onClick={approvePendingMember(token, currentGroup, member.id)}
+              >
                 Approve
               </Button>
               <Button basic color="red">
@@ -98,6 +103,7 @@ GroupMemberOptions.propTypes = {
   token: PropTypes.string.isRequired,
   modalOpen: PropTypes.func.isRequired,
   modalClose: PropTypes.func.isRequired,
+  approvePendingMember: PropTypes.func.isRequired,
   submitDeleteMember: PropTypes.func.isRequired,
   removeMemberName: PropTypes.string.isRequired,
   removeMemberId: PropTypes.string.isRequired,

@@ -28,9 +28,7 @@ class AdminGroupManage extends Component {
 
   componentDidMount() {
     const { groupId, user, history, fetchSingleAdminGroup } = this.props;
-    if (!user.token) {
-      history.push('/login');
-    }
+    if (!user.token) history.push('/login');
     fetchSingleAdminGroup(user.token, groupId);
   }
 
@@ -50,6 +48,12 @@ class AdminGroupManage extends Component {
     const { removeMember } = this.props;
     removeMember(token, groupId, memberId);
     this.setState({ removeMemberModalStatus: false });
+  };
+
+  approvePendingMember = (token, groupId, memberId) => {
+    console.log('token', token);
+    console.log('groupId', groupId);
+    console.log('memberId', memberId);
   };
 
   handleChange = e => {
@@ -145,6 +149,7 @@ class AdminGroupManage extends Component {
             submitDeleteMember={this.submitDeleteMember}
             removeMemberName={removeMemberName}
             removeMemberId={removeMemberId}
+            approvePendingMember={this.approvePendingMember}
           />
         ),
       },

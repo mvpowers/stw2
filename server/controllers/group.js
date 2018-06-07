@@ -162,15 +162,15 @@ exports.joinGroup = (req, res) => {
   });
 };
 
-exports.confirmMember = (req, res) => {
-  const { groupId, userId } = req.body;
+exports.approvePendingMember = (req, res) => {
+  const { groupId, memberId } = req.body;
   const { id } = jwtDecode(req.headers['x-access-token']);
 
-  if (!groupId) return res.status(403).send("Group's ID is required");
-  if (!userId) return res.status(403).send("User's ID is required");
+  if (!groupId) return res.status(403).send('groupId is required');
+  if (!memberId) return res.status(403).send('memberId is required');
 
   return Group.findOneAndUpdate(
-    { admin: id, _id: groupId, 'members.id': userId },
+    { admin: id, _id: groupId, 'members.id': memberId },
     { $set: { 'members.$.pending': false } },
     { new: true },
     (err, data) => {

@@ -29,6 +29,9 @@ import {
   JOIN_GROUP_PENDING,
   JOIN_GROUP_SUCCESS,
   JOIN_GROUP_FAIL,
+  APPROVE_MEMBER_PENDING,
+  APPROVE_MEMBER_SUCCESS,
+  APPROVE_MEMBER_FAIL,
 } from '../constants';
 
 const getGroups = data => ({
@@ -118,6 +121,16 @@ const addMemberToGroup = data => ({
 
 const failedAddMemberToGroup = data => ({
   type: JOIN_GROUP_FAIL,
+  payload: data,
+});
+
+const addPendingMemberToGroup = data => ({
+  type: APPROVE_MEMBER_SUCCESS,
+  payload: data,
+});
+
+const failedAddPendingMemberToGroup = data => ({
+  type: APPROVE_MEMBER_FAIL,
   payload: data,
 });
 
@@ -262,5 +275,23 @@ export const joinGroup = (token, groupId) => dispatch => {
     })
     .catch(err => {
       dispatch(failedAddMemberToGroup(err.response.data));
+    });
+};
+
+export const confirmPendingMember = (token, groupId, memberId) => dispatch => {
+  dispatch({ type: APPROVE_MEMBER_PENDING });
+  return axios
+    .patch(
+      `http://${config.SERVER_ADDRESS}:${
+        config.SERVER_PORT
+      }/group/member/approve`,
+      { groupId, memberId },
+      { headers: { 'x-access-token': token } },
+    )
+    .then(res => {
+      dispatch(addPendingMemberToGroup(res.data));
+    })
+    .catch(err => {
+      dispatch(failedAddPendingMemberToGroup(err.response.data));
     });
 };
