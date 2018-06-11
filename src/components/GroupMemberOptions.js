@@ -7,6 +7,7 @@ const GroupMemberOptions = ({
   acceptedMembers,
   approvePendingMember,
   currentGroup,
+  declinePendingMember,
   modalClose,
   modalOpen,
   pendingMembers,
@@ -40,7 +41,13 @@ const GroupMemberOptions = ({
               >
                 Approve
               </Button>
-              <Button basic color="red">
+              <Button
+                basic
+                color="red"
+                onClick={() =>
+                  declinePendingMember(token, currentGroup, member.id)
+                }
+              >
                 Decline
               </Button>
             </div>
@@ -107,6 +114,7 @@ GroupMemberOptions.propTypes = {
   modalClose: PropTypes.func.isRequired,
   approvePendingMember: PropTypes.func.isRequired,
   submitDeleteMember: PropTypes.func.isRequired,
+  declinePendingMember: PropTypes.func.isRequired,
   removeMemberName: PropTypes.string.isRequired,
   removeMemberId: PropTypes.string.isRequired,
   currentGroup: PropTypes.string.isRequired,

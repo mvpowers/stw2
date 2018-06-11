@@ -180,3 +180,22 @@ exports.approvePendingMember = (req, res) => {
     },
   );
 };
+
+exports.declinePendingMember = (req, res) => {
+  const { groupId, memberId } = req.body;
+  const { id } = jwtDecode(req.headers['x-access-token']);
+
+  if (!groupId) return res.status(403).send('groupId is required');
+  if (!memberId) return res.status(403).send('memberId is required');
+
+  return Group.findOneAndUpdate(
+    { admin: id, _id: groupId, 'members.id': memberId },
+    { $pull: { members: { id: memberId } } },
+    { new: true },
+    (err, data) => {
+      if (err) return res.status(500).send('Unable to decline member');
+      if (!data) return res.status(404).send('Unable to find member');
+      return res.json(data);
+    },
+  );
+};

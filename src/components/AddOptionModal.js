@@ -61,7 +61,7 @@ AddOptionModal.propTypes = {
 };
 
 AddOptionModal.defaultProps = {
-  currentGroup: PropTypes.string,
+  currentGroup: '',
 };
 
 export default AddOptionModal;

@@ -4,21 +4,21 @@ import { Segment, Message, Card } from 'semantic-ui-react';
 import { AddOptionModal, ErrorMessage, RemoveOptionModal } from './';
 
 const AdminVoteOptions = ({
-  options,
-  submitNewOption,
-  submitDeleteOption,
   addOptionModalStatus,
+  currentGroup,
+  currentOptionName,
+  error,
+  handleChange,
+  modalClose,
+  modalOpen,
+  options,
+  removeOptionId,
   removeOptionModalStatus,
   removeOptionName,
-  removeOptionId,
-  modalOpen,
-  modalClose,
-  handleChange,
-  token,
-  currentOptionName,
-  currentGroup,
+  submitDeleteOption,
+  submitNewOption,
   successMessage,
-  error,
+  token,
 }) => (
   <Segment basic>
     {successMessage && (
@@ -90,9 +90,13 @@ AdminVoteOptions.propTypes = {
   removeOptionName: PropTypes.string.isRequired,
   removeOptionId: PropTypes.string.isRequired,
   currentOptionName: PropTypes.string.isRequired,
-  currentGroup: PropTypes.string.isRequired,
+  currentGroup: PropTypes.string,
   successMessage: PropTypes.string.isRequired,
   error: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+AdminVoteOptions.defaultProps = {
+  currentGroup: '',
 };
 
 export default AdminVoteOptions;

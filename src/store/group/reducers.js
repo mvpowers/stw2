@@ -30,6 +30,9 @@ import {
   APPROVE_MEMBER_PENDING,
   APPROVE_MEMBER_SUCCESS,
   APPROVE_MEMBER_FAIL,
+  DECLINE_MEMBER_PENDING,
+  DECLINE_MEMBER_SUCCESS,
+  DECLINE_MEMBER_FAIL,
 } from '../constants';
 
 const initialState = {
@@ -298,6 +301,33 @@ const groupReducer = (state = initialState, action) => {
       };
 
     case APPROVE_MEMBER_FAIL:
+      return {
+        ...state,
+        pending: false,
+        successMessage: '',
+        error: [...state.error, action.payload],
+      };
+
+    case DECLINE_MEMBER_PENDING:
+      return {
+        ...state,
+        pending: true,
+        error: [],
+        successMessage: '',
+      };
+
+    case DECLINE_MEMBER_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        successMessage: 'Member successfully declined',
+        editAdminGroup: {
+          ...state.editAdminGroup,
+          members: action.payload.members,
+        },
+      };
+
+    case DECLINE_MEMBER_FAIL:
       return {
         ...state,
         pending: false,

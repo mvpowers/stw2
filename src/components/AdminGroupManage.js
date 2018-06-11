@@ -10,6 +10,7 @@ import {
   removeVoteOption,
   removeMember,
   confirmPendingMember,
+  declinePendingMember,
 } from '../store/group/actions';
 
 class AdminGroupManage extends Component {
@@ -54,6 +55,11 @@ class AdminGroupManage extends Component {
   approvePendingMember = (token, groupId, memberId) => {
     const { confirmPendingMember } = this.props;
     confirmPendingMember(token, groupId, memberId);
+  };
+
+  declinePendingMember = (token, groupId, memberId) => {
+    const { declinePendingMember } = this.props;
+    declinePendingMember(token, groupId, memberId);
   };
 
   handleChange = e => {
@@ -139,17 +145,18 @@ class AdminGroupManage extends Component {
         menuItem: { key: 'members', icon: 'users', content: 'Group Members' },
         render: () => (
           <GroupMemberOptions
-            currentGroup={groups.editAdminGroup._id}
-            pendingMembers={this.filterPending(groups.editAdminGroup.members)}
             acceptedMembers={this.filterAccepted(groups.editAdminGroup.members)}
-            removeMemberModalStatus={removeMemberModalStatus}
-            token={user.token}
-            modalOpen={this.modalOpen}
-            modalClose={this.modalClose}
-            submitDeleteMember={this.submitDeleteMember}
-            removeMemberName={removeMemberName}
-            removeMemberId={removeMemberId}
             approvePendingMember={this.approvePendingMember}
+            currentGroup={groups.editAdminGroup._id}
+            declinePendingMember={this.declinePendingMember}
+            modalClose={this.modalClose}
+            modalOpen={this.modalOpen}
+            pendingMembers={this.filterPending(groups.editAdminGroup.members)}
+            removeMemberId={removeMemberId}
+            removeMemberModalStatus={removeMemberModalStatus}
+            removeMemberName={removeMemberName}
+            submitDeleteMember={this.submitDeleteMember}
+            token={user.token}
           />
         ),
       },
@@ -176,20 +183,21 @@ class AdminGroupManage extends Component {
 }
 
 AdminGroupManage.propTypes = {
-  fetchSingleAdminGroup: PropTypes.func.isRequired,
   addOption: PropTypes.func.isRequired,
-  removeVoteOption: PropTypes.func.isRequired,
   confirmPendingMember: PropTypes.func.isRequired,
-  removeMember: PropTypes.func.isRequired,
+  declinePendingMember: PropTypes.func.isRequired,
+  fetchSingleAdminGroup: PropTypes.func.isRequired,
   groupId: PropTypes.string.isRequired,
-  user: PropTypes.shape({
-    token: PropTypes.string,
+  groups: PropTypes.shape({
+    editAdminGroup: PropTypes.object,
   }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  groups: PropTypes.shape({
-    editAdminGroup: PropTypes.object,
+  removeMember: PropTypes.func.isRequired,
+  removeVoteOption: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    token: PropTypes.string,
   }).isRequired,
 };
 
@@ -201,11 +209,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchSingleAdminGroup,
       addOption,
-      removeVoteOption,
-      removeMember,
       confirmPendingMember,
+      declinePendingMember,
+      fetchSingleAdminGroup,
+      removeMember,
+      removeVoteOption,
     },
     dispatch,
   );

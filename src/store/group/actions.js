@@ -32,6 +32,9 @@ import {
   APPROVE_MEMBER_PENDING,
   APPROVE_MEMBER_SUCCESS,
   APPROVE_MEMBER_FAIL,
+  DECLINE_MEMBER_PENDING,
+  DECLINE_MEMBER_SUCCESS,
+  DECLINE_MEMBER_FAIL,
 } from '../constants';
 
 const getGroups = data => ({
@@ -131,6 +134,16 @@ const addPendingMemberToGroup = data => ({
 
 const failedAddPendingMemberToGroup = data => ({
   type: APPROVE_MEMBER_FAIL,
+  payload: data,
+});
+
+const declinePendingMemberFromGroup = data => ({
+  type: DECLINE_MEMBER_SUCCESS,
+  payload: data,
+});
+
+const failedDeclinePendingMemberFromGroup = data => ({
+  type: DECLINE_MEMBER_FAIL,
   payload: data,
 });
 
@@ -293,5 +306,23 @@ export const confirmPendingMember = (token, groupId, memberId) => dispatch => {
     })
     .catch(err => {
       dispatch(failedAddPendingMemberToGroup(err.response.data));
+    });
+};
+
+export const declinePendingMember = (token, groupId, memberId) => dispatch => {
+  dispatch({ type: DECLINE_MEMBER_PENDING });
+  return axios
+    .patch(
+      `http://${config.SERVER_ADDRESS}:${
+        config.SERVER_PORT
+      }/group/member/decline`,
+      { groupId, memberId },
+      { headers: { 'x-access-token': token } },
+    )
+    .then(res => {
+      dispatch(declinePendingMemberFromGroup(res.data));
+    })
+    .catch(err => {
+      dispatch(failedDeclinePendingMemberFromGroup(err.response.data));
     });
 };
