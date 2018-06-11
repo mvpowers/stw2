@@ -149,6 +149,7 @@ const groupReducer = (state = initialState, action) => {
         ...state,
         pending: false,
         error: [...state.error, action.payload],
+        successMessage: '',
       };
 
     case SINGLE_GROUP_PENDING:
@@ -174,6 +175,7 @@ const groupReducer = (state = initialState, action) => {
         ...state,
         pending: false,
         error: [...state.error, action.payload],
+        successMessage: '',
       };
 
     case ADD_OPTION_PENDING:
