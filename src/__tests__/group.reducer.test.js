@@ -1,41 +1,5 @@
-/* eslint-disable no-undef */
 import groupReducer from '../store/group/reducers';
-import {
-  GROUPS_PENDING,
-  GROUPS_SUCCESS,
-  GROUPS_FAIL,
-  GROUPS_ERROR_CLEAR,
-  NEW_GROUP_PENDING,
-  NEW_GROUP_SUCCESS,
-  NEW_GROUP_FAIL,
-  LEAVE_GROUP_PENDING,
-  LEAVE_GROUP_SUCCESS,
-  LEAVE_GROUP_FAIL,
-  ADMIN_GROUPS_PENDING,
-  ADMIN_GROUPS_SUCCESS,
-  ADMIN_GROUPS_FAIL,
-  SINGLE_GROUP_PENDING,
-  SINGLE_GROUP_SUCCESS,
-  SINGLE_GROUP_FAIL,
-  ADD_OPTION_PENDING,
-  ADD_OPTION_SUCCESS,
-  ADD_OPTION_FAIL,
-  REMOVE_OPTION_PENDING,
-  REMOVE_OPTION_SUCCESS,
-  REMOVE_OPTION_FAIL,
-  REMOVE_MEMBER_PENDING,
-  REMOVE_MEMBER_SUCCESS,
-  REMOVE_MEMBER_FAIL,
-  JOIN_GROUP_PENDING,
-  JOIN_GROUP_SUCCESS,
-  JOIN_GROUP_FAIL,
-  APPROVE_MEMBER_PENDING,
-  APPROVE_MEMBER_SUCCESS,
-  APPROVE_MEMBER_FAIL,
-  DECLINE_MEMBER_PENDING,
-  DECLINE_MEMBER_SUCCESS,
-  DECLINE_MEMBER_FAIL,
-} from '../store/constants';
+import * as types from '../store/constants';
 
 describe('group reducer', () => {
   it('should return the initial state', () => {
@@ -55,7 +19,7 @@ describe('group reducer', () => {
       groupReducer(
         {},
         {
-          type: GROUPS_PENDING,
+          type: types.GROUPS_PENDING,
         },
       ),
     ).toEqual({ pending: true });
@@ -66,7 +30,7 @@ describe('group reducer', () => {
       groupReducer(
         {},
         {
-          type: GROUPS_SUCCESS,
+          type: types.GROUPS_SUCCESS,
           payload: 'test payload',
         },
       ),
@@ -78,7 +42,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: [] },
         {
-          type: GROUPS_FAIL,
+          type: types.GROUPS_FAIL,
           payload: 'test payload',
         },
       ),
@@ -90,7 +54,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: ['initial error'], successMessage: 'initial success message' },
         {
-          type: GROUPS_ERROR_CLEAR,
+          type: types.GROUPS_ERROR_CLEAR,
         },
       ),
     ).toEqual({ error: [], successMessage: '' });
@@ -105,7 +69,7 @@ describe('group reducer', () => {
           pending: false,
         },
         {
-          type: NEW_GROUP_PENDING,
+          type: types.NEW_GROUP_PENDING,
         },
       ),
     ).toEqual({ error: [], pending: true, successMessage: '' });
@@ -116,7 +80,7 @@ describe('group reducer', () => {
       groupReducer(
         { data: [] },
         {
-          type: NEW_GROUP_SUCCESS,
+          type: types.NEW_GROUP_SUCCESS,
           payload: { name: 'testName', groupId: '555' },
         },
       ),
@@ -133,7 +97,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: [], successMessage: 'test success message' },
         {
-          type: NEW_GROUP_FAIL,
+          type: types.NEW_GROUP_FAIL,
           payload: 'test payload',
         },
       ),
@@ -149,7 +113,7 @@ describe('group reducer', () => {
           pending: false,
         },
         {
-          type: LEAVE_GROUP_PENDING,
+          type: types.LEAVE_GROUP_PENDING,
         },
       ),
     ).toEqual({ error: [], pending: true, successMessage: '' });
@@ -160,7 +124,7 @@ describe('group reducer', () => {
       groupReducer(
         { data: [] },
         {
-          type: LEAVE_GROUP_SUCCESS,
+          type: types.LEAVE_GROUP_SUCCESS,
           payload: { groups: 'testGroup', deleted: 'testDeleted' },
         },
       ),
@@ -177,7 +141,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: [], successMessage: 'test success message' },
         {
-          type: LEAVE_GROUP_FAIL,
+          type: types.LEAVE_GROUP_FAIL,
           payload: 'test payload',
         },
       ),
@@ -193,7 +157,7 @@ describe('group reducer', () => {
           pending: false,
         },
         {
-          type: ADMIN_GROUPS_PENDING,
+          type: types.ADMIN_GROUPS_PENDING,
         },
       ),
     ).toEqual({
@@ -209,7 +173,7 @@ describe('group reducer', () => {
       groupReducer(
         { data: [] },
         {
-          type: ADMIN_GROUPS_SUCCESS,
+          type: types.ADMIN_GROUPS_SUCCESS,
           payload: 'testPayload',
         },
       ),
@@ -225,7 +189,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: [], successMessage: 'test success message' },
         {
-          type: ADMIN_GROUPS_FAIL,
+          type: types.ADMIN_GROUPS_FAIL,
           payload: 'test payload',
         },
       ),
@@ -241,7 +205,7 @@ describe('group reducer', () => {
           pending: false,
         },
         {
-          type: SINGLE_GROUP_PENDING,
+          type: types.SINGLE_GROUP_PENDING,
         },
       ),
     ).toEqual({
@@ -259,7 +223,7 @@ describe('group reducer', () => {
       groupReducer(
         { data: [] },
         {
-          type: SINGLE_GROUP_SUCCESS,
+          type: types.SINGLE_GROUP_SUCCESS,
           payload: 'testPayload',
         },
       ),
@@ -275,7 +239,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: [], successMessage: 'test success message' },
         {
-          type: SINGLE_GROUP_FAIL,
+          type: types.SINGLE_GROUP_FAIL,
           payload: 'test payload',
         },
       ),
@@ -291,7 +255,7 @@ describe('group reducer', () => {
           pending: false,
         },
         {
-          type: ADD_OPTION_PENDING,
+          type: types.ADD_OPTION_PENDING,
         },
       ),
     ).toEqual({
@@ -306,7 +270,7 @@ describe('group reducer', () => {
       groupReducer(
         { data: [] },
         {
-          type: ADD_OPTION_SUCCESS,
+          type: types.ADD_OPTION_SUCCESS,
           payload: { options: 'testPayload' },
         },
       ),
@@ -323,7 +287,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: [], successMessage: 'test success message' },
         {
-          type: ADD_OPTION_FAIL,
+          type: types.ADD_OPTION_FAIL,
           payload: 'test payload',
         },
       ),
@@ -339,7 +303,7 @@ describe('group reducer', () => {
           pending: false,
         },
         {
-          type: REMOVE_OPTION_PENDING,
+          type: types.REMOVE_OPTION_PENDING,
         },
       ),
     ).toEqual({
@@ -354,7 +318,7 @@ describe('group reducer', () => {
       groupReducer(
         { data: [] },
         {
-          type: REMOVE_OPTION_SUCCESS,
+          type: types.REMOVE_OPTION_SUCCESS,
           payload: { options: 'testPayload' },
         },
       ),
@@ -371,7 +335,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: [], successMessage: 'test success message' },
         {
-          type: REMOVE_OPTION_FAIL,
+          type: types.REMOVE_OPTION_FAIL,
           payload: 'test payload',
         },
       ),
@@ -387,7 +351,7 @@ describe('group reducer', () => {
           pending: false,
         },
         {
-          type: REMOVE_MEMBER_PENDING,
+          type: types.REMOVE_MEMBER_PENDING,
         },
       ),
     ).toEqual({
@@ -402,7 +366,7 @@ describe('group reducer', () => {
       groupReducer(
         { data: [] },
         {
-          type: REMOVE_MEMBER_SUCCESS,
+          type: types.REMOVE_MEMBER_SUCCESS,
           payload: { members: 'testPayload' },
         },
       ),
@@ -419,7 +383,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: [], successMessage: 'test success message' },
         {
-          type: REMOVE_MEMBER_FAIL,
+          type: types.REMOVE_MEMBER_FAIL,
           payload: 'test payload',
         },
       ),
@@ -435,7 +399,7 @@ describe('group reducer', () => {
           pending: false,
         },
         {
-          type: JOIN_GROUP_PENDING,
+          type: types.JOIN_GROUP_PENDING,
         },
       ),
     ).toEqual({
@@ -450,7 +414,7 @@ describe('group reducer', () => {
       groupReducer(
         { data: [] },
         {
-          type: JOIN_GROUP_SUCCESS,
+          type: types.JOIN_GROUP_SUCCESS,
           payload: 'testPayload',
         },
       ),
@@ -466,7 +430,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: [], successMessage: 'test success message' },
         {
-          type: JOIN_GROUP_FAIL,
+          type: types.JOIN_GROUP_FAIL,
           payload: 'test payload',
         },
       ),
@@ -482,7 +446,7 @@ describe('group reducer', () => {
           pending: false,
         },
         {
-          type: APPROVE_MEMBER_PENDING,
+          type: types.APPROVE_MEMBER_PENDING,
         },
       ),
     ).toEqual({
@@ -497,7 +461,7 @@ describe('group reducer', () => {
       groupReducer(
         { data: [] },
         {
-          type: APPROVE_MEMBER_SUCCESS,
+          type: types.APPROVE_MEMBER_SUCCESS,
           payload: { members: 'testPayload' },
         },
       ),
@@ -516,7 +480,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: [], successMessage: 'test success message' },
         {
-          type: APPROVE_MEMBER_FAIL,
+          type: types.APPROVE_MEMBER_FAIL,
           payload: 'test payload',
         },
       ),
@@ -532,7 +496,7 @@ describe('group reducer', () => {
           pending: false,
         },
         {
-          type: DECLINE_MEMBER_PENDING,
+          type: types.DECLINE_MEMBER_PENDING,
         },
       ),
     ).toEqual({
@@ -547,7 +511,7 @@ describe('group reducer', () => {
       groupReducer(
         { data: [] },
         {
-          type: DECLINE_MEMBER_SUCCESS,
+          type: types.DECLINE_MEMBER_SUCCESS,
           payload: { members: 'testPayload' },
         },
       ),
@@ -566,7 +530,7 @@ describe('group reducer', () => {
       groupReducer(
         { error: [], successMessage: 'test success message' },
         {
-          type: DECLINE_MEMBER_FAIL,
+          type: types.DECLINE_MEMBER_FAIL,
           payload: 'test payload',
         },
       ),

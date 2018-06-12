@@ -4,6 +4,9 @@
     "plugin:prettier/recommended"
   ],
   "parser": "babel-eslint",
+  "env": {
+    "jest": true
+  },
   "rules": {
     "func-names": ["error", "never"],
     "react/jsx-filename-extension": "off",
