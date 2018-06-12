@@ -67,7 +67,7 @@ describe('group actions', () => {
 
       const store = mockStore();
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.createGroup()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -87,7 +87,7 @@ describe('group actions', () => {
 
       const store = mockStore();
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.createGroup()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -107,7 +107,7 @@ describe('group actions', () => {
 
       const store = mockStore();
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.leaveGroup()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -127,7 +127,7 @@ describe('group actions', () => {
 
       const store = mockStore();
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.leaveGroup()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -147,7 +147,7 @@ describe('group actions', () => {
 
       const store = mockStore();
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.fetchAdminGroups()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -167,7 +167,7 @@ describe('group actions', () => {
 
       const store = mockStore();
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.fetchAdminGroups()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -187,7 +187,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.fetchSingleAdminGroup()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -207,7 +207,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.fetchSingleAdminGroup()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -227,7 +227,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.addOption()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -247,7 +247,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.addOption()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -267,7 +267,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.removeVoteOption()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -287,7 +287,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.removeVoteOption()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -307,7 +307,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.removeMember()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -327,7 +327,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.removeMember()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -347,7 +347,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.joinGroup()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -367,7 +367,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.joinGroup()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -387,7 +387,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.confirmPendingMember()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -407,7 +407,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.confirmPendingMember()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -427,7 +427,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.declinePendingMember()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
@@ -447,7 +447,7 @@ describe('group actions', () => {
 
       const store = mockStore({ posts: {} });
 
-      return store.dispatch(actions.fetchGroups()).then(() => {
+      return store.dispatch(actions.declinePendingMember()).then(() => {
         const dispatchedActions = store.getActions();
         const actionTypes = dispatchedActions.map(action => action.type);
         expect(actionTypes).toEqual(expectedActions);
