@@ -10,8 +10,6 @@ import {
 } from '../constants';
 
 const initialState = {
-  // votes: [],
-  // comments: [{ _id: '', voteFor: '', commentText: '', likedBy: [] }],
   votesVisible: null,
   active: null,
   _id: '',
