@@ -1,0 +1,2 @@
+{"_id":{"$oid":"5ae79e4d3b54690bde39a73c"},"admin":false,"name":"bob","phone":"9091231234","email":"fake@fake.com","password":"$2b$10$6QAbe7vok5xYq4ZLse7Cquj.9WfiDGmmbJOSqVu1xHHqmQ8GScOyK","__v":0,"resetExpire":{"$date":"2018-05-11T23:10:24.385Z"},"resetToken":"69e08fdd-8692-43b0-9fd1-3acc7d36ec44"}
+{"_id":{"$oid":"5b21999997717718b5cb1dae"},"admin":false,"name":"Test Test","email":"test@test.com","phone":"9099961234","password":"$2b$10$tdmAT5dzww8RrBZwWSQLkuNGoiQ72IllhAPqE1QpggAOIzg9K7iGy","__v":0}

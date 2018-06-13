@@ -54,7 +54,7 @@ exports.submitVote = (req, res) => {
     },
     (err, data) => {
       if (err) return res.status(500).send('Unable to submit vote');
-      if (data.length === 0) {
+      if (data === null) {
         // if active voteId not found, add entry
         return Result.update(
           { active: true, 'groupEntry.groupId': groupId },
