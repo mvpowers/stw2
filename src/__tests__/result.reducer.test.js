@@ -1,7 +1,7 @@
 import resultReducer from '../store/result/reducers';
 import * as types from '../store/constants';
 
-describe('group reducer', () => {
+describe('result reducer', () => {
   it('should return the initial state', () => {
     expect(resultReducer(undefined, {})).toEqual({
       votesVisible: null,

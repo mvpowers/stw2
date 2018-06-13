@@ -7,7 +7,7 @@ import * as actions from '../store/result/actions';
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-describe('group actions', () => {
+describe('result actions', () => {
   beforeEach(() => {
     moxios.install();
   });
