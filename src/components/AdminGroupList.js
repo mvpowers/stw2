@@ -39,6 +39,14 @@ class AdminGroupList extends Component {
               <Icon name="pencil" circular />
               <Header.Content>Admin Panel</Header.Content>
             </Header>
+            {groups.adminGroups.length === 0 && (
+              <Message
+                content="You are not currently the admin of any groups"
+                header="Nothing to See Here"
+                icon="eye slash outline"
+                warning
+              />
+            )}
             {groups.adminGroups.map(group => (
               <Card fluid key={group.groupId}>
                 <Card.Content>
