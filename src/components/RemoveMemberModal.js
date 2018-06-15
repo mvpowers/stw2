@@ -3,27 +3,29 @@ import PropTypes from 'prop-types';
 import { Button, Modal } from 'semantic-ui-react';
 
 const RemoveMemberModal = ({
-  removeMemberModalStatus,
-  modalOpen,
-  modalClose,
-  token,
-  memberName,
-  memberId,
-  submitDeleteMember,
-  removeMemberName,
-  removeMemberId,
   currentGroup,
+  memberId,
+  memberName,
+  modalClose,
+  modalOpen,
+  removeMemberId,
+  removeMemberModalStatus,
+  removeMemberName,
+  submitDeleteMember,
+  token,
+  userId,
 }) => (
   <Modal
     trigger={
       <Button
-        basic
-        fluid
-        color="red"
-        onClick={modalOpen}
         action="removeMember"
+        basic
+        color="red"
+        disabled={memberId === userId}
+        fluid
         id={memberId}
         name={memberName}
+        onClick={modalOpen}
       >
         Remove Member
       </Button>
@@ -42,10 +44,10 @@ const RemoveMemberModal = ({
     </Modal.Content>
     <Modal.Actions>
       <Button
-        negative
+        content="No"
         icon="remove"
         labelPosition="right"
-        content="No"
+        negative
         onClick={modalClose}
       />
       <Button
@@ -60,16 +62,17 @@ const RemoveMemberModal = ({
 );
 
 RemoveMemberModal.propTypes = {
-  removeMemberModalStatus: PropTypes.bool.isRequired,
-  modalOpen: PropTypes.func.isRequired,
-  modalClose: PropTypes.func.isRequired,
-  submitDeleteMember: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
-  removeMemberName: PropTypes.string.isRequired,
-  removeMemberId: PropTypes.string.isRequired,
-  memberName: PropTypes.string.isRequired,
-  memberId: PropTypes.string.isRequired,
   currentGroup: PropTypes.string.isRequired,
+  modalClose: PropTypes.func.isRequired,
+  modalOpen: PropTypes.func.isRequired,
+  memberId: PropTypes.string.isRequired,
+  memberName: PropTypes.string.isRequired,
+  removeMemberId: PropTypes.string.isRequired,
+  removeMemberModalStatus: PropTypes.bool.isRequired,
+  removeMemberName: PropTypes.string.isRequired,
+  token: PropTypes.string.isRequired,
+  submitDeleteMember: PropTypes.func.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 export default RemoveMemberModal;

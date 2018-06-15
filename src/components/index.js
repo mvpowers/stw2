@@ -17,7 +17,7 @@ export { default as RemoveGroupModal } from './RemoveGroupModal';
 export { default as CreateGroupModal } from './CreateGroupModal';
 export { default as JoinGroupModal } from './JoinGroupModal';
 export { default as AdminGroupManage } from './AdminGroupManage';
-export { default as AdminGroups } from './AdminGroups';
+export { default as AdminGroupList } from './AdminGroupList';
 export { default as AdminVoteOptions } from './AdminVoteOptions';
 export { default as AddOptionModal } from './AddOptionModal';
 export { default as RemoveOptionModal } from './RemoveOptionModal';

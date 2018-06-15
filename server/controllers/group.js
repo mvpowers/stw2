@@ -126,6 +126,7 @@ exports.removeMemberFromGroup = (req, res) => {
 
   if (!groupId) return res.status(403).send('Group ID is required');
   if (!memberId) return res.status(403).send('Member ID is required');
+  if (memberId === id) return res.status(403).send('Cannot remove admin');
 
   return Group.findOneAndUpdate(
     { _id: groupId, admin: id },

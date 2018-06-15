@@ -16,6 +16,7 @@ const GroupMemberOptions = ({
   removeMemberName,
   submitDeleteMember,
   token,
+  userId,
 }) => (
   <Segment basic>
     {pendingMembers.length > 0 && (
@@ -69,16 +70,17 @@ const GroupMemberOptions = ({
           </Card.Content>
           <Card.Content>
             <RemoveMemberModal
-              removeMemberModalStatus={removeMemberModalStatus}
-              modalOpen={modalOpen}
-              modalClose={modalClose}
-              token={token}
-              memberName={member.name}
-              memberId={member.id}
-              submitDeleteMember={submitDeleteMember}
-              removeMemberName={removeMemberName}
-              removeMemberId={removeMemberId}
               currentGroup={currentGroup}
+              memberId={member.id}
+              memberName={member.name}
+              modalClose={modalClose}
+              modalOpen={modalOpen}
+              removeMemberId={removeMemberId}
+              removeMemberModalStatus={removeMemberModalStatus}
+              removeMemberName={removeMemberName}
+              submitDeleteMember={submitDeleteMember}
+              token={token}
+              userId={userId}
             />
           </Card.Content>
         </Card>
@@ -102,22 +104,23 @@ GroupMemberOptions.propTypes = {
       name: PropTypes.string,
     }),
   ).isRequired,
+  approvePendingMember: PropTypes.func.isRequired,
+  currentGroup: PropTypes.string.isRequired,
+  declinePendingMember: PropTypes.func.isRequired,
+  modalClose: PropTypes.func.isRequired,
+  modalOpen: PropTypes.func.isRequired,
   pendingMembers: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string,
       name: PropTypes.string,
     }),
   ).isRequired,
-  removeMemberModalStatus: PropTypes.bool.isRequired,
-  token: PropTypes.string.isRequired,
-  modalOpen: PropTypes.func.isRequired,
-  modalClose: PropTypes.func.isRequired,
-  approvePendingMember: PropTypes.func.isRequired,
-  submitDeleteMember: PropTypes.func.isRequired,
-  declinePendingMember: PropTypes.func.isRequired,
-  removeMemberName: PropTypes.string.isRequired,
   removeMemberId: PropTypes.string.isRequired,
-  currentGroup: PropTypes.string.isRequired,
+  removeMemberModalStatus: PropTypes.bool.isRequired,
+  removeMemberName: PropTypes.string.isRequired,
+  submitDeleteMember: PropTypes.func.isRequired,
+  token: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 export default GroupMemberOptions;

@@ -13,7 +13,7 @@ import {
 import { fetchAdminGroups } from '../store/group/actions';
 import { Wait } from './';
 
-class AdminGroups extends Component {
+class AdminGroupList extends Component {
   componentDidMount() {
     const { user, history, fetchAdminGroups } = this.props;
     if (!user.token) {
@@ -83,7 +83,7 @@ class AdminGroups extends Component {
   }
 }
 
-AdminGroups.propTypes = {
+AdminGroupList.propTypes = {
   groups: PropTypes.shape({
     adminGroups: PropTypes.arrayOf(
       PropTypes.shape({
@@ -114,4 +114,4 @@ const mapDispatchToProps = dispatch =>
     dispatch,
   );
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminGroups);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminGroupList);

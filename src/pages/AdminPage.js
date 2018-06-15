@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Segment } from 'semantic-ui-react';
-import { AdminGroupManage, AdminGroups } from '../components';
+import { AdminGroupManage, AdminGroupList } from '../components';
 
 const AdminPage = ({ match, history }) => (
   <Segment basic>
     {match.params.groupId ? (
       <AdminGroupManage groupId={match.params.groupId} history={history} />
     ) : (
-      <AdminGroups history={history} />
+      <AdminGroupList history={history} />
     )}
   </Segment>
 );

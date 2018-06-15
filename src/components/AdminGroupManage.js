@@ -157,6 +157,7 @@ class AdminGroupManage extends Component {
             removeMemberName={removeMemberName}
             submitDeleteMember={this.submitDeleteMember}
             token={user.token}
+            userId={user.id}
           />
         ),
       },
